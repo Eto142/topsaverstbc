@@ -70,7 +70,7 @@ window.smartsupp||(function(d) {
                                 <ul class="contact-info list-style">
                                   
                                     <li><i class="flaticon-email-1"></i> <a
-                                            href="">support@app.topsaverstbc.online<span
+                                            href="">support@topsaverstbc.com<span
                                                 class="__cf_email__">
                                                 </span></a>
                                     </li>
