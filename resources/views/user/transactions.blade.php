@@ -45,7 +45,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($allTransactions as $details)
+                        @forelse(($allTransactions ?? $transaction ?? []) as $details)
                             <tr>
                                 <td class="ps-4">
                                     <div class="d-flex align-items-center gap-2.5">
