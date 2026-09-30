@@ -1,433 +1,281 @@
-<!doctype html>
-<html lang="en">
+@include('user.header')
 
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#000000">
-    <title>Dashboard - Top Saver Trust Bank</title>
-    <meta name="description" content="Top Saver Trust Bank Mobile Banking">
-    <meta name="keywords"
-        content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
-    <link rel="icon" type="image/png" href="{{asset('asset/img/favicon.png')}}" sizes="32x32">
-    <link rel="apple-touch-icon" sizes="180x180" href="{{asset('asset/img/icon/192x192.png')}}">
-    <link rel="stylesheet" href="{{asset('asset/panel/css/style.css')}}">
-    <link rel="manifest" href="__manifest.json">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"
-        integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-    <style>
-        /* Loader Styles */
-        #loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.5s ease-out;
-        }
-        
-        #loader.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        
-        .loading-content {
-            text-align: center;
-        }
-        
-        .spinner-grow {
-            width: 2rem;
-            height: 2rem;
-        }
-        
-        /* Ensure content is hidden until loaded */
-        #appCapsule {
-            opacity: 0;
-            transition: opacity 0.3s ease-in;
-        }
-        
-        #appCapsule.loaded {
-            opacity: 1;
-        }
-    </style>
-</head>
-
-<body>
-
-    <!-- Loader -->
-    <div id="loader">
-        <div class="loading-content">
-            <span class="spinner-grow spinner-grow-sm me-2" role="status" aria-hidden="true"></span>
-            <div>Loading...</div>
+<div class="container-fluid px-3 px-md-4 py-4">
+    <!-- Header Page Banner -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h3 class="fw-extrabold text-dark mb-1">Virtual & Physical Cards</h3>
+            <p class="text-muted small mb-0">Manage your Top Saver Trust Bank debit cards, security limits, and instant delivery requests.</p>
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary rounded-pill px-3.5 py-2 fw-bold shadow-sm d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #0284c7, #00a9a4); border: none;" data-bs-toggle="modal" data-bs-target="#requestFormModal">
+                <i class="fas fa-plus-circle"></i> Request Card Delivery
+            </button>
         </div>
     </div>
 
-    <!-- App Capsule -->
-    <div id="appCapsule">
-        <!-- App Header -->
-        <div class="appHeader">
-            <div class="left">
-                <a href="" class="headerButton"></a>
-            </div>
-            <div class="pageTitle">Top Saver Trust Bank Card</div>
-            <div class="right">
-                <a onclick="location.reload();" class="headerButton">
-                    <ion-icon name="refresh"></ion-icon>
-                </a>
-            </div>
+    @if (session('error'))
+        <div class="alert alert-danger border-0 shadow-sm rounded-3 d-flex align-items-center gap-3 p-3 mb-4" role="alert">
+            <i class="fas fa-exclamation-circle fs-4 text-danger"></i>
+            <div><strong>Error:</strong> {{ session('error') }}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        <!-- * App Header -->
+    @elseif (session('status'))
+        <div class="alert alert-success border-0 shadow-sm rounded-3 d-flex align-items-center gap-3 p-3 mb-4" role="alert">
+            <i class="fas fa-check-circle fs-4 text-success"></i>
+            <div><strong>Success:</strong> {{ session('status') }}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-        <!-- App Content -->
-        <div class="section mt-3">
-            <div class="card">
-                <div class="card-body">
-                    <ul class="nav nav-tabs capsuled" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-bs-toggle="tab" href="#ngn" role="tab">
-                                TopSavers Trust Bank
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div><br>
-
-            @if (session('error'))
-            <div class="alert box-bdr-red alert-dismissible fade show text-red" role="alert">
-                <b>Error!</b>{{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @elseif (session('status'))
-            <div class="alert box-bdr-green alert-dismissible fade show text-green" role="alert">
-                <b>Success!</b> {{ session('status') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-            @endif
-            
+    <div class="row g-4">
+        <!-- Card Display Column -->
+        <div class="col-lg-6 col-xl-5">
             @forelse($details as $detail)
                 @if($detail->status == 0)
-                    <div class="tab-content mt-1">
-                        <div class="tab-pane fade show active" id="ngn" role="tabpanel">
-                            <div class="card-block mb-2" style="background-color: #305C89">
-                                <div class="card-main">
-                                    <div class="card-button dropdown">
-                                        <img src="under.png" alt="Under Review" class="image-block imaged w48 lazy animate">
-                                    </div>
-                                    <div class="balance">
-                                        <h1 class="title">Card on Review</h1>
-                                        <p>This card is currently under review and cannot be displayed.</p>
-                                    </div>
-                                </div>
-                            </div>
+                    <!-- Card Under Review -->
+                    <div class="card border-0 shadow-lg rounded-4 text-white p-4 overflow-hidden mb-4" style="background: linear-gradient(135deg, #1e293b 0%, #334155 100%); position: relative; min-height: 250px;">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <span class="badge bg-warning text-dark font-monospace px-3 py-1.5 fw-bold"><i class="fas fa-clock me-1"></i> Under Review</span>
+                            <i class="fas fa-shield-alt text-white-50 fs-3"></i>
+                        </div>
+                        <div class="my-auto text-center py-3">
+                            <h5 class="fw-bold text-white mb-2">Card Application Under Review</h5>
+                            <p class="text-white-50 small mb-0">Our risk management team is reviewing your card request. You will be notified once activated.</p>
                         </div>
                     </div>
                 @else
-                    <div class="tab-content mt-1">
-                        <div class="tab-pane fade show active" id="ngn" role="tabpanel">
-                            <div class="card-block mb-2" style="background-color: #305C89">
-                                <div class="card-main">
-                                    <div class="card-button dropdown">
-                                        <img src="mastercard.png" alt="img" class="image-block imaged w48 lazy animate">
-                                    </div>
-                                    <div class="balance">
-                                        <img src="{{asset('assets/images/logo.png')}}" alt="img" class="image-block imaged w48 lazy animate" width="800px">
-                                        <h1 class="title">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h1>
-                                    </div>
-                                    <div class="in">
-                                        <div class="card-number">
-                                            <span class="label">Card Number</span>
-                                            {{ implode(' ', str_split($detail->card_number, 4)) }}
-                                        </div>
-                                        <div class="bottom">
-                                            <div class="card-expiry">
-                                                <span class="label">Expiry</span>
-                                                {{ \Carbon\Carbon::parse($detail->card_expiry)->format('m/y') }}
-                                            </div>
-                                            <div class="card-ccv">
-                                                <span class="label">CCV</span>
-                                                {{ $detail->card_cvc }}
-                                            </div>
-                                        </div>
-                                    </div>
+                    <!-- Ultra-Premium Debit Card Visual (Interactive Flip/Reveal) -->
+                    <div class="card border-0 shadow-lg rounded-4 text-white p-4 overflow-hidden mb-4 position-relative" style="background: linear-gradient(135deg, #004d4a 0%, #007875 45%, #009691 85%, #00a9a4 100%); min-height: 260px; border: 1px solid rgba(255,255,255,0.2) !important; box-shadow: 0 20px 40px -10px rgba(0, 169, 164, 0.3) !important;">
+                        <!-- Ambient Glows -->
+                        <div style="position: absolute; right: -40px; top: -40px; width: 200px; height: 200px; background: rgba(0, 169, 164, 0.35); filter: blur(50px); border-radius: 50%; pointer-events: none;"></div>
+                        <div style="position: absolute; left: -40px; bottom: -40px; width: 180px; height: 180px; background: rgba(2, 132, 199, 0.25); filter: blur(45px); border-radius: 50%; pointer-events: none;"></div>
+
+                        <div class="d-flex justify-content-between align-items-center position-relative z-1 mb-4">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="fw-extrabold font-manrope text-white tracking-wider" style="font-size: 1.1rem; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">TOP SAVER TRUST</span>
+                            </div>
+                            <i class="fab fa-cc-mastercard text-white fs-1 opacity-90"></i>
+                        </div>
+
+                        <!-- Chip & Contactless -->
+                        <div class="d-flex align-items-center gap-3 position-relative z-1 my-2">
+                            <div style="width: 48px; height: 36px; background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%); border-radius: 6px; border: 1px solid rgba(255,255,255,0.4); box-shadow: inset 0 0 4px rgba(0,0,0,0.3);"></div>
+                            <i class="fas fa-wifi text-white-50 fs-5" style="transform: rotate(90deg);"></i>
+                        </div>
+
+                        <!-- Card Number -->
+                        <div class="position-relative z-1 mt-3 mb-3">
+                            <div class="text-white-50 text-uppercase font-monospace small" style="letter-spacing: 1px; font-size: 0.7rem;">Card Number</div>
+                            <div class="d-flex align-items-center gap-3">
+                                <h4 class="fw-bold text-white font-monospace mb-0" id="cardNumberDisplay" style="letter-spacing: 2.5px; text-shadow: 0 2px 8px rgba(0,0,0,0.6);">
+                                    •••• •••• •••• {{ substr($detail->card_number, -4) }}
+                                </h4>
+                                <button type="button" class="btn btn-sm btn-link text-info p-0" id="toggleCardDetails" title="Toggle Card Visibility">
+                                    <i class="far fa-eye fs-6" id="cardEyeIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Footer Details: Expiry, CVV, Cardholder -->
+                        <div class="d-flex justify-content-between align-items-end position-relative z-1 mt-auto pt-2 border-top border-white border-opacity-10">
+                            <div>
+                                <div class="text-white-50 text-uppercase font-monospace" style="font-size: 0.65rem;">Cardholder</div>
+                                <div class="fw-extrabold text-white font-manrope text-uppercase" style="font-size: 0.95rem;">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
+                            </div>
+                            <div class="d-flex gap-4">
+                                <div>
+                                    <div class="text-white-50 text-uppercase font-monospace" style="font-size: 0.65rem;">Expires</div>
+                                    <div class="fw-bold text-white font-monospace" style="font-size: 0.9rem;">{{ \Carbon\Carbon::parse($detail->card_expiry)->format('m/y') }}</div>
+                                </div>
+                                <div>
+                                    <div class="text-white-50 text-uppercase font-monospace" style="font-size: 0.65rem;">CVV</div>
+                                    <div class="fw-bold text-white font-monospace" id="cvvDisplay" style="font-size: 0.9rem;">•••</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="container mt-5">
-                        <center>
-                            <div class="card-body pb-1">
-                                <button type="button" class="btn btn-outline-dark me-1 mb-1" data-toggle="modal" data-target="#requestFormModal">
-                                    Request for Card Delivery
-                                </button>
-                            </div>
-                        </center>
+
+                    <!-- Quick Card Controls -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 mb-4 bg-white">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold text-dark small">Card Status</span>
+                            <span class="badge bg-success bg-opacity-10 text-success rounded-pill px-3 py-1 fw-bold"><i class="fas fa-check-circle me-1"></i> Active</span>
+                        </div>
+                        <div class="d-grid gap-2 mt-3">
+                            <button type="button" class="btn btn-outline-dark rounded-3 fw-bold btn-sm py-2 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#requestFormModal">
+                                <i class="fas fa-truck text-primary"></i> Order Physical Card Delivery
+                            </button>
+                        </div>
                     </div>
                 @endif
             @empty
-                <p>No Card Yet</p>
-            @endforelse
-            
-            <div class="section mt-2">
-                <center>
-                    <div class="card-body pb-1">
-                        <!--<a href="{{route('user.cards.card_withdrawal')}}" type="button" class="btn btn-outline-dark me-1 mb-1">Card Withdrawal</a>-->
+                <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white mb-4">
+                    <div class="p-3 rounded-circle bg-light d-inline-flex mb-3 mx-auto">
+                        <i class="fas fa-credit-card fs-1 text-muted"></i>
                     </div>
-                </center>
-            </div><br>
-            
-            <!-- Request Form Modal -->
-            <div class="modal fade" id="requestFormModal" tabindex="-1" role="dialog" aria-labelledby="requestFormModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="requestFormModalLabel">Card Delivery Request Form</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                    <h5 class="fw-bold text-dark mb-2">No Active Card Found</h5>
+                    <p class="text-muted small mb-4">You do not have any physical or virtual card attached to your account yet.</p>
+                    <a href="{{ route('user.cards.request.card', Auth::user()->id) }}" class="btn btn-primary rounded-pill px-4 py-2.5 fw-bold mx-auto" style="background: linear-gradient(135deg, #0284c7, #00a9a4); border: none;">
+                        <i class="fas fa-plus-circle me-1.5"></i> Request New Card Now
+                    </a>
+                </div>
+            @endforelse
+        </div>
+
+        <!-- Details & Features Column -->
+        <div class="col-lg-6 col-xl-7">
+            <!-- Account Profile Info Card -->
+            <div class="card border-0 shadow-sm rounded-4 mb-4 bg-white">
+                <div class="card-header bg-white border-0 p-4">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fas fa-user-shield me-2 text-primary"></i> Account Verification Data</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <div class="p-3 rounded-3 bg-light">
+                                <div class="text-muted small mb-1">First Name</div>
+                                <div class="fw-bold text-dark">{{ Auth::user()->first_name }}</div>
+                            </div>
                         </div>
-                        <div class="modal-body">
-                            <form id="requestForm" action="{{route('user.cards.requestcard.delivery')}}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="fullName">Full Name</label>
-                                    <input type="text" class="form-control" id="fullName" name="fname" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="houseAddress">House Address</label>
-                                    <input type="text" class="form-control" id="houseAddress" name="address" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phoneNumber">Phone Number</label>
-                                    <input type="tel" class="form-control" id="phoneNumber" name="phone" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="emailAddress">Email Address</label>
-                                    <input type="email" class="form-control" id="emailAddress" name="emailAddress" required>
-                                </div>
-                            </form>
+                        <div class="col-sm-6">
+                            <div class="p-3 rounded-3 bg-light">
+                                <div class="text-muted small mb-1">Last Name</div>
+                                <div class="fw-bold text-dark">{{ Auth::user()->last_name }}</div>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary" form="requestForm">Submit</button>
+                        <div class="col-sm-6">
+                            <div class="p-3 rounded-3 bg-light">
+                                <div class="text-muted small mb-1">Date of Birth</div>
+                                <div class="fw-bold text-dark">{{ Auth::user()->dob ?? 'N/A' }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="p-3 rounded-3 bg-light">
+                                <div class="text-muted small mb-1">Gender</div>
+                                <div class="fw-bold text-dark text-capitalize">{{ Auth::user()->gender ?? 'N/A' }}</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="card">
-                <ul class="">
-                    <li>
-                        <a href="#" class="item">
-                            <div class="in">
-                                <div>Instant Access
-                                    <div class="text-muted">Apply and activate instantly</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <br>
+            <!-- Card Security Features -->
+            <div class="card border-0 shadow-sm rounded-4 bg-white">
+                <div class="card-header bg-white border-0 p-4">
+                    <h5 class="fw-bold text-dark mb-0"><i class="fas fa-shield-alt me-2 text-success"></i> Security & Card Benefits</h5>
+                </div>
+                <div class="card-body p-4 pt-0">
+                    <div class="d-flex align-items-start gap-3 mb-3 pb-3 border-bottom">
+                        <div class="p-2.5 rounded-3 bg-success bg-opacity-10 text-success">
+                            <i class="fas fa-bolt fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Instant Activation</h6>
+                            <p class="text-muted small mb-0">Virtual cards are instantly ready for online checkout upon admin approval.</p>
+                        </div>
+                    </div>
 
-            <div class="card">
-                <ul class="">
-                    <li>
-                        <a href="#" class="item">
-                            <div class="in">
-                                <div>Safety
-                                    <div class="text-muted">No physical handing. No risk of loss</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <br>
+                    <div class="d-flex align-items-start gap-3 mb-3 pb-3 border-bottom">
+                        <div class="p-2.5 rounded-3 bg-info bg-opacity-10 text-info">
+                            <i class="fas fa-lock fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">End-to-End Encryption</h6>
+                            <p class="text-muted small mb-0">Protected by 256-bit SSL encryption for secure worldwide POS & online transactions.</p>
+                        </div>
+                    </div>
 
-            <b>Personal Information</b>
-            <div class="card">
-                <ul class="listview flush transparent image-listview text">
-                    <li>
-                        <a href="#" class="item">
-                            <div class="in">
-                                <div>First Name
-                                    <div class="text-muted">{{Auth::user()->first_name}}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="item">
-                            <div class="in">
-                                <div>Last Name
-                                    <div class="text-muted">{{Auth::user()->last_name}}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="item">
-                            <div class="in">
-                                <div>Date of Birth
-                                    <div class="text-muted">{{Auth::user()->dob}}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="item">
-                            <div class="in">
-                                <div>Gender
-                                    <div class="text-muted">{{Auth::user()->gender}}</div>
-                                </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="action-sheet-content">
-                <div class="form-group basic">
-                    <a href="{{route('user.cards.request.card', Auth::user()->id)}}">
-                        <button type="button" class="btn btn-primary btn-block btn-lg" data-bs-dismiss="modal">Get It Now</button>
-                    </a>
+                    <div class="d-flex align-items-start gap-3">
+                        <div class="p-2.5 rounded-3 bg-warning bg-opacity-10 text-warning">
+                            <i class="fas fa-globe fs-5"></i>
+                        </div>
+                        <div>
+                            <h6 class="fw-bold text-dark mb-1">Zero Foreign Transaction Fee</h6>
+                            <p class="text-muted small mb-0">Seamless multi-currency transactions with no hidden conversion markups.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Bottom Navigation -->
-    <div class="bottom-header">
-        <ul>
-            <li><ion-icon name="document-text-outline"></ion-icon><a href="{{route('user.home')}}"> Overview</a></li>
-            <li><ion-icon name="arrow-forward-outline"></ion-icon><a href="{{route('user.bank')}}"> Transfer</a></li>
-            <li><ion-icon name="card-outline"></ion-icon><a href="{{route('user.card')}}"> Cards</a></li>
-            <li><ion-icon name="list"></ion-icon><a href="{{route('user.transactions')}}">History</a></li>
-        </ul>
+<!-- Request Physical Card Delivery Modal -->
+<div class="modal fade" id="requestFormModal" tabindex="-1" aria-labelledby="requestFormModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header text-white p-4" style="background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle p-2 bg-white bg-opacity-10">
+                        <i class="fas fa-shipping-fast text-info fs-5"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold text-white mb-0" id="requestFormModalLabel">Physical Card Delivery Request</h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="requestForm" action="{{ route('user.cards.requestcard.delivery') }}" method="POST">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small text-uppercase">Full Name</label>
+                        <input type="text" class="form-control py-2.5" id="fullName" name="fname" value="{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small text-uppercase">Delivery House Address</label>
+                        <input type="text" class="form-control py-2.5" id="houseAddress" name="address" placeholder="123 Street Name, City, Country" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small text-uppercase">Contact Phone Number</label>
+                        <input type="tel" class="form-control py-2.5" id="phoneNumber" name="phone" value="{{ Auth::user()->phone_number }}" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small text-uppercase">Email Address</label>
+                        <input type="email" class="form-control py-2.5" id="emailAddress" name="emailAddress" value="{{ Auth::user()->email }}" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer p-3 bg-light">
+                <button type="button" class="btn btn-light fw-bold text-muted px-4" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary fw-bold px-4 rounded-3" form="requestForm" style="background: linear-gradient(135deg, #0284c7, #00a9a4); border: none;">Submit Request</button>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- Bootstrap JS, Popper.js, and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
-    <!-- Ionicons -->
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+@include('user.footer')
 
-    <!-- App Scripts -->
-    <script src="asset/panel/js/lib/bootstrap.bundle.min.js"></script>
-    <script src="asset/panel/js/plugins/splide/splide.min.js"></script>
-    <script src="asset/panel/js/base.js"></script>
-    <script src="asset/panel/js/main.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleBtn = document.getElementById('toggleCardDetails');
+        const numDisplay = document.getElementById('cardNumberDisplay');
+        const cvvDisplay = document.getElementById('cvvDisplay');
+        const eyeIcon = document.getElementById('cardEyeIcon');
 
-    <script>
-        // Proper loader handling
-        document.addEventListener('DOMContentLoaded', function() {
-            // Hide loader and show content when page is fully loaded
-            window.addEventListener('load', function() {
-                setTimeout(function() {
-                    const loader = document.getElementById('loader');
-                    const appCapsule = document.getElementById('appCapsule');
-                    
-                    if (loader) {
-                        loader.classList.add('hidden');
-                    }
-                    if (appCapsule) {
-                        appCapsule.classList.add('loaded');
-                    }
-                }, 1000); // 1 second delay to ensure everything is loaded
+        let revealed = false;
+
+        if (toggleBtn && numDisplay && cvvDisplay) {
+            toggleBtn.addEventListener('click', function() {
+                revealed = !revealed;
+                if (revealed) {
+                    @if(isset($detail) && $detail)
+                        numDisplay.textContent = "{{ implode(' ', str_split($detail->card_number, 4)) }}";
+                        cvvDisplay.textContent = "{{ $detail->card_cvc }}";
+                    @endif
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                } else {
+                    @if(isset($detail) && $detail)
+                        numDisplay.textContent = "•••• •••• •••• {{ substr($detail->card_number, -4) }}";
+                        cvvDisplay.textContent = "•••";
+                    @endif
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                }
             });
-
-            // Fallback: if load event doesn't fire, hide loader after 3 seconds
-            setTimeout(function() {
-                const loader = document.getElementById('loader');
-                const appCapsule = document.getElementById('appCapsule');
-                
-                if (loader && !loader.classList.contains('hidden')) {
-                    loader.classList.add('hidden');
-                }
-                if (appCapsule) {
-                    appCapsule.classList.add('loaded');
-                }
-            }, 3000);
-
-            // Handle modal functionality
-            $('#requestFormModal').on('show.bs.modal', function (e) {
-                // Optional: Pre-fill form fields if needed
-                document.getElementById('fullName').value = "{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}";
-                document.getElementById('emailAddress').value = "{{ Auth::user()->email }}";
-                document.getElementById('phoneNumber').value = "{{ Auth::user()->phone_number }}";
-            });
-        });
-
-        var data = null;
-        console.log(data);
-
-        function crypto_type(id) {
-            for (var i = 0; i < data.length; i++) {
-                if (id == data[i].id) {
-                    $("#wallet_address").val(data[i].wallet_address);
-                }
-            }
         }
-    </script>
-
-    <style>
-        /* Bottom header styles */
-        .bottom-header {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: #ffffff;
-            border-top: 1px solid #e0e0e0;
-            padding: 10px 20px;
-            box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        .bottom-header ul {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .bottom-header li {
-            margin-right: 20px;
-        }
-
-        .bottom-header a {
-            color: #333333;
-            text-decoration: none;
-            font-weight: bold;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 12px;
-        }
-
-        .bottom-header ion-icon {
-            font-size: 20px;
-            margin-bottom: 4px;
-        }
-    </style>
-</body>
-</html>
+    });
+</script>

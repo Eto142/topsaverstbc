@@ -1,87 +1,62 @@
-@include('home.header')   
- 
-        
-        
-        
-        <div class="switch-theme-mode">
-    <label id="switch" class="switch">
-        <input type="checkbox" onchange="toggleTheme()" id="slider">
-        <span class="slider round"></span>
-    </label>
-</div>
+@include('home.header')
 
-<div class="content-wrapper">
+<!-- Page Hero -->
+<section class="bk-page-hero">
+  <div class="bk-wrap">
+    <h1>Terms of Service</h1>
+    <p>Please read these terms and conditions carefully before using our digital banking services.</p>
+    <div class="bk-breadcrumb"><a href="/">Home</a> <span>/</span> Terms of Service</div>
+  </div>
+</section>
 
-    <div class="breadcrumb-wrap bg-spring">
-        <img src="home/asset/img/breadcrumb/br-shape-1.png" alt="Image" class="br-shape-one xs-none">
-        <img src="home/asset/img/breadcrumb/br-shape-2.png" alt="Image" class="br-shape-two xs-none">
-        <img src="home/asset/img/breadcrumb/br-shape-3.png" alt="Image" class="br-shape-three moveHorizontal sm-none">
-        <img src="home/asset/img/breadcrumb/br-shape-4.png" alt="Image" class="br-shape-four moveVertical sm-none">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7 col-md-8 col-sm-8">
-                    <div class="breadcrumb-title">
-                        <h2>Terms Of Service</h2>
-                        <ul class="breadcrumb-menu list-style">
-                            <li><a href="index.html">Home </a></li>
-                            <li>Terms Of Service</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-4 col-sm-4 xs-none">
-                    <div class="breadcrumb-img">
-                        <img src="home/asset/img/breadcrumb/br-shape-5.png" alt="Image"
-                            class="br-shape-five animationFramesTwo">
-                        <img src="home/asset/img/breadcrumb/br-shape-6.png" alt="Image" class="br-shape-six bounce">
-                        <img src="home/asset/img/breadcrumb/breadcrumb-1.png" alt="Image">
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Terms Content -->
+<section class="bk-page-section">
+  <div class="bk-wrap">
+    <div class="bk-text-page sr">
+
+      <h2>1. Acceptance of Terms</h2>
+      <p>By accessing or using the digital banking services, website, or portal of Topsavers Trust Bank ("the Bank"), you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you must refrain from using our services.</p>
+
+      <h2>2. Account Eligibility &amp; Verification</h2>
+      <p>To open an account with Topsavers Trust Bank, you must be at least 18 years of age and present valid government identification. You agree to provide accurate, truthful, and complete information during registration and keep your account details updated.</p>
+
+      <h2>3. Account Protection &amp; Security Credentials</h2>
+      <p>You are solely responsible for maintaining the confidentiality of your login credentials, passwords, and security PINs. You agree to notify Topsavers Trust Bank immediately of any unauthorized account access or security breach.</p>
+      <p>The Bank uses 256-bit SSL encryption and automated fraud controls to safeguard user sessions, but users must also practice basic account security precautions.</p>
+
+      <h2>4. Digital Banking Services &amp; Transfers</h2>
+      <p>Topsavers Trust Bank provides checking, savings, tenured fixed deposits, domestic wire, and global transfer services. Processing times, exchange rates, and limits are subject to verified account status and regulatory compliance checks.</p>
+
+      <h2>5. Transparency &amp; Fee Structure</h2>
+      <p>Topsavers Trust Bank is committed to transparent banking with zero hidden fees. Applicable transaction fees, transfer charges, or exchange rate markups are clearly displayed prior to transaction confirmation.</p>
+
+      <h2>6. Privacy &amp; Data Governance</h2>
+      <p>Your personal and financial data is handled in strict compliance with international data protection laws. We never sell or misuse your personal financial records.</p>
+
+      <h2>7. Amendments</h2>
+      <p>Topsavers Trust Bank reserves the right to amend or update these Terms of Service at any time. Updated terms will be published on this page and take effect upon posting.</p>
+
+      <h2>8. Contact Us</h2>
+      <p>If you have any questions regarding these Terms of Service, please contact our support team at <a href="mailto:support@topsaverstbc.com" style="color:var(--blue);font-weight:600">support@topsaverstbc.com</a> or visit our <a href="{{ url('contact') }}" style="color:var(--blue)">Contact Page</a>.</p>
+
     </div>
+  </div>
+</section>
 
-
-    <section class="terms-wrap ptb-100">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-10 offset-xl-1">
-                    <div class="single-terms">
-                        <h3>Legal Disclaimer: </h3>
-                        <p>Neither Agent nor any of the Banks shall be liable to any contractor, subcontractor,
-                            architect, supplier, laborer, architect, engineer or any other party for services performed
-                            or materials supplied in connection with construction of the Collateral Pool Properties.
-                            Neither Agent nor any of the Banks shall be liable for any debts or claims accruing in favor
-                            of any such parties against Borrower or against the Collateral Pool Properties. Borrower is
-                            not or shall not be an agent of Agent or the Banks for any purposes, and neither Agent nor
-                            the Banks are venture partners with Borrower in any manner whatsoever. Neither Agent nor the
-                            Banks shall be deemed to be in privity of contract with any contractor, subcontractor,
-                            architect or provider of services on or to the Collateral Pool Properties, nor shall any
-                            payment of funds directly to a contractor, subcontractor, architect or provider of services
-                            be deemed to create any third party beneficiary status or recognition of same by Agent or
-                            any Bank unless and until Agent or such Bank expressly assumes such status in writing. No
-                            contractor, subcontractor, architect, supplier, laborer, architect, engineer or other party
-                            shall be deemed to be a third party beneficiary of this Agreement or any of the Loan
-                            Documents. Approvals granted by Agent or the Banks for any matters covered under this
-                            Agreement shall be narrowly construed to cover only the parties and facts identified in any
-                            written approval or, if not in writing, such approvals shall be solely for the benefit of
-                            Borrower.</p>
-                    </div>
-
-
-
-                    <div class="single-terms">
-                        <h3> Accounts, Passwords and Security</h3>
-                        <p>Here are some useful tips to for creating strong passwords and keeping your information
-                            secure. Use a unique password for each of your important accounts (i.e. email and online
-                            banking). Do not use the same password across multiple accounts. Your password should be at
-                            least 8 characters long.</p>
-                        <p>Protect all your saved passwords with built-in security.</p>
-                    </div>
-                </div>
-            </div>
+<!-- CTA -->
+<section class="bk-cta">
+  <div class="bk-wrap">
+    <div class="bk-cta-box sr">
+      <div class="bk-cta-content">
+        <h2>Have Questions Regarding Terms?</h2>
+        <p>Our support specialists are happy to clarify any of our policies.</p>
+        <div class="bk-cta-btns">
+          <a href="{{ url('contact') }}" class="bk-btn bk-btn--white">Contact Support <i class="ri-arrow-right-line"></i></a>
+          <a href="{{ url('faq') }}" class="bk-btn bk-btn--glass">View FAQ <i class="ri-question-line"></i></a>
         </div>
-    </section>
-
-</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 @include('home.footer')

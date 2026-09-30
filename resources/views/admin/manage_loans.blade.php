@@ -1,12 +1,10 @@
 @include('admin.header')
-<div class="main-content" id="mainContent">
+<div class="main-content p-4" id="mainContent" style="margin-left: 250px;">
     <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Loan History</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <button class="btn btn-primary">
-                <i class="fas fa-download me-2"></i>Export Loan Transactions
-            </button>
+            <h2 class="fw-extrabold text-dark mb-1">Loan Approvals & History</h2>
+            <p class="text-muted small mb-0">Review loan requests, approve credit facilities, and manage repayment terms.</p>
         </div>
     </div>
 

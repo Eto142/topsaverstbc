@@ -3,23 +3,24 @@
 <style>
     /* ---------- Modern Design Variables ---------- */
     :root {
-        --primary: #0c7453ff;
-        --primary-dark: #0c7453ff;
-        --success: #059669;
-        --error: #dc2626;
-        --warning: #d97706;
+        --primary: #00a9a4;
+        --primary-dark: #007875;
+        --primary-gradient: linear-gradient(135deg, #090d16 0%, #0f172a 40%, #023635 80%, #00a9a4 100%);
+        --success: #10b981;
+        --error: #ef4444;
+        --warning: #f59e0b;
         --background: #f8fafc;
         --surface: #ffffff;
         --text-primary: #1e293b;
         --text-secondary: #64748b;
         --border: #e2e8f0;
-        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.15), 0 4px 6px -2px rgba(0, 0, 0, 0.08);
+        --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+        --shadow-lg: 0 20px 40px -10px rgba(0, 0, 0, 0.12), 0 4px 6px -2px rgba(0, 0, 0, 0.06);
     }
 
     body {
         background-color: var(--background);
-        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
         color: var(--text-primary);
         line-height: 1.6;
     }
@@ -32,9 +33,9 @@
     }
 
     .card-pro {
-        border-radius: 20px;
+        border-radius: 24px;
         box-shadow: var(--shadow-lg);
-        border: none;
+        border: 1px solid rgba(0, 0, 0, 0.06);
         overflow: hidden;
         background: var(--surface);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -42,13 +43,13 @@
 
     .card-pro:hover {
         transform: translateY(-2px);
-        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.18);
     }
 
     .card-pro .card-header {
-        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-        border-bottom: none;
-        padding: 24px 32px;
+        background: var(--primary-gradient);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+        padding: 28px 36px;
         color: white;
         position: relative;
         overflow: hidden;
@@ -407,7 +408,7 @@
             </div>
             <div class="balance-display text-end">
                 <div class="fw-600">Available Balance</div>
-                <div>{{ Auth::user()->currency }}{{ number_format($balance, 2, '.', ',') }}</div>
+                <div>{{ Auth::user()->currency }}{{ number_format($balance ?? Auth::user()->balance ?? 0, 2, '.', ',') }}</div>
             </div>
         </div>
 

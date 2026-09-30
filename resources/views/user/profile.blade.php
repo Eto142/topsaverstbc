@@ -1,707 +1,262 @@
 @include('user.header')
-<div class="content-body">
-    <div class="container-fluid">
-        <div class="form-head mb-4">
-            <h2 class="text-black font-w600 mb-0">Profile</h2>
+
+<div class="container-fluid px-3 px-md-4 py-4">
+    <!-- Header Banner -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h3 class="fw-extrabold text-dark mb-1">Account Profile & Security</h3>
+            <p class="text-muted small mb-0">Manage your personal credentials, contact info, security settings, and KYC identity verification.</p>
         </div>
-        
-        <!-- Alert Messages -->
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Error!</strong> {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <div>
+            <button type="button" class="btn btn-primary rounded-pill px-3.5 py-2 fw-bold shadow-sm d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #0284c7, #00a9a4); border: none;" data-bs-toggle="modal" data-bs-target="#kycModal">
+                <i class="fas fa-id-card"></i> KYC Verification Portal
+            </button>
         </div>
-        @elseif (session('status'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> {{ session('status') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    @if (session('error'))
+        <div class="alert alert-danger border-0 shadow-sm rounded-3 d-flex align-items-center gap-3 p-3 mb-4" role="alert">
+            <i class="fas fa-exclamation-circle fs-4 text-danger"></i>
+            <div><strong>Error:</strong> {{ session('error') }}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-        @endif
+    @elseif (session('status'))
+        <div class="alert alert-success border-0 shadow-sm rounded-3 d-flex align-items-center gap-3 p-3 mb-4" role="alert">
+            <i class="fas fa-check-circle fs-4 text-success"></i>
+            <div><strong>Profile Updated:</strong> {{ session('status') }}</div>
+            <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-        <!-- Profile Header Section -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="profile card card-body px-3 pt-3 pb-0">
-                    <div class="profile-head">
-                        <div class="photo-content">
-                            <div class="cover-photo rounded"></div>
-                        </div>
-                        <div class="profile-info">
-                            <div class="profile-photo">
-                            <div class="user-profile-wrapper">
-    <img src="{{ Auth::user()->display_picture ? Storage::url(Auth::user()->display_picture) : asset('uploads/display/avatar.jpg') }}" 
-         class="user-profile-photo" 
-         alt="Profile">
-</div>
+    <!-- User Profile Header Card -->
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden mb-4 bg-white">
+        <div class="p-4" style="background: linear-gradient(135deg, #090d16 0%, #0f172a 40%, #023635 80%, #00a9a4 100%); min-height: 140px; position: relative;">
+            <div style="position: absolute; right: 20px; bottom: 10px; color: rgba(255,255,255,0.05); font-size: 3rem; font-weight: 900; pointer-events: none;">PROFILE</div>
+        </div>
 
-<style>
-.user-profile-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    margin-top: 40px;
-}
+        <div class="card-body p-4 pt-0 position-relative">
+            <div class="d-flex align-items-end flex-wrap gap-4" style="margin-top: -60px;">
+                <div class="position-relative">
+                    <img src="{{ Auth::user()->display_picture ? Storage::url(Auth::user()->display_picture) : asset('uploads/display/avatar.jpg') }}" class="rounded-circle border border-4 border-white shadow-lg bg-white" alt="Avatar" style="width: 120px; height: 120px; object-fit: cover;">
+                    <button type="button" class="btn btn-sm btn-light rounded-circle shadow-sm position-absolute bottom-0 end-0 p-2" onclick="document.getElementById('profileDpInput').click();" title="Change Avatar">
+                        <i class="fas fa-camera text-primary"></i>
+                    </button>
+                    <form id="dpForm" action="{{ route('user.personal.dp') }}" method="POST" enctype="multipart/form-data" class="d-none">
+                        @csrf
+                        <input type="file" id="profileDpInput" name="image" accept="image/*" onchange="document.getElementById('dpForm').submit();" />
+                    </form>
+                </div>
 
-.user-profile-photo {
-    width: 180px; /* adjust as needed */
-    height: 180px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 4px solid #0b3d91; /* professional navy blue border */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    transition: transform 0.3s ease;
-}
-
-.user-profile-photo:hover {
-    transform: scale(1.05);
-}
-</style>
-
-</a>
-                            </div>
-                            <div class="card shadow-sm border-0 rounded-3">
-                                <div class="card-body">
-                                    <div class="d-flex align-items-center mb-4">
-                                        <div class="flex-grow-1">
-                                            <h4 class="text-primary mb-1">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
-                                            <p class="mb-0 text-muted">{{ Auth::user()->account_type }} Account</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="row g-3">
-                                        <div class="col-md-6 col-12">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <p class="text-muted mb-1">📧 Email</p>
-                                                <h6 class="mb-0">{{ Auth::user()->email }}</h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <p class="text-muted mb-1">📱 Phone</p>
-                                                <h6 class="mb-0">{{ Auth::user()->phone_number ?? 'Not provided' }}</h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <p class="text-muted mb-1">🌍 Nationality</p>
-                                                <h6 class="mb-0">{{ Auth::user()->country ?? 'Not specified' }}</h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <p class="text-muted mb-1">🏠 Address</p>
-                                                <h6 class="mb-0">{{ Auth::user()->address ?? 'Not provided' }}</h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <p class="text-muted mb-1">🎂 Date of Birth</p>
-                                                <h6 class="mb-0">
-                                                    {{ Auth::user()->dob ? \Carbon\Carbon::parse(Auth::user()->dob)->format('M d, Y') : 'Not specified' }}
-                                                </h6>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="p-3 bg-light rounded-3 h-100">
-                                                <p class="text-muted mb-1">⚧ Gender</p>
-                                                <h6 class="mb-0">{{ Auth::user()->gender ?? 'Not specified' }}</h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <div class="flex-grow-1 mb-2">
+                    <h4 class="fw-extrabold text-dark mb-1">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h4>
+                    <div class="d-flex align-items-center gap-2 flex-wrap">
+                        <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-pill font-monospace fw-bold">{{ Auth::user()->account_type }} Account</span>
+                        <span class="badge bg-success bg-opacity-10 text-success px-3 py-1 rounded-pill fw-bold"><i class="fas fa-shield-alt me-1"></i> Account Active</span>
+                        <span class="text-muted small font-monospace"><i class="far fa-credit-card me-1"></i> {{ Auth::user()->account_number }}</span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- KYC Verification Modal -->
-        <div class="modal fade" id="kycModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">KYC Verification</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('user.upload.kyc') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="driver_license" class="form-label">Driver's License</label>
-                                <input type="file" class="form-control" id="driver_license" name="driver_license" required>
-                                <div class="form-text">Accepted formats: JPG, PNG, PDF. Max size: 5MB</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="passport" class="form-label">Passport</label>
-                                <input type="file" class="form-control" id="passport" name="pass" required>
-                                <div class="form-text">Accepted formats: JPG, PNG, PDF. Max size: 5MB</div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="idCard" class="form-label">Residence ID Card</label>
-                                <input type="file" class="form-control" id="idCard" name="card" required>
-                                <div class="form-text">Accepted formats: JPG, PNG, PDF. Max size: 5MB</div>
-                            </div>
-                            <div class="d-flex justify-content-end gap-2">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-                                <button type="submit" class="btn btn-primary">Submit for Verification</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <!-- Navigation Tabs & Content -->
+    <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
+        <div class="card-header bg-white border-bottom p-0">
+            <ul class="nav nav-tabs nav-fill border-0" id="profileTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active py-3.5 fw-bold" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab"><i class="fas fa-user-circle me-1.5"></i> Overview</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link py-3.5 fw-bold" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab"><i class="fas fa-edit me-1.5"></i> Edit Profile</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link py-3.5 fw-bold" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab"><i class="fas fa-lock me-1.5"></i> Password & Security</button>
+                </li>
+            </ul>
         </div>
 
-        <!-- Profile Tabs Section -->
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="profile-tab">
-                            <div class="custom-tab-1">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a href="#about-me" data-bs-toggle="tab" class="nav-link active show">Account</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#my-posts" data-bs-toggle="tab" class="nav-link">Security</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#profile-settings" data-bs-toggle="tab" class="nav-link">Settings</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#change-image" data-bs-toggle="tab" class="nav-link">Avatar</a>
-                                    </li>
-                                    <li class="nav-item ms-auto">
-                                        <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#kycModal">
-                                            <i class="fas fa-id-card me-2"></i>KYC Verification
-                                        </button>
-                                    </li>
-                                </ul>
-                                
-                                <div class="tab-content">
-                                    <!-- Account Tab -->
-                                    <div id="about-me" class="tab-pane fade active show">
-                                        <div class="profile-about-me">
-                                            <div class="pt-4 border-bottom-1 pb-3">
-                                                <h4 class="text-primary">Account Description</h4>
-                                                <p class="mb-2">Purpose: {{ Auth::user()->account_purpose ?? 'Not specified' }}</p>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="profile-lang mb-5 mt-4">
-                                            <h4 class="text-primary mb-2">Account Number</h4>
-                                            <div class="d-flex align-items-center">
-                                                <span class="text-muted pe-3 f-s-16">{{Auth::user()->account_number}}</span>
-                                                <button class="btn btn-sm btn-outline-secondary ms-2" onclick="copyToClipboard('{{Auth::user()->a_number}}')">
-                                                    <i class="fas fa-copy me-1"></i>Copy
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <div class="profile-lang mb-5">
-                                            <h4 class="text-primary mb-2">Account Type</h4>
-                                            <span class="badge bg-info pe-3 f-s-16">{{Auth::user()->account_type}}</span>
-                                        </div>
-                                        
-                                        <div class="profile-personal-info">
-                                            <h4 class="text-primary mb-4">Quick Personal Information</h4>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3 col-5">
-                                                    <label class="f-w-500">Full Name</label>
-                                                </div>
-                                                <div class="col-sm-9 col-7">
-                                                    <p>{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3 col-5">
-                                                    <label class="f-w-500">Email</label>
-                                                </div>
-                                                <div class="col-sm-9 col-7">
-                                                    <p>{{ Auth::user()->email }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3 col-5">
-                                                    <label class="f-w-500">Phone</label>
-                                                </div>
-                                                <div class="col-sm-9 col-7">
-                                                    <p>{{ Auth::user()->phone ?? 'Not provided' }}</p>
-                                                </div>
-                                            </div>
-                                            <div class="text-end">
-                                                <a href="#profile-settings" class="btn btn-primary" data-bs-toggle="tab">Edit Full Profile</a>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Security Tab -->
-                                    <div id="my-posts" class="tab-pane fade">
-                                        <div class="my-post-content pt-3">
-                                            <div class="card mb-4">
-                                                <div class="card-header">
-                                                    <h5 class="card-title">Change Password</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <form id="user_password" action="{{ route('user.update-password') }}" method="POST">
-                                                        @csrf
-                                                        <div id="user_password_response"></div>
-                                                        <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label">Current Password</label>
-                                                            <div class="col-sm-9">
-                                                                <div class="input-group">
-                                                                    <input type="password" class="form-control" name="old_password" id="old_password">
-                                                                    <span class="input-group-text toggle-password" data-target="old_password">
-                                                                        <i class="fas fa-eye"></i>
-                                                                    </span>
-                                                                </div>
-                                                                @error('old_password')
-                                                                <span class="text-danger">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label">New Password</label>
-                                                            <div class="col-sm-9">
-                                                                <div class="input-group">
-                                                                    <input type="password" class="form-control" name="new_password" id="new_password">
-                                                                    <span class="input-group-text toggle-password" data-target="new_password">
-                                                                        <i class="fas fa-eye"></i>
-                                                                    </span>
-                                                                </div>
-                                                                <div class="password-requirements mt-2">
-                                                                    <small class="form-text text-muted">
-                                                                        Password must contain at least 8 characters, including uppercase, lowercase, numbers, and special characters.
-                                                                    </small>
-                                                                </div>
-                                                                @error('new_password')
-                                                                <span class="text-danger">{{ $message }}</span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb-3 row">
-                                                            <label class="col-sm-3 col-form-label">Confirm Password</label>
-                                                            <div class="col-sm-9">
-                                                                <div class="input-group">
-                                                                    <input type="password" class="form-control" name="new_password_confirmation" id="new_password_confirmation">
-                                                                    <span class="input-group-text toggle-password" data-target="new_password_confirmation">
-                                                                        <i class="fas fa-eye"></i>
-                                                                    </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-4 w-100">
-                                                            <button id="btnPassword" type="submit" class="btn btn-success float-end">Update Password</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="card">
-                                                <div class="card-header">
-                                                    <h5 class="card-title">Two-Factor Authentication</h5>
-                                                </div>
-                                                <div class="card-body">
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        <div>
-                                                            <h6 class="mb-1">2FA Status</h6>
-                                                            <p class="text-muted mb-0">Add an extra layer of security to your account</p>
-                                                        </div>
-                                                        <div class="form-check form-switch">
-                                                            <input class="form-check-input" type="checkbox" id="twoFactorSwitch">
-                                                            <label class="form-check-label" for="twoFactorSwitch">Disabled</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mt-3 text-end">
-                                                        <button class="btn btn-outline-primary">Configure</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Settings Tab -->
-                                    <div id="profile-settings" class="tab-pane fade">
-                                        <div class="pt-3">
-                                            <div class="settings-form">
-                                                <h4 class="text-primary mb-4">Account Settings</h4>
-                                                <form id="user_info" action="{{route('user.personal.details')}}" method="POST">
-                                                    @csrf
-                                                    <div id="user_info_response"></div>
-                                                    
-                                                    <div class="row">
-                                                        <div class="mb-3 col-md-6">
-                                                            <label class="form-label">First Name <span class="text-danger">*</span></label>
-                                                            <input type="text" name="first_name" class="form-control" value="{{Auth::user()->first_name}}" required>
-                                                            @error('first_name')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-3 col-md-6">
-                                                            <label class="form-label">Last Name <span class="text-danger">*</span></label>
-                                                            <input type="text" name="last_name" class="form-control" value="{{Auth::user()->last_name}}" required>
-                                                            @error('last_name')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Email <span class="text-danger">*</span></label>
-                                                        <input type="email" name="email" class="form-control" value="{{Auth::user()->email}}" required>
-                                                        @error('email')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Address</label>
-                                                        <textarea name="user_address" class="form-control" rows="3">{{Auth::user()->address}}</textarea>
-                                                        @error('user_address')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    
-                                                    <div class="row">
-                                                        <div class="mb-3 col-md-4">
-                                                            <label class="form-label">Phone Number</label>
-                                                            <input type="tel" name="user_phone" class="form-control" value="{{Auth::user()->phone_number}}">
-                                                            @error('user_phone')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-3 col-md-4">
-                                                            <label class="form-label">Date of Birth</label>
-                                                            <input type="date" name="dob" class="form-control" value="{{Auth::user()->dob}}">
-                                                            @error('dob')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="mb-3 col-md-4">
-                                                            <label class="form-label">Gender</label>
-                                                            <select name="gender" class="form-control">
-                                                                <option value="">Select Gender</option>
-                                                                <option value="Male" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
-                                                                <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
-                                                                <option value="Other" {{ Auth::user()->gender == 'Other' ? 'selected' : '' }}>Other</option>
-                                                            </select>
-                                                            @error('gender')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="row">
-                                                        <div class="mb-3 col-md-6">
-                                                            <label class="form-label">Country</label>
-                                                            <select name="country" class="form-control">
-                                                                <option value="">Select Country</option>
-                                                                <option value="United States" {{ Auth::user()->country == 'United States' ? 'selected' : '' }}>United States</option>
-                                                                <option value="United Kingdom" {{ Auth::user()->country == 'United Kingdom' ? 'selected' : '' }}>United Kingdom</option>
-                                                                <option value="Canada" {{ Auth::user()->country == 'Canada' ? 'selected' : '' }}>Canada</option>
-                                                                <!-- Add more countries as needed -->
-                                                            </select>
-                                                        </div>
-                                                        <div class="mb-3 col-md-6">
-                                                            <label class="form-label">Account Purpose</label>
-                                                            <select name="account_purpose" class="form-control">
-                                                                <option value="">Select Purpose</option>
-                                                                <option value="Personal" {{ Auth::user()->account_purpose == 'Personal' ? 'selected' : '' }}>Personal</option>
-                                                                <option value="Business" {{ Auth::user()->account_purpose == 'Business' ? 'selected' : '' }}>Business</option>
-                                                                <option value="Investment" {{ Auth::user()->account_purpose == 'Investment' ? 'selected' : '' }}>Investment</option>
-                                                                <option value="Savings" {{ Auth::user()->account_purpose == 'Savings' ? 'selected' : '' }}>Savings</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="mt-4 w-100">
-                                                        <button id="btn1" class="btn btn-primary" type="submit">
-                                                            <i class="fas fa-save me-2"></i>Save Changes
-                                                        </button>
-                                                        <button type="reset" class="btn btn-light ms-2">Reset</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Change Avatar Tab -->
-                                    <div id="change-image" class="tab-pane fade">
-                                        <div class="row">
-                                            <div class="col-lg-4">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">Current Avatar</h5>
-                                                    </div>
-                                                    <div class="card-body text-center">
-                                                        <img class="rounded-circle mb-3" src="{{ asset('uploads/display/' . (Auth::user()->display_picture ? Auth::user()->display_picture : 'avatar.jpg')) }}" width="150" height="150" alt="Current Avatar">
-                                                        <h4>{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h4>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="card-title">Upload New Avatar</h5>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <form id="update_avatar" action="{{route('user.personal.dp')}}" method="POST" enctype="multipart/form-data">
-                                                            @csrf
-                                                            <div id="avatar_response" class="mb-4"></div>
-                                                            
-                                                            <div class="mb-3">
-                                                                <label for="avatar" class="form-label">Select Image</label>
-                                                                <input name="image" type="file" accept="image/*" class="form-control" id="avatarInput" required>
-                                                                <div class="form-text">Accepted formats: JPG, PNG, GIF. Max size: 5MB. Recommended: 300x300 pixels</div>
-                                                            </div>
-                                                            
-                                                            <div class="mb-3">
-                                                                <div class="image-preview" id="imagePreview">
-                                                                    <img src="" alt="Image Preview" class="image-preview__image" style="display: none;">
-                                                                    <span class="image-preview__default-text" style="display: none;">Image Preview</span>
-                                                                </div>
-                                                            </div>
-                                                            
-                                                            <div class="alert alert-info">
-                                                                <i class="fas fa-info-circle me-2"></i>
-                                                                For best results, use a square image with a transparent background.
-                                                            </div>
-                                                            
-                                                            <button type="submit" class="btn btn-success">
-                                                                <i class="fas fa-upload me-2"></i>Upload Avatar
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="card-body p-4 p-md-5">
+            <div class="tab-content" id="profileTabContent">
+                <!-- Overview Tab -->
+                <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                    <h5 class="fw-bold text-dark mb-4">Personal Information Summary</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Full Name</span>
+                                <span class="fw-bold text-dark fs-6">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Email Address</span>
+                                <span class="fw-bold text-dark fs-6">{{ Auth::user()->email }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Phone Number</span>
+                                <span class="fw-bold text-dark fs-6">{{ Auth::user()->phone_number ?? Auth::user()->phone ?? 'Not specified' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Date of Birth</span>
+                                <span class="fw-bold text-dark fs-6">{{ Auth::user()->dob ? \Carbon\Carbon::parse(Auth::user()->dob)->format('M d, Y') : 'Not specified' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Gender</span>
+                                <span class="fw-bold text-dark fs-6 text-capitalize">{{ Auth::user()->gender ?? 'Not specified' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Country / Nationality</span>
+                                <span class="fw-bold text-dark fs-6">{{ Auth::user()->country ?? 'Not specified' }}</span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="p-3.5 rounded-3 bg-light border">
+                                <span class="text-muted small d-block mb-1">Residential Address</span>
+                                <span class="fw-bold text-dark fs-6">{{ Auth::user()->address ?? 'Not specified' }}</span>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <!-- Edit Profile Tab -->
+                <div class="tab-pane fade" id="edit" role="tabpanel">
+                    <h5 class="fw-bold text-dark mb-4">Update Contact & Personal Information</h5>
+                    <form action="{{ route('user.personal.details') }}" method="POST">
+                        @csrf
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small text-uppercase">First Name</label>
+                                <input type="text" name="first_name" class="form-control py-2.5" value="{{ Auth::user()->first_name }}" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Last Name</label>
+                                <input type="text" name="last_name" class="form-control py-2.5" value="{{ Auth::user()->last_name }}" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Email Address</label>
+                                <input type="email" name="email" class="form-control py-2.5" value="{{ Auth::user()->email }}" required />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Phone Number</label>
+                                <input type="tel" name="user_phone" class="form-control py-2.5" value="{{ Auth::user()->phone_number ?? Auth::user()->phone }}" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Date of Birth</label>
+                                <input type="date" name="dob" class="form-control py-2.5" value="{{ Auth::user()->dob }}" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Gender</label>
+                                <select name="gender" class="form-select py-2.5">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male" {{ Auth::user()->gender == 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ Auth::user()->gender == 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Other" {{ Auth::user()->gender == 'Other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Residential Address</label>
+                                <textarea name="user_address" class="form-control py-2.5" rows="3">{{ Auth::user()->address }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-primary rounded-3 px-4 py-2.5 fw-bold" style="background: linear-gradient(135deg, #0284c7, #00a9a4); border: none;">
+                                <i class="fas fa-save me-1.5"></i> Save Profile Details
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Password & Security Tab -->
+                <div class="tab-pane fade" id="security" role="tabpanel">
+                    <h5 class="fw-bold text-dark mb-4">Change Account Security Password</h5>
+                    <form action="{{ route('user.update-password') }}" method="POST">
+                        @csrf
+                        <div class="row g-3 max-w-lg">
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Current Password</label>
+                                <input type="password" name="old_password" class="form-control py-2.5" required />
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-dark small text-uppercase">New Password</label>
+                                <input type="password" name="new_password" class="form-control py-2.5" required />
+                                <small class="text-muted mt-1 d-block">Minimum 8 characters with letters, numbers & symbols.</small>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Confirm New Password</label>
+                                <input type="password" name="new_password_confirmation" class="form-control py-2.5" required />
+                            </div>
+                        </div>
+
+                        <div class="mt-4 text-end">
+                            <button type="submit" class="btn btn-success rounded-3 px-4 py-2.5 fw-bold" style="background: linear-gradient(135deg, #10b981, #059669); border: none;">
+                                <i class="fas fa-key me-1.5"></i> Update Security Password
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Email Verification Modal -->
-<div class="modal fade" id="verifyEmailModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Verify Email Address</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- KYC Modal -->
+<div class="modal fade" id="kycModal" tabindex="-1" aria-labelledby="kycModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header text-white p-4" style="background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle p-2 bg-white bg-opacity-10">
+                        <i class="fas fa-id-card text-info fs-5"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold text-white mb-0" id="kycModalTitle">Identity Verification (KYC)</h5>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <p>We've sent a verification link to your email address. Please check your inbox and click on the link to verify your email.</p>
-                <p>If you didn't receive the email, click the button below to resend.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Resend Verification Email</button>
+            <div class="modal-body p-4">
+                <form action="{{ route('user.upload.kyc') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small text-uppercase">Driver's License Document</label>
+                        <input type="file" name="driver_license" class="form-control py-2" accept="image/*,.pdf" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold text-dark small text-uppercase">International Passport</label>
+                        <input type="file" name="pass" class="form-control py-2" accept="image/*,.pdf" required />
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark small text-uppercase">National Residence ID Card</label>
+                        <input type="file" name="card" class="form-control py-2" accept="image/*,.pdf" required />
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-3 py-2.5" style="background: linear-gradient(135deg, #0284c7 0%, #00a9a4 100%); border: none;">
+                            <i class="fas fa-upload me-1.5"></i> Submit Documents for Verification
+                        </button>
+                        <button type="button" class="btn btn-light fw-bold text-muted py-2.5" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Include necessary JavaScript libraries -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Function to copy text to clipboard
-function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(function() {
-        // Show success feedback
-        alert('Account number copied to clipboard!');
-    }, function() {
-        // Fallback for older browsers
-        const textArea = document.createElement('textarea');
-        textArea.value = text;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        alert('Account number copied to clipboard!');
-    });
-}
-
-// Toggle password visibility
-document.querySelectorAll('.toggle-password').forEach(function(element) {
-    element.addEventListener('click', function() {
-        const targetId = this.getAttribute('data-target');
-        const passwordInput = document.getElementById(targetId);
-        const icon = this.querySelector('i');
-        
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            icon.classList.remove('fa-eye');
-            icon.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            icon.classList.remove('fa-eye-slash');
-            icon.classList.add('fa-eye');
-        }
-    });
-});
-
-// Image preview functionality
-const avatarInput = document.getElementById('avatarInput');
-const imagePreview = document.getElementById('imagePreview');
-const previewImage = imagePreview.querySelector('.image-preview__image');
-const defaultText = imagePreview.querySelector('.image-preview__default-text');
-
-avatarInput.addEventListener('change', function() {
-    const file = this.files[0];
-    
-    if (file) {
-        const reader = new FileReader();
-        
-        defaultText.style.display = "none";
-        previewImage.style.display = "block";
-        
-        reader.addEventListener('load', function() {
-            previewImage.setAttribute('src', this.result);
-        });
-        
-        reader.readAsDataURL(file);
-    } else {
-        defaultText.style.display = null;
-        previewImage.style.display = null;
-    }
-});
-
-// Form validation
-document.addEventListener('DOMContentLoaded', function() {
-    const forms = document.querySelectorAll('form');
-    
-    forms.forEach(function(form) {
-        form.addEventListener('submit', function(e) {
-            // Basic validation could be added here
-            const submitButton = this.querySelector('button[type="submit"]');
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
-                
-                // Re-enable button after 5 seconds in case of error
-                setTimeout(() => {
-                    submitButton.disabled = false;
-                    submitButton.innerHTML = submitButton.getAttribute('data-original-text') || 'Submit';
-                }, 5000);
-            }
-        });
-    });
-    
-    // Store original button text
-    document.querySelectorAll('button[type="submit"]').forEach(button => {
-        button.setAttribute('data-original-text', button.innerHTML);
-    });
-});
-
-// Tab navigation helper
-function navigateToTab(tabId) {
-    const tabLink = document.querySelector(`[data-bs-target="${tabId}"]`);
-    if (tabLink) {
-        new bootstrap.Tab(tabLink).show();
-    }
-}
-</script>
-
-<style>
-.profile-details {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
-
-.profile-name, .profile-email, .profile-actions {
-    flex: 1;
-    min-width: 200px;
-}
-
-.toggle-password {
-    cursor: pointer;
-}
-
-.image-preview {
-    width: 200px;
-    height: 200px;
-    border: 2px dashed #ddd;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.image-preview__image {
-    max-width: 100%;
-    max-height: 100%;
-}
-
-.image-preview__default-text {
-    color: #6c757d;
-}
-
-.password-requirements {
-    font-size: 0.85rem;
-}
-
-.nav-tabs .nav-link {
-    padding: 0.75rem 1.25rem;
-    font-weight: 500;
-}
-
-.input-group-text {
-    cursor: pointer;
-}
-
-.card {
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-    margin-bottom: 20px;
-}
-
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #eee;
-}
-
-.form-text {
-    font-size: 0.8rem;
-}
-
-.badge {
-    font-size: 0.75rem;
-    padding: 0.35em 0.65em;
-}
-
-/* Improved responsive design */
-@media (max-width: 768px) {
-    .profile-info .card-body .row {
-        margin: 0 -5px;
-    }
-    
-    .profile-info .card-body .col-md-6 {
-        padding: 0 5px;
-    }
-    
-    .nav-tabs .nav-item {
-        flex: 1;
-        text-align: center;
-    }
-    
-    .nav-tabs .nav-link {
-        padding: 0.5rem 0.75rem;
-        font-size: 0.85rem;
-    }
-}
-</style>
 
 @include('user.footer')

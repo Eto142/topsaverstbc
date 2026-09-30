@@ -1,161 +1,81 @@
-@include('home.header')   
+@include('home.header')
 
+<!-- Page Hero -->
+<section class="bk-page-hero">
+  <div class="bk-wrap">
+    <h1>Contact Us</h1>
+    <p>Our dedicated support team is available 24/7. Reach out and we'll get right back to you.</p>
+    <div class="bk-breadcrumb"><a href="/">Home</a> <span>/</span> Contact Us</div>
+  </div>
+</section>
 
+<!-- Contact Content -->
+<section class="bk-page-section">
+  <div class="bk-wrap">
+    <div class="bk-page-grid-2">
+      <!-- Contact Info -->
+      <div class="sr">
+        <span class="bk-label">Get In Touch</span>
+        <h2 class="bk-title" style="text-align:left;margin-bottom:16px">How Can We Help You?</h2>
+        <p style="font-size:.95rem;color:var(--txt-m);line-height:1.65;margin-bottom:24px">Whether you have questions about opening an account, managing transfers, or choosing the right deposit plan, our support team is standing by.</p>
 
-        
-        <div class="switch-theme-mode">
-    <label id="switch" class="switch">
-        <input type="checkbox" onchange="toggleTheme()" id="slider">
-        <span class="slider round"></span>
-    </label>
-</div>
-
-<div class="content-wrapper">
-
-    <div class="breadcrumb-wrap bg-spring">
-        <img src="home/asset/img/breadcrumb/br-shape-1.png" alt="Image" class="br-shape-one xs-none">
-        <img src="home/asset/img/breadcrumb/br-shape-2.png" alt="Image" class="br-shape-two xs-none">
-        <img src="home/asset/img/breadcrumb/br-shape-3.png" alt="Image" class="br-shape-three moveHorizontal sm-none">
-        <img src="home/asset/img/breadcrumb/br-shape-4.png" alt="Image" class="br-shape-four moveVertical sm-none">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7 col-md-8 col-sm-8">
-                    <div class="breadcrumb-title">
-                        <h2>Contact Us</h2>
-                        <ul class="breadcrumb-menu list-style">
-                            <li><a href="/">Home </a></li>
-                            <li>Contact</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-4 col-sm-4 xs-none">
-                    <div class="breadcrumb-img">
-                        <img src="home/asset/img/breadcrumb/br-shape-5.png" alt="Image"
-                            class="br-shape-five animationFramesTwo">
-                        <img src="home/asset/img/breadcrumb/br-shape-6.png" alt="Image" class="br-shape-six bounce">
-                        <img src="home/asset/img/breadcrumb/breadcrumb-1.png" alt="Image">
-                    </div>
-                </div>
-            </div>
+        <div class="bk-feat-item">
+          <div class="bk-fi-icon"><i class="ri-mail-line"></i></div>
+          <div>
+            <h4>Email Support</h4>
+            <p><a href="mailto:support@topsaverstbc.com" style="color:var(--blue);font-weight:600">support@topsaverstbc.com</a></p>
+          </div>
         </div>
+
+        <div class="bk-feat-item">
+          <div class="bk-fi-icon"><i class="ri-shield-check-line"></i></div>
+          <div>
+            <h4>Security &amp; Fraud Assistance</h4>
+            <p>24/7 automated account monitoring and rapid response team.</p>
+          </div>
+        </div>
+
+        <div class="bk-feat-item">
+          <div class="bk-fi-icon"><i class="ri-time-line"></i></div>
+          <div>
+            <h4>Operating Hours</h4>
+            <p>Online &amp; Digital Banking: 24 Hours / 7 Days a week<br>Support Desk: Always Available</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="sr">
+        <div class="bk-info-card" style="padding:32px 28px">
+          <h3 style="font-size:1.15rem;font-weight:700;margin-bottom:18px">Send Us a Message</h3>
+
+          @if(session('status'))
+            <div class="bk-alert bk-alert--success">{{ session('status') }}</div>
+          @endif
+          @if(session('error'))
+            <div class="bk-alert bk-alert--error">{{ session('error') }}</div>
+          @endif
+
+          <form method="POST" action="{{ url('contact') }}">
+            @csrf
+            <div class="bk-form-group">
+              <label for="email">Your Email Address</label>
+              <input type="email" name="email" id="email" class="bk-input" placeholder="name@example.com" required>
+            </div>
+            <div class="bk-form-group">
+              <label for="subject">Subject</label>
+              <input type="text" name="subject" id="subject" class="bk-input" placeholder="Account inquiry, transfer, etc." required>
+            </div>
+            <div class="bk-form-group">
+              <label for="message">Message Details</label>
+              <textarea name="message" id="message" class="bk-input" placeholder="Type your message here..." required></textarea>
+            </div>
+            <button type="submit" class="bk-btn bk-btn--fill" style="width:100%;justify-content:center;padding:12px 20px">Send Message <i class="ri-send-plane-line"></i></button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-
-    <section class="contact-wrap pt-100">
-        <div class="container">
-            <div class="row justify-content-center pb-75">
-                <div class="col-lg-4 col-md-6">
-                    <div class="contact-item">
-                        <span class="contact-icon">
-                            <i class="flaticon-location"></i>
-                        </span>
-                        <div class="contact-info">
-                            <h3>Address</h3>
-                            <p>
-                                74 Old Edinburgh Road 
-                PA29 7GX 
-                            </p>
-                            
-
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="contact-item">
-                        <span class="contact-icon">
-                            <i class="flaticon-email-2"></i>
-                        </span>
-                        <div class="contact-info">
-                            <h3>Email Us</h3>
-                            <a href="mailto:support@topsaverstbc.online">support@topsaverstbc.online</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="contact-item">
-                        <span class="contact-icon">
-                            <i class="flaticon-phone-call"></i>
-                        </span>
-                        <div class="contact-info">
-                            <h3>Call us</h3>
-                            <a href="tel:+447701423168">+447701423168</a>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="comp-map pb-100">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9437.961574661605!2d-0.34947493022460935!3d53.74515049999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4878be24f3b00c3f%3A0x97951841cfe5d6e7!2s23%20Jameson%20St%2C%20Hull%20HU1%203HR%2C%20UK!5e0!3m2!1sen!2sng!4v1687943914691!5m2!1sen!2sng"></iframe>
-
-
-            </div>
-        </div>
-        <div class="contact-form-area ptb-100 bg-albastor">
-            <img src="home/asset/img/contact-shape-1.png" alt="Image" class="contact-shape-one animationFramesTwo">
-            <img src="home/asset/img/contact-shape-2.png" alt="Image" class="contact-shape-two bounce">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-10 offset-xl-1 col-lg-10 offset-lg-1">
-                        <div class="content-title style1 text-center mb-40">
-                            <span>Send Us A Message</span>
-                            <h2>Do You have Any Questions?</h2>
-                        </div>
-                        <div class="contact-form">
-                            <form class="form-wrap" id="contactForm">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="name" placeholder="Your Name*" id="name" required
-                                                data-error="Please enter your name">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="email" name="email" id="email" required
-                                                placeholder="Your Email*" data-error="Please enter your email*">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="number" name="phone" id="phone" required
-                                                placeholder="Phone Number" data-error="Please enter your phone number">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="text" name="msg_subject" placeholder="Subject" id="msg_subject"
-                                                required data-error="Please enter your subject">
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group v1">
-                                            <textarea name="message" id="message" placeholder="Your Messages.."
-                                                cols="30" rows="10" required
-                                                data-error="Please enter your message"></textarea>
-                                            <div class="help-block with-errors"></div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 text-center">
-                                        <button type="submit" class="btn style1 w-100 d-block">Send Message </button>
-                                        <div id="msgSubmit" class="h3 text-center hidden"></div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-</div>
-
-  
-  
 @include('home.footer')

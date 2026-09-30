@@ -48,9 +48,9 @@ class RegisterController extends Controller
         'terms_agree' => 'required|accepted',
     ]);
 
-    // Generate a unique account number
+    // Generate a unique 10-digit numeric account number
     do {
-        $accountNumber = 'ACCT-' . mt_rand(1000000000, 9999999999);
+        $accountNumber = '30' . mt_rand(10000000, 99999999);
     } while (User::where('account_number', $accountNumber)->exists());
 
     // Handle profile picture upload

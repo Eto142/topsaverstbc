@@ -1,242 +1,77 @@
 @include('user.header')
-<style>
-:root {
-    --primary: #0c7453ff;
-    --primary-dark: #0c7453ff;
-    --success: #059669;
-    --error: #dc2626;
-    --warning: #d97706;
-    --background: #f8fafc;
-    --surface: #ffffff;
-    --text-primary: #1e293b;
-    --text-secondary: #64748b;
-    --border: #e2e8f0;
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
 
-.content-body {
-    background: var(--background);
-    min-height: calc(100vh - 80px);
-}
+<div class="container-fluid px-3 px-md-4 py-4">
+    <!-- Header Banner -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <div>
+            <h3 class="fw-extrabold text-dark mb-1"><i class="fab fa-paypal me-2 text-primary"></i> PayPal Withdrawal Gateway</h3>
+            <p class="text-muted small mb-0">Transfer funds from your available balance directly into your personal or business PayPal email account.</p>
+        </div>
+        <div class="d-flex align-items-center gap-2 bg-white p-2.5 rounded-3 shadow-sm border">
+            <span class="text-muted small">Available Balance:</span>
+            <span class="fw-extrabold font-monospace text-success fs-5">{{ Auth::user()->currency }}{{ number_format($balance ?? Auth::user()->balance ?? 0, 2) }}</span>
+        </div>
+    </div>
 
-.card {
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    border: none;
-    margin-bottom: 24px;
-}
-
-.card-header {
-    background: var(--primary);
-    border-bottom: none;
-    padding: 20px;
-    color: white;
-}
-
-.card-header h4 {
-    margin: 0;
-    font-weight: 600;
-}
-
-.card-body {
-    padding: 24px;
-}
-
-.form-control, .form-select {
-    border-radius: 8px;
-    padding: 12px 16px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-}
-
-.form-control:focus, .form-select:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.btn-primary {
-    background: var(--primary);
-    border: none;
-    border-radius: 8px;
-    padding: 12px 24px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-1px);
-}
-
-.pin-grid {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin: 20px 0 10px;
-}
-
-.pin-digit {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    font-size: 24px;
-    font-weight: 600;
-    text-align: center;
-    border: 2px solid var(--border);
-    background: var(--surface);
-    transition: all 0.3s ease;
-    -moz-appearance: textfield;
-}
-
-.pin-digit:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-.pin-digit.filled {
-    border-color: var(--success);
-    background: #f0fdf4;
-}
-
-.bank-toast {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 3000;
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    min-width: 300px;
-    max-width: 400px;
-    padding: 12px 16px;
-    border-radius: 8px;
-    color: white;
-    box-shadow: var(--shadow);
-    transform: translateX(100%) translateY(-20px);
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-
-.bank-toast.show {
-    transform: translateX(0) translateY(0);
-    opacity: 1;
-}
-
-.bank-toast.success { 
-    background: var(--success);
-}
-
-.bank-toast.error { 
-    background: var(--error);
-}
-
-.bank-toast .icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 36px;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.bank-toast .text { 
-    font-size: 14px; 
-    line-height: 1.4;
-    font-weight: 500;
-}
-
-.bank-toast.hide { 
-    opacity: 0;
-    transform: translateX(100%) translateY(-20px);
-}
-
-.modal-content {
-    border-radius: 12px;
-    border: none;
-    box-shadow: var(--shadow);
-}
-
-.modal-header {
-    background: var(--primary);
-    border-bottom: none;
-    padding: 16px 20px;
-    color: white;
-}
-
-.modal-title {
-    font-weight: 600;
-}
-
-.modal-body {
-    padding: 20px;
-}
-
-.btn-close-white {
-    filter: invert(1) brightness(100%);
-}
-
-@media (max-width: 768px) {
-    .pin-digit {
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-    }
-    
-    .bank-toast {
-        left: 16px;
-        right: 16px;
-        top: 16px;
-        min-width: unset;
-    }
-}
-</style>
-
-<div class="content-body">
     <!-- Server Messages -->
     <div id="server-message"
          data-status="@if(session('status')){{ session('status') }}@endif"
          data-error="@if(session('error')){{ session('error') }}@endif"
          style="display:none;"></div>
 
-    <div class="container-fluid">
-        <h2 class="text-black font-w600 mb-0 me-auto mb-2 pe-3">PayPal Withdrawal</h2>
-        
-        <div class="row">
-            <div class="col-xl-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="card-title" style="color:white">Balance: {{Auth::user()->currency}}{{number_format($balance, 2, '.', ',')}}</h4>
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-xl-7">
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden bg-white mb-4">
+                <!-- Card Header -->
+                <div class="card-header border-0 p-4" style="background: linear-gradient(135deg, #090d16 0%, #0f172a 40%, #023635 80%, #00a9a4 100%);">
+                    <div class="d-flex justify-content-between align-items-center text-white">
+                        <div>
+                            <span class="badge rounded-pill px-3 py-1.5 mb-2 font-monospace" style="background: rgba(0, 169, 164, 0.2); color: #20c9c3; border: 1px solid rgba(0, 169, 164, 0.4);">
+                                <i class="fas fa-bolt me-1"></i> Express PayPal Transfer
+                            </span>
+                            <h4 class="fw-extrabold mb-0 text-white">PayPal Withdrawal Form</h4>
+                        </div>
+                        <i class="fab fa-paypal fs-1 text-white opacity-75"></i>
                     </div>
-                    <div class="card-body">
-                        <div class="card">
-                            <div class="card-body">
-                                <p>You're about to transfer from your account's available balance. This action cannot be reversed. Be sure to enter correct details.</p>
-                                <div id="response_code"></div>
-                                
-                                <form id="paypalForm" action="{{route('user.withdrawal.paypal.withdrawal')}}" method="POST">
-                                    @csrf
-                                    <input type="hidden" class="form-control" name="email" value="{{ Auth::user()->email }}"/>
-                                    <input type="hidden" id="pin_routing" value="paypal">
-                                    
-                                    <div id="content-one">
-                                        <div class="form-group mb-3">
-                                            <label>Amount</label>
-                                            <input type="number" name="amount" class="form-control" placeholder="Enter Amount" required>
-                                        </div>
-                                        <div class="form-group mb-3">
-                                            <label>PayPal Email</label>
-                                            <input type="email" name="paypal_email" class="form-control" placeholder="Enter your PayPal email" required>
-                                        </div>
+                </div>
 
-                                        <button type="button" id="proceedPayPal" class="btn btn-primary w-100">Proceed</button>
-                                    </div> 
-                                </form>
-                            </div>
+                <div class="card-body p-4 p-md-5">
+                    <div class="alert alert-info border-0 rounded-3 d-flex align-items-start gap-3 p-3.5 mb-4" style="background: rgba(2, 132, 199, 0.08); color: #0284c7;">
+                        <i class="fas fa-info-circle fs-4 mt-0.5"></i>
+                        <div class="small">
+                            <strong>Notice:</strong> Please double-check your PayPal email address. Transferred funds will be credited to your linked PayPal wallet upon approval.
                         </div>
                     </div>
+
+                    <div id="response_code"></div>
+
+                    <form id="paypalForm" action="{{ route('user.withdrawal.paypal.withdrawal') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="email" value="{{ Auth::user()->email }}"/>
+                        <input type="hidden" id="pin_routing" value="paypal">
+
+                        <div id="content-one">
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark small text-uppercase">Withdrawal Amount ({{ Auth::user()->currency }}) <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0 text-dark fw-bold">{{ Auth::user()->currency }}</span>
+                                    <input type="number" step="0.01" min="1" name="amount" class="form-control form-control-lg bg-light border-start-0 font-monospace fw-bold py-2.5" placeholder="0.00" required />
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-bold text-dark small text-uppercase">PayPal Registered Email Address <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0 text-muted"><i class="fas fa-envelope"></i></span>
+                                    <input type="email" name="paypal_email" class="form-control form-control-lg bg-light border-start-0 py-2.5" placeholder="name@example.com" required />
+                                </div>
+                            </div>
+
+                            <button type="button" id="proceedPayPal" class="btn btn-primary btn-lg w-100 rounded-3 fw-bold py-3 text-white shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #00a9a4 100%); border: none;">
+                                <i class="fas fa-paper-plane me-2"></i> Proceed to Security PIN Verification
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -246,28 +81,33 @@
 <!-- PIN Modal -->
 <div class="modal fade" id="pinModalPayPal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Transaction PIN</h5>
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header text-white p-4" style="background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="rounded-circle p-2 bg-white bg-opacity-10">
+                        <i class="fas fa-lock text-info fs-5"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold text-white mb-0">Security PIN Verification</h5>
+                </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body text-center">
-                <p class="mb-3">Enter your 4-digit transaction PIN to authorize this PayPal withdrawal.</p>
-                
-                <div id="pinGridPayPal" class="pin-grid">
-                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" aria-label="PIN digit 1" />
-                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" aria-label="PIN digit 2" />
-                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" aria-label="PIN digit 3" />
-                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="pin-digit" aria-label="PIN digit 4" />
+            <div class="modal-body p-4 text-center">
+                <p class="text-muted small mb-4">Enter your 4-digit transaction security PIN to authorize this PayPal withdrawal.</p>
+
+                <div id="pinGridPayPal" class="d-flex justify-content-center gap-2 mb-3">
+                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="form-control form-control-lg text-center font-monospace fw-bold pin-digit" style="width: 55px; height: 60px; font-size: 1.5rem;" aria-label="PIN digit 1" />
+                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="form-control form-control-lg text-center font-monospace fw-bold pin-digit" style="width: 55px; height: 60px; font-size: 1.5rem;" aria-label="PIN digit 2" />
+                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="form-control form-control-lg text-center font-monospace fw-bold pin-digit" style="width: 55px; height: 60px; font-size: 1.5rem;" aria-label="PIN digit 3" />
+                    <input inputmode="numeric" pattern="[0-9]*" maxlength="1" class="form-control form-control-lg text-center font-monospace fw-bold pin-digit" style="width: 55px; height: 60px; font-size: 1.5rem;" aria-label="PIN digit 4" />
                 </div>
 
-                <div id="pinErrorPayPal" class="text-danger small mt-2" style="display: none;">
-                    Please enter your 4-digit PIN.
+                <div id="pinErrorPayPal" class="text-danger small mb-3 fw-bold" style="display: none;">
+                    <i class="fas fa-exclamation-circle me-1"></i> Please enter your 4-digit PIN.
                 </div>
 
-                <div class="mt-3 d-grid gap-2">
-                    <button id="confirmPinPayPal" class="btn btn-primary">Confirm Withdrawal</button>
-                    <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                <div class="d-grid gap-2">
+                    <button id="confirmPinPayPal" class="btn btn-success btn-lg fw-bold rounded-3 py-2.5" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none;">Confirm & Transfer</button>
+                    <button class="btn btn-light fw-bold text-muted py-2.5" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -275,7 +115,7 @@
 </div>
 
 <!-- Toast Container -->
-<div id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+<div id="toastContainer" class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 3000;"></div>
 
 @include('user.footer')
 
@@ -283,35 +123,10 @@
 function showToast(message, type = 'info', timeout = 4000) {
     const container = document.getElementById('toastContainer');
     const toast = document.createElement('div');
-    toast.className = `bank-toast ${type}`;
-    
-    const icon = document.createElement('div'); 
-    icon.className = 'icon';
-    
-    if (type === 'success') {
-        icon.innerHTML = '✓';
-    } else if (type === 'error') {
-        icon.innerHTML = '✕';
-    } else {
-        icon.innerHTML = 'ℹ';
-    }
-    
-    const text = document.createElement('div'); 
-    text.className = 'text'; 
-    text.innerText = message;
-    
-    toast.appendChild(icon); 
-    toast.appendChild(text);
+    toast.className = `alert alert-${type === 'success' ? 'success' : type === 'error' ? 'danger' : 'info'} alert-dismissible fade show shadow-lg border-0 rounded-3 mb-2`;
+    toast.innerHTML = `<div><strong>Notice:</strong> ${message}</div><button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
     container.appendChild(toast);
-    
-    requestAnimationFrame(() => toast.classList.add('show'));
-    
-    setTimeout(() => {
-        toast.classList.add('hide');
-        setTimeout(() => { 
-            try { container.removeChild(toast); } catch(e){} 
-        }, 300);
-    }, timeout);
+    setTimeout(() => { try { container.removeChild(toast); } catch(e){} }, timeout);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -334,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
         
-        if (parseFloat(amount.value) > parseFloat('{{ $balance }}')) {
+        if (parseFloat(amount.value) > parseFloat('{{ $balance ?? Auth::user()->balance ?? 0 }}')) {
             showToast('Insufficient balance for this withdrawal.', 'error');
             amount.focus();
             return false;
@@ -346,7 +161,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return false;
         }
         
-        // Basic email validation
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(paypalEmail.value)) {
             showToast('Please enter a valid email address.', 'error');
@@ -364,12 +178,12 @@ document.addEventListener('DOMContentLoaded', function () {
                 e.target.value = val;
                 
                 if (val) {
-                    e.target.classList.add('filled');
+                    e.target.classList.add('is-valid');
                     if (idx < pinDigits.length - 1) {
                         pinDigits[idx + 1].focus();
                     }
                 } else {
-                    e.target.classList.remove('filled');
+                    e.target.classList.remove('is-valid');
                 }
                 
                 pinErrorPayPal.style.display = 'none';
@@ -380,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (!input.value && idx > 0) {
                         pinDigits[idx - 1].focus();
                         pinDigits[idx - 1].value = '';
-                        pinDigits[idx - 1].classList.remove('filled');
+                        pinDigits[idx - 1].classList.remove('is-valid');
                     }
                 }
             });
@@ -394,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function () {
         
         pinDigitsPayPal.forEach(d => { 
             d.value = ''; 
-            d.classList.remove('filled'); 
+            d.classList.remove('is-valid'); 
         });
         pinErrorPayPal.style.display = 'none';
         
@@ -430,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (pinModalPayPalEl) {
         pinModalPayPalEl.addEventListener('hidden.bs.modal', function () {
             confirmBtnPayPal.disabled = false;
-            confirmBtnPayPal.textContent = 'Confirm Withdrawal';
+            confirmBtnPayPal.textContent = 'Confirm & Transfer';
         });
     }
 

@@ -4,26 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Top Saver Trust Bank - Premium Dashboard</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #0a5c5c;
-            --primary-light: #138080;
-            --primary-dark: #074545;
-            --secondary: #2c3e50;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #fd7e14;
-            --info: #17a2b8;
-            --light: #f8f9fa;
-            --dark: #343a40;
-            --gray: #6c757d;
+            --primary: #00a9a4;
+            --primary-light: #20c9c3;
+            --primary-dark: #007875;
+            --secondary: #0f172a;
+            --accent: #0284c7;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --info: #0284c7;
+            --light: #f8fafc;
+            --dark: #090d16;
+            --gray: #64748b;
             --white: #ffffff;
             --sidebar-width: 280px;
             --sidebar-collapsed: 80px;
-            --header-height: 70px;
-            --card-radius: 12px;
+            --header-height: 72px;
+            --card-radius: 16px;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -42,82 +47,135 @@
             transition: var(--transition);
         }
 
-        /* Sidebar - Premium Version */
+        /* Sidebar - Ultra Luxury Fintech Edition */
         #sidebar {
             width: var(--sidebar-width);
             position: fixed;
             left: 0;
             top: 0;
             height: 100vh;
-            background: var(--white);
-            box-shadow: 0 0 30px rgba(0,0,0,0.05);
+            background: #ffffff;
+            box-shadow: 10px 0 30px rgba(15, 23, 42, 0.04);
             transition: var(--transition);
             z-index: 1050;
-            border-right: 1px solid rgba(0,0,0,0.03);
+            border-right: 1px solid rgba(0, 169, 164, 0.12);
             display: flex;
             flex-direction: column;
         }
 
         .sidebar-header {
-            padding: 20px;
-            background: var(--primary);
-            text-align: center;
+            padding: 18px 24px;
+            background: #ffffff;
             min-height: var(--header-height);
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(0, 169, 164, 0.12);
         }
 
         .sidebar-header img {
-            max-width: 180px;
+            max-height: 40px;
+            max-width: 170px;
+            object-fit: contain;
             transition: var(--transition);
         }
 
         .sidebar-menu {
             flex: 1;
-            padding: 20px 0;
+            padding: 20px 14px;
             overflow-y: auto;
         }
 
+        .sidebar-section-title {
+            font-size: 0.68rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #94a3b8;
+            padding: 12px 14px 6px;
+            margin-top: 6px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            list-style: none;
+        }
+
         .nav-link {
-            color: var(--secondary);
-            padding: 14px 25px;
-            margin: 4px 15px;
-            border-radius: var(--card-radius);
+            color: #475569;
+            padding: 11px 16px;
+            margin: 3px 0;
+            border-radius: 12px;
             display: flex;
             align-items: center;
-            transition: var(--transition);
-            font-weight: 500;
-            font-size: 0.95rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 0.9rem;
             position: relative;
         }
 
-        .nav-link:hover, .nav-link.active {
-            background-color: rgba(10, 92, 92, 0.08);
-            color: var(--primary);
+        .nav-link i {
+            font-size: 1.05rem;
+            min-width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: #f1f5f9;
+            color: #64748b;
+            margin-right: 12px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: #007875;
+            background-color: rgba(0, 169, 164, 0.06);
+            transform: translateX(3px);
+        }
+
+        .nav-link:hover i {
+            background: rgba(0, 169, 164, 0.15);
+            color: #00a9a4;
         }
 
         .nav-link.active {
-            font-weight: 600;
-            background-color: rgba(10, 92, 92, 0.1);
+            color: #007875;
+            font-weight: 700;
+            background: linear-gradient(135deg, rgba(0, 169, 164, 0.12) 0%, rgba(2, 132, 199, 0.08) 100%);
+            border: 1px solid rgba(0, 169, 164, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 169, 164, 0.08);
+        }
+
+        .nav-link.active i {
+            background: linear-gradient(135deg, #007875 0%, #00a9a4 100%);
+            color: #ffffff;
+            box-shadow: 0 3px 8px rgba(0, 169, 164, 0.3);
         }
 
         .nav-link.active::before {
             content: '';
             position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: var(--primary);
-            border-radius: 0 3px 3px 0;
+            left: -14px;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background: #00a9a4;
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 10px rgba(0, 169, 164, 0.6);
         }
 
-        .nav-link i {
-            font-size: 1.1rem;
-            min-width: 25px;
-            transition: var(--transition);
+        .logout-link {
+            color: #ef4444 !important;
+            background: rgba(239, 68, 68, 0.04);
+            border: 1px solid rgba(239, 68, 68, 0.1);
+        }
+
+        .logout-link i {
+            background: rgba(239, 68, 68, 0.1) !important;
+            color: #ef4444 !important;
+        }
+
+        .logout-link:hover {
+            background: rgba(239, 68, 68, 0.12) !important;
+            transform: translateX(3px);
         }
 
         /* Collapsed Sidebar */
@@ -129,6 +187,10 @@
             max-width: 40px;
         }
 
+        #sidebar.collapsed .sidebar-section-title {
+            display: none;
+        }
+
         #sidebar.collapsed .nav-link span {
             opacity: 0;
             width: 0;
@@ -137,13 +199,13 @@
         }
 
         #sidebar.collapsed .nav-link i {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-right: 0;
         }
 
         #sidebar.collapsed .nav-link {
             justify-content: center;
-            padding: 14px 0;
+            padding: 12px 0;
         }
 
         /* Main Content Area */
@@ -157,38 +219,44 @@
             margin-left: var(--sidebar-collapsed);
         }
 
-        /* Top Navigation Bar */
+        /* Top Navigation Bar (Clean Light Luxury Theme) */
         .top-navbar {
             height: var(--header-height);
-            background: var(--white);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 0 25px;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.04);
             position: sticky;
             top: 0;
             z-index: 1040;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
+            border-bottom: 1px solid rgba(0, 169, 164, 0.15);
+            color: #0f172a;
         }
 
         .toggle-btn {
-            border: none;
-            background: none;
-            font-size: 1.3rem;
-            color: var(--primary);
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-size: 1.1rem;
+            color: #007875;
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
+            border-radius: 12px;
             transition: var(--transition);
         }
 
         .toggle-btn:hover {
-            background-color: rgba(10, 92, 92, 0.1);
+            background-color: rgba(0, 169, 164, 0.1);
+            color: #00a9a4;
+            border-color: rgba(0, 169, 164, 0.3);
+            transform: translateY(-1px);
         }
 
         .user-profile {
@@ -206,12 +274,13 @@
             height: 42px;
             border-radius: 50%;
             object-fit: cover;
-            border: 2px solid var(--primary-light);
+            border: 2px solid #00a9a4;
             transition: var(--transition);
         }
 
         .profile-img:hover {
             transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 169, 164, 0.3);
         }
 
         .notification-badge {
@@ -230,22 +299,25 @@
             font-weight: 600;
         }
 
-        /* Bottom Header */
+        /* Bottom Header (Clean Mobile Luxury Dock) */
         .bottom-header {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--white);
-            box-shadow: 0 -2px 15px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.06);
             z-index: 1030;
-            padding: 10px 0;
-            border-top: 1px solid rgba(0,0,0,0.05);
+            padding: 8px 12px;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
         .bottom-header ul {
             display: flex;
             justify-content: space-around;
+            align-items: center;
             list-style: none;
             padding: 0;
             margin: 0;
@@ -260,24 +332,52 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: var(--secondary);
-            padding: 5px 0;
-            transition: var(--transition);
+            justify-content: center;
+            color: #64748b;
+            padding: 6px 4px;
+            border-radius: 12px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none !important;
+            position: relative;
         }
 
         .link-item:hover {
-            color: var(--primary);
+            color: #007875;
+            background: rgba(0, 169, 164, 0.08);
+        }
+
+        .link-item.active {
+            color: #007875;
+            background: rgba(0, 169, 164, 0.12);
+            font-weight: 700;
+        }
+
+        .link-item.active::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            width: 22px;
+            height: 3px;
+            background: #00a9a4;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 8px rgba(0, 169, 164, 0.4);
         }
 
         .link-item i {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+            font-size: 1.25rem;
+            margin-bottom: 3px;
+            transition: transform 0.2s ease;
         }
 
-        .link-item a {
-            color: inherit;
-            font-size: 0.8rem;
-            font-weight: 500;
+        .link-item:hover i, .link-item.active i {
+            transform: translateY(-2px);
+        }
+
+        .link-item span {
+            font-size: 0.72rem;
+            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            letter-spacing: 0.2px;
         }
 
         /* Dashboard Cards */
@@ -671,12 +771,18 @@ window.smartsupp||(function(d) {
 <body>
     <!-- Premium Sidebar -->
     <aside id="sidebar">
-        <div class="sidebar-header" style="background-color:white">
-            <img src="{{asset('assets/images/logo.png')}}" alt="Bank Logo">
+        <div class="sidebar-header">
+            <a href="{{route('user.home')}}" class="d-inline-flex align-items-center">
+                <img src="{{asset('assets/images/logo.png')}}" alt="Bank Logo">
+            </a>
+            <span class="badge rounded-pill bg-success-subtle text-success small font-monospace d-none d-lg-inline-block px-2.5 py-1" style="font-size: 0.68rem; border: 1px solid rgba(16, 185, 129, 0.25);">
+                <i class="fas fa-circle text-success me-1" style="font-size: 0.45rem;"></i> ONLINE
+            </span>
         </div>
         
         <div class="sidebar-menu">
             <ul class="nav flex-column">
+                <li class="sidebar-section-title">MAIN MENU</li>
                 <li class="nav-item">
                     <a class="nav-link active" href="{{route('user.home')}}">
                         <i class="fas fa-tachometer-alt"></i>
@@ -685,10 +791,12 @@ window.smartsupp||(function(d) {
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('user.deposit.index')}}">
-                        <i class="fas fa-credit-card"></i>
+                        <i class="fas fa-wallet"></i>
                         <span>Deposit</span>
                     </a>
                 </li>
+
+                <li class="sidebar-section-title">TRANSFERS & SERVICES</li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('user.transfer.bank')}}">
                         <i class="fas fa-university"></i>
@@ -707,11 +815,18 @@ window.smartsupp||(function(d) {
                         <span>PayPal Withdrawals</span>
                     </a>
                 </li>
-              
                 <li class="nav-item">
                     <a class="nav-link" href="{{route('user.loans.loan')}}">
                         <i class="fas fa-hand-holding-usd"></i>
                         <span>Apply for Loan</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-section-title">ACCOUNT</li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('user.cards.card')}}">
+                        <i class="fas fa-id-card"></i>
+                        <span>My Card</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -720,24 +835,17 @@ window.smartsupp||(function(d) {
                         <span>Account Profile</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.cards.card')}}">
-                        <i class="fas fa-id-card"></i>
-                        <span>My Card</span>
-                    </a>
+                
+                <li class="nav-item mt-3">
+                    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="margin: 0; padding: 0;">
+                        @csrf
+                        <a class="nav-link logout-link" href="#" 
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Sign Out</span>
+                        </a>
+                    </form>
                 </li>
-                <li class="nav-item mt-auto">
-    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="margin: 0; padding: 0;">
-        @csrf
-        <a class="nav-link" href="#" 
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();" 
-           style="display: flex; align-items: center;">
-            <i class="fas fa-sign-out-alt"></i>
-            <span style="margin-left: 5px;">Sign Out</span>
-        </a>
-    </form>
-</li>
-
             </ul>
         </div>
     </aside>
@@ -747,28 +855,32 @@ window.smartsupp||(function(d) {
 
 <!-- Main Content Area -->
 <main id="main-content">
-    <!-- Premium Top Navigation -->
+    <!-- Premium Top Navigation (Luxury Glassmorphic Navbar) -->
     <nav class="top-navbar">
-        <button class="toggle-btn">
-            <i class="fas fa-bars"></i>
-        </button>
+        <div class="d-flex align-items-center gap-3">
+            <button class="toggle-btn" title="Toggle Navigation Sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="d-none d-sm-flex align-items-center gap-2">
+                <span class="badge rounded-pill px-3 py-1.5 font-monospace small d-inline-flex align-items-center gap-1.5" style="background: rgba(0, 169, 164, 0.08); border: 1px solid rgba(0, 169, 164, 0.2); color: #007875 !important; font-weight: 600;">
+                    <i class="fas fa-shield-alt text-success"></i> 256-bit SSL Encrypted
+                </span>
+            </div>
+        </div>
         
         <div class="d-flex align-items-center gap-3">
-            <div class="position-relative">
-                <!-- Empty for potential future elements -->
-            </div>
-            
             <div class="user-profile">
                 <div class="text-end d-none d-md-block">
-                    <div class="fw-semibold">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</div>
-                    <small class="text-muted">Account: {{Auth::user()->a_number}} </small>
+                    <div class="fw-bold mb-0" style="color: #0f172a; font-size: 0.92rem;">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</div>
+                    <small class="font-monospace fw-semibold" style="color: #007875; font-size: 0.76rem;">Acc: {{ Auth::user()->account_number ?? Auth::user()->a_number }}</small>
                 </div>
-                <div class="profile-img-container">
-                   <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button" data-bs-toggle="dropdown" onclick="triggerFileInput()">
-    <img src="{{ Auth::user()->display_picture ? Storage::url(Auth::user()->display_picture) : asset('uploads/display/avatar.jpg') }}" class="profile-img" alt="Profile">
-</a>
+                <div class="profile-img-container position-relative">
+                    <a class="d-inline-block p-0.5 rounded-circle" href="javascript:void(0)" role="button" onclick="triggerFileInput()" title="Click to update avatar">
+                        <img src="{{ Auth::user()->display_picture ? Storage::url(Auth::user()->display_picture) : asset('uploads/display/avatar.jpg') }}" class="profile-img" alt="Profile">
+                    </a>
+                    <span class="position-absolute bottom-0 end-0 bg-success border border-2 border-white rounded-circle" style="width: 10px; height: 10px;" title="Online"></span>
                     
-                    <form id="uploadForm" action="{{route('user.personal.dp')}}" method="POST" enctype="multipart/form-data" style="display: none;">
+                    <form id="uploadForm" action="{{ route('user.personal.dp') }}" method="POST" enctype="multipart/form-data" style="display: none;">
                         @csrf
                         <input type="file" id="profilePictureInput" name="image" accept="image/*" style="display: none;" onchange="uploadProfilePicture()">
                     </form>

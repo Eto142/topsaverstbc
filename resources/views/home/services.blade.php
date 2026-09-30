@@ -1,133 +1,109 @@
 @include('home.header')
 
-        
-        <div class="switch-theme-mode">
-    <label id="switch" class="switch">
-        <input type="checkbox" onchange="toggleTheme()" id="slider">
-        <span class="slider round"></span>
-    </label>
-</div>
-<div class="content-wrapper">
+<!-- Page Hero -->
+<section class="bk-page-hero">
+  <div class="bk-wrap">
+    <h1>Our Services</h1>
+    <p>Comprehensive financial and digital banking solutions tailored for individuals and businesses.</p>
+    <div class="bk-breadcrumb"><a href="/">Home</a> <span>/</span> Services</div>
+  </div>
+</section>
 
-    <div class="breadcrumb-wrap bg-spring">
-        <img src="home/asset/img/breadcrumb/br-shape-1.png" alt="Image" class="br-shape-one xs-none">
-        <img src="home/asset/img/breadcrumb/br-shape-2.png" alt="Image" class="br-shape-two xs-none">
-        <img src="home/asset/img/breadcrumb/br-shape-3.png" alt="Image" class="br-shape-three moveHorizontal sm-none">
-        <img src="home/asset/img/breadcrumb/br-shape-4.png" alt="Image" class="br-shape-four moveVertical sm-none">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-7 col-md-8 col-sm-8">
-                    <div class="breadcrumb-title">
-                        <h2>Services</h2>
-                        <ul class="breadcrumb-menu list-style">
-                            <li><a href="index.html">Home </a></li>
-                            <li>Services</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-5 col-md-4 col-sm-4 xs-none">
-                    <div class="breadcrumb-img">
-                        <img src="home/asset/img/breadcrumb/br-shape-5.png" alt="Image"
-                            class="br-shape-five animationFramesTwo">
-                        <img src="home/asset/img/breadcrumb/br-shape-6.png" alt="Image" class="br-shape-six bounce">
-                        <img src="home/asset/img/breadcrumb/breadcrumb-2.png" alt="Image">
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- Services Grid -->
+<section class="bk-page-section">
+  <div class="bk-wrap">
+    <div class="bk-section-top">
+      <span class="bk-label">What We Offer</span>
+      <h2 class="bk-title">Modern Digital Banking Solutions</h2>
+      <p class="bk-desc">From personal savings accounts to global transfers and high-yield fixed deposits, discover our suite of banking products.</p>
     </div>
+    <div class="bk-cards-grid">
+      <div class="bk-card sr">
+        <div class="bk-card-icon"><i class="ri-exchange-dollar-line"></i></div>
+        <h3>Global Money Transfer</h3>
+        <p>Send and receive funds internationally across 50+ countries with competitive exchange rates and fast settlement.</p>
+        <a href="{{ route('register') }}" class="bk-card-link">Get Started <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="bk-card sr">
+        <div class="bk-card-icon"><i class="ri-bank-line"></i></div>
+        <h3>Personal Checking &amp; Savings</h3>
+        <p>Everyday personal banking with zero hidden fees, competitive interest rates, and seamless mobile access.</p>
+        <a href="{{ route('register') }}" class="bk-card-link">Open Account <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="bk-card sr">
+        <div class="bk-card-icon"><i class="ri-briefcase-4-line"></i></div>
+        <h3>Corporate &amp; Business Banking</h3>
+        <p>Business accounts, commercial transfers, payroll management, and corporate treasury solutions.</p>
+        <a href="{{ route('register') }}" class="bk-card-link">Learn More <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="bk-card sr">
+        <div class="bk-card-icon"><i class="ri-bank-card-line"></i></div>
+        <h3>Debit &amp; Credit Cards</h3>
+        <p>Multi-currency cards for global spending, online shopping, zero annual fees, and instant card controls.</p>
+        <a href="{{ route('register') }}" class="bk-card-link">Apply Now <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="bk-card sr">
+        <div class="bk-card-icon"><i class="ri-hand-coin-line"></i></div>
+        <h3>Personal &amp; Commercial Loans</h3>
+        <p>Flexible financing solutions with competitive interest rates and customizable repayment schedules.</p>
+        <a href="{{ url('contact') }}" class="bk-card-link">Contact Support <i class="ri-arrow-right-line"></i></a>
+      </div>
+      <div class="bk-card sr">
+        <div class="bk-card-icon"><i class="ri-pie-chart-2-line"></i></div>
+        <h3>Fixed &amp; Tenured Deposits</h3>
+        <p>Lock in guaranteed high returns on long-term savings accounts with structured payout terms.</p>
+        <a href="{{ route('register') }}" class="bk-card-link">Start Depositing <i class="ri-arrow-right-line"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- Why Choose Us -->
+<section class="bk-page-section--alt">
+  <div class="bk-wrap">
+    <div class="bk-section-top">
+      <span class="bk-label">Why Topsavers</span>
+      <h2 class="bk-title">Why Choose Topsavers Trust Bank?</h2>
+    </div>
+    <div class="bk-page-grid-4">
+      <div class="bk-info-card sr">
+        <i class="ri-global-line"></i>
+        <h4>Global Reach</h4>
+        <p>Seamless international transfers with multi-currency support.</p>
+      </div>
+      <div class="bk-info-card sr">
+        <i class="ri-user-star-line"></i>
+        <h4>Dedicated Support</h4>
+        <p>24/7 client care specialists available whenever you need assistance.</p>
+      </div>
+      <div class="bk-info-card sr">
+        <i class="ri-lock-line"></i>
+        <h4>Bank-Grade Security</h4>
+        <p>256-bit encryption and active fraud monitoring on all accounts.</p>
+      </div>
+      <div class="bk-info-card sr">
+        <i class="ri-customer-service-2-line"></i>
+        <h4>Zero Hidden Fees</h4>
+        <p>Transparent pricing with clear fee breakdowns across all services.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section class="service-wrap ptb-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="service-card style4">
-                        <div class="service-info">
-                            <div class="service-title">
-                                <span><i class="flaticon-payment-method"></i></span>
-                                <h3><a href="#">Online Banking</a></h3>
-                            </div>
-                            <p>When it comes to managing your personal or business accounts, you'll be able to quickly
-                                pay bills, transfer money, apply for certain loans and much more through First Unit bank
-                                Online Banking. </p>
-                            <a href="#" class="link style1">Learn More <i class="flaticon-right-arrow-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="service-card style4">
-                        <div class="service-info">
-                            <div class="service-title">
-                                <span><i class="flaticon-computer"></i></span>
-                                <h3><a href="#">Mobile Banking </a></h3>
-                            </div>
-                            <p>When you're ready to take your member experience to a new level, HawaiiUSA's Mobile
-                                Banking enables you to manage your account, move money and more - all from your
-                                smartphone or tablet using our free app. See what you can do! </p>
-                            <a href="#" class="link style1">Learn More <i class="flaticon-right-arrow-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="service-card style4">
-                        <div class="service-info">
-                            <div class="service-title">
-                                <span><i class="flaticon-loan-1"></i></span>
-                                <h3><a href="#">Internet Banking</a></h3>
-                            </div>
-                            <p>First Unit bank Online Banking Service gives you unrestricted and secure access to your
-                                account, anytime, anywhere on your computer, tablet, smart phones or any
-                                internet-enabled devices. It is your bank on the go! </p>
-                            <a href="#" class="link style1">Learn More <i class="flaticon-right-arrow-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="service-card style4">
-                        <div class="service-info">
-                            <div class="service-title">
-                                <span><i class="flaticon-secure-shield"></i></span>
-                                <h3><a href="#">Cards</a></h3>
-                            </div>
-                            <p>First Unit bank makes digital payments and transfers easy with various credit, debit and
-                                ATM card options to suit your needs. You'll appreciate the anytime access and other
-                                convenient features of these cards. </p>
-                            <a href="#" class="link style1">Learn More <i class="flaticon-right-arrow-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="service-card style4">
-                        <div class="service-info">
-                            <div class="service-title">
-                                <span><i class="flaticon-mortarboard"></i></span>
-                                <h3><a href="#">e-Statements</a></h3>
-                            </div>
-                            <p> First Unit bank allows account holders to access their statements online where they can
-                                download or print them</p>
-                            <a href="#" class="link style1">Learn More <i class="flaticon-right-arrow-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4 col-lg-6 col-md-6">
-                    <div class="service-card style4">
-                        <div class="service-info">
-                            <div class="service-title">
-                                <span><i class="flaticon-loan"></i></span>
-                                <h3><a href="#">Reduced Student Loans</a></h3>
-                            </div>
-                            <p>Rates as low as 2.97% APR* (Variable) / 3.35% APR* (FIXED)!* Live customer support
-                                available M-F 9am to 5pm PST to discuss your needs. </p>
-                            <a href="#" class="link style1">Learn More <i class="flaticon-right-arrow-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+<!-- CTA -->
+<section class="bk-cta">
+  <div class="bk-wrap">
+    <div class="bk-cta-box sr">
+      <div class="bk-cta-content">
+        <h2>Ready to Bank Smarter?</h2>
+        <p>Open your Topsavers Trust Bank account in under 5 minutes.</p>
+        <div class="bk-cta-btns">
+          <a href="{{ route('register') }}" class="bk-btn bk-btn--white">Open an Account <i class="ri-arrow-right-line"></i></a>
+          <a href="{{ url('contact') }}" class="bk-btn bk-btn--glass">Contact Support <i class="ri-phone-line"></i></a>
         </div>
-    </section>
-
-</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 @include('home.footer')

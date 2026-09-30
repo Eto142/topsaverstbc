@@ -1,12 +1,10 @@
 @include('admin.header')
-<div class="main-content" id="mainContent">
+<div class="main-content p-4" id="mainContent" style="margin-left: 250px;">
     <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0">Deposit History</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
-            <button class="btn btn-primary">
-                <i class="fas fa-download me-2"></i>Export Deposit History
-            </button>
+            <h2 class="fw-extrabold text-dark mb-1">Deposit Logs & History</h2>
+            <p class="text-muted small mb-0">Monitor and verify all customer deposits, check uploads, and crypto payments.</p>
         </div>
     </div>
 

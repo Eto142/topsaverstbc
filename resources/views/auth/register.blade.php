@@ -1,1809 +1,773 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Topsavers Trust Bank - Online Registration</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary-color: #0a5c5c;
-            --primary-light: #0d7a7a;
-            --primary-dark: #063e3e;
-            --secondary-color: #f8f9fa;
-            --accent-color: #ff6b35;
-            --light-color: #ffffff;
-            --dark-color: #333333;
-            --gray-light: #f5f5f5;
-            --gray-medium: #e0e0e0;
-            --gray-dark: #757575;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --error-color: #dc3545;
-            --border-radius: 8px;
-            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--gray-light);
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            color: var(--dark-color);
-            line-height: 1.6;
-        }
-        
-        .bank-header {
-            background-color: var(--light-color);
-            color: var(--primary-color);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: relative;
-            z-index: 10;
-            border-bottom: 3px solid var(--primary-color);
-        }
-        
-        .bank-logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-        }
-        
-        .bank-logo img {
-            height: 40px;
-            width: auto;
-        }
-        
-        .login-link {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: var(--border-radius);
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            border: 1px solid var(--primary-color);
-        }
-        
-        .login-link:hover {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .login-link i {
-            margin-right: 8px;
-        }
-        
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-grow: 1;
-            padding: 2rem;
-            position: relative;
-        }
-        
-        .register-container {
-            background-color: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--box-shadow);
-            width: 100%;
-            max-width: 900px;
-            position: relative;
-            z-index: 1;
-            animation: fadeInUp 0.5s ease;
-            overflow: hidden;
-        }
-        
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .register-header {
-            background: linear-gradient(to right, var(--primary-color), var(--primary-light));
-            color: white;
-            padding: 1.5rem 2rem;
-            position: relative;
-        }
-        
-        .register-header h2 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .register-header p {
-            opacity: 0.9;
-            font-size: 0.95rem;
-        }
-        
-        .register-progress {
-            display: flex;
-            background-color: var(--gray-light);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--gray-medium);
-        }
-        
-        .progress-step {
-            display: flex;
-            align-items: center;
-            flex: 1;
-            position: relative;
-        }
-        
-        .progress-step:not(:last-child):after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 100%;
-            height: 2px;
-            background-color: var(--gray-medium);
-            z-index: 1;
-        }
-        
-        .step-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background-color: var(--gray-medium);
-            color: var(--gray-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            margin-right: 0.75rem;
-            position: relative;
-            z-index: 2;
-            transition: var(--transition);
-        }
-        
-        .step-label {
-            font-weight: 600;
-            color: var(--gray-dark);
-            transition: var(--transition);
-        }
-        
-        .progress-step.active .step-number {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .progress-step.active .step-label {
-            color: var(--primary-color);
-        }
-        
-        .progress-step.completed .step-number {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .progress-step.completed:after {
-            background-color: var(--success-color);
-        }
-        
-        .form-content {
-            padding: 2rem;
-        }
-        
-        .form-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        
-        .form-section.active {
-            display: block;
-        }
-        
-        .section-title {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            font-size: 1.4rem;
-            font-weight: 700;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background-color: var(--accent-color);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-            position: relative;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--primary-dark);
-            font-size: 0.95rem;
-        }
-        
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.85rem 1rem;
-            border: 1px solid var(--gray-medium);
-            border-radius: var(--border-radius);
-            font-size: 1rem;
-            transition: var(--transition);
-            box-sizing: border-box;
-            background-color: var(--light-color);
-        }
-        
-        .file-input {
-            padding: 0.75rem 1rem;
-            background-color: var(--gray-light);
-            border: 1px dashed var(--gray-medium);
-            cursor: pointer;
-        }
-        
-        .file-input:hover {
-            border-color: var(--primary-color);
-            background-color: var(--secondary-color);
-        }
-        
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(10, 92, 92, 0.1);
-        }
-        
-        .form-row {
-            display: flex;
-            gap: 1.5rem;
-        }
-        
-        .form-col {
-            flex: 1;
-        }
-        
-        .password-container {
-            position: relative;
-        }
-        
-        .toggle-password {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: var(--gray-dark);
-            transition: var(--transition);
-        }
-        
-        .toggle-password:hover {
-            color: var(--primary-color);
-        }
-        
-        .password-strength {
-            height: 5px;
-            background-color: var(--gray-medium);
-            margin-top: 0.5rem;
-            border-radius: 2px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .password-strength::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 0%;
-            background-color: var(--error-color);
-            transition: width 0.3s, background-color 0.3s;
-        }
-        
-        .password-strength[data-strength="weak"]::before {
-            width: 25%;
-            background-color: var(--error-color);
-        }
-        
-        .password-strength[data-strength="medium"]::before {
-            width: 50%;
-            background-color: var(--warning-color);
-        }
-        
-        .password-strength[data-strength="good"]::before {
-            width: 75%;
-            background-color: #17a2b8;
-        }
-        
-        .password-strength[data-strength="strong"]::before {
-            width: 100%;
-            background-color: var(--success-color);
-        }
-        
-        .password-strength-text {
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-            text-align: right;
-            font-weight: 500;
-        }
-        
-        .password-strength-text.weak {
-            color: var(--error-color);
-        }
-        
-        .password-strength-text.medium {
-            color: var(--warning-color);
-        }
-        
-        .password-strength-text.good {
-            color: #17a2b8;
-        }
-        
-        .password-strength-text.strong {
-            color: var(--success-color);
-        }
-        
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.85rem;
-            margin-top: 0.5rem;
-            min-height: 1rem;
-            font-weight: 500;
-        }
-        
-        .form-actions {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--gray-medium);
-        }
-        
-        .btn {
-            padding: 0.85rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-light);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(10, 92, 92, 0.3);
-        }
-        
-        .btn-secondary {
-            background-color: var(--gray-light);
-            color: var(--dark-color);
-            border: 1px solid var(--gray-medium);
-        }
-        
-        .btn-secondary:hover {
-            background-color: var(--gray-medium);
-        }
-        
-        .btn i {
-            margin-right: 8px;
-        }
-        
-        .login-prompt {
-            text-align: center;
-            margin-top: 1.5rem;
-            color: var(--gray-dark);
-            font-size: 0.95rem;
-        }
-        
-        .login-prompt a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            position: relative;
-        }
-        
-        .login-prompt a::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: var(--primary-color);
-            transition: var(--transition);
-        }
-        
-        .login-prompt a:hover::after {
-            width: 100%;
-        }
-        
-        .security-tips {
-            margin-top: 2rem;
-            padding: 1.25rem;
-            background-color: var(--gray-light);
-            border-radius: var(--border-radius);
-            font-size: 0.85rem;
-            border-left: 4px solid var(--accent-color);
-        }
-        
-        .security-tips h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-        }
-        
-        .security-tips h3 i {
-            margin-right: 8px;
-            color: var(--accent-color);
-        }
-        
-        .security-tips ul {
-            padding-left: 1.5rem;
-            margin-bottom: 0;
-        }
-        
-        .security-tips li {
-            margin-bottom: 0.5rem;
-            position: relative;
-        }
-        
-        .security-tips li::before {
-            content: '•';
-            color: var(--accent-color);
-            font-weight: bold;
-            display: inline-block;
-            width: 1em;
-            margin-left: -1em;
-        }
-        
-        footer {
-            background-color: var(--primary-dark);
-            color: white;
-            text-align: center;
-            padding: 1.25rem;
-            font-size: 0.85rem;
-            position: relative;
-        }
-        
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(to right, var(--accent-color), var(--primary-light));
-        }
-        
-        /* Custom select styling */
-        .form-group select {
-            appearance: none;
-            background: url("data:image/svg+xml;utf8,<svg fill='%230a5c5c' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>") no-repeat right 12px center/16px;
-            background-color: var(--light-color);
-            padding-right: 36px;
-        }
-        
-        /* Date input styling */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            background: transparent;
-            bottom: 0;
-            color: transparent;
-            cursor: pointer;
-            height: auto;
-            left: 0;
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: auto;
-        }
-        
-        /* Profile Picture Step Styling */
-        .upload-container {
-            text-align: center;
-            padding: 2rem;
-            border: 2px dashed var(--gray-medium);
-            border-radius: var(--border-radius);
-            background-color: var(--gray-light);
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-        
-        .upload-container:hover {
-            border-color: var(--primary-color);
-            background-color: var(--secondary-color);
-        }
-        
-        .upload-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .upload-text {
-            margin-bottom: 1.5rem;
-            color: var(--dark-color);
-        }
-        
-        .file-input-wrapper {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1rem;
-        }
-        
-        .file-input-wrapper input[type="file"] {
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        
-        .file-input-button {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            background-color: var(--primary-color);
-            color: white;
-            border-radius: var(--border-radius);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-        
-        .file-input-button:hover {
-            background-color: var(--primary-light);
-        }
-        
-        .file-name {
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-            color: var(--gray-dark);
-        }
-        
-        .preview-container {
-            margin-top: 2rem;
-            text-align: center;
-        }
-        
-        .preview-image {
-            max-width: 200px;
-            max-height: 200px;
-            border-radius: 50%;
-            border: 3px solid var(--primary-color);
-            object-fit: cover;
-        }
-        
-        .preview-placeholder {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            background-color: var(--gray-light);
-            border: 3px dashed var(--gray-medium);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            color: var(--gray-dark);
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .form-row {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .register-progress {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .progress-step:not(:last-child):after {
-                display: none;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .register-container {
-                padding: 0;
-            }
-            
-            .form-content {
-                padding: 1.5rem;
-            }
-            
-            .bank-header {
-                padding: 0.75rem 1rem;
-            }
-            
-            .main-container {
-                padding: 1rem;
-            }
-            
-            .upload-container {
-                padding: 1.5rem;
-            }
-        }
-        
-        /* Animation for form elements */
-        .form-group {
-            animation: fadeIn 0.5s ease forwards;
-            opacity: 0;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
-        
-        /* Add delay to form group animations */
-        .form-group:nth-child(1) { animation-delay: 0.1s; }
-        .form-group:nth-child(2) { animation-delay: 0.2s; }
-        .form-group:nth-child(3) { animation-delay: 0.3s; }
-        .form-group:nth-child(4) { animation-delay: 0.4s; }
-        .form-group:nth-child(5) { animation-delay: 0.5s; }
-        .form-group:nth-child(6) { animation-delay: 0.6s; }
-        .form-group:nth-child(7) { animation-delay: 0.7s; }
-        .form-group:nth-child(8) { animation-delay: 0.8s; }
-        .form-group:nth-child(9) { animation-delay: 0.9s; }
-        .form-group:nth-child(10) { animation-delay: 1s; }
-        
-        /* Terms and conditions styling */
-        .terms-container {
-            max-height: 200px;
-            overflow-y: auto;
-            padding: 1rem;
-            border: 1px solid var(--gray-medium);
-            border-radius: var(--border-radius);
-            background-color: var(--gray-light);
-            margin-bottom: 1rem;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-        
-        .terms-container h4 {
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-        
-        .terms-container p {
-            margin-bottom: 1rem;
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-        
-        .checkbox-group input {
-            margin-right: 10px;
-            margin-top: 3px;
-        }
-        
-        .checkbox-group label {
-            font-weight: normal;
-            line-height: 1.4;
-        }
-        
-        /* Next of Kin specific styles */
-        .relationship-group {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .relationship-group .form-col:first-child {
-            flex: 2;
-        }
-        
-        .relationship-group .form-col:last-child {
-            flex: 1;
-        }
-        
-        .section-subtitle {
-            color: var(--primary-dark);
-            font-size: 1.1rem;
-            margin: 1.5rem 0 1rem 0;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--gray-medium);
-        }
-    </style>
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Account Registration - Topsavers Trust Bank</title>
+<link rel="shortcut icon" href="{{ asset('home/asset/img/logo.png') }}" type="image/png">
 
-<!-- Smartsupp Live Chat script -->
-<script type="text/javascript">
-var _smartsupp = _smartsupp || {};
-_smartsupp.key = '400579ce64e0abc3d4c0be6882ce7b545d338a5c';
-window.smartsupp||(function(d) {
-  var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-  s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-  c.type='text/javascript';c.charset='utf-8';c.async=true;
-  c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-})(document);
-</script>
-<noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a></noscript>
-<body>
-    <header class="bank-header">
-        <div class="bank-logo">
-            <i class="fas fa-university" style="font-size: 2rem; margin-right: 10px;"></i>
-             <a class="navbar-brand" href="/">
-                            <img class="logo-light" src="home/asset/img/logo.png" alt="logo" width="160">
-                           
-                        </a>
-        </div>
-        <a href="{{ route('user.login') }}" class="login-link">
-            <i class="fas fa-sign-in-alt"></i> Sign In
-        </a>
-    </header>
-    
-    <div class="main-container">
-        <div class="register-container">
-            <div class="register-header">
-                <h2>Open Your Online Banking Account</h2>
-                <p>Secure, fast, and convenient banking at your fingertips</p>
-            </div>
-            
-            <div class="register-progress">
-                <div class="progress-step active" data-step="1">
-                    <div class="step-number">1</div>
-                    <div class="step-label">Personal Info</div>
-                </div>
-                <div class="progress-step" data-step="2">
-                    <div class="step-number">2</div>
-                    <div class="step-label">Account Details</div>
-                </div>
-                <div class="progress-step" data-step="3">
-                    <div class="step-number">3</div>
-                    <div class="step-label">Next of Kin</div>
-                </div>
-                <div class="progress-step" data-step="4">
-                    <div class="step-number">4</div>
-                    <div class="step-label">Security Setup</div>
-                </div>
-                <div class="progress-step" data-step="5">
-                    <div class="step-number">5</div>
-                    <div class="step-label">Profile Picture</div>
-                </div>
-                <div class="progress-step" data-step="6">
-                    <div class="step-number">6</div>
-                    <div class="step-label">Review & Submit</div>
-                </div>
-            </div>
-            
-            <form method="POST" action="{{ route('register') }}" id="registrationForm" enctype="multipart/form-data">
-                @csrf
-                
-                <div class="form-content">
-                    <!-- Step 1: Personal Information -->
-                    <div class="form-section active" id="step-1">
-                        <h3 class="section-title">Personal Information</h3>
-                        
-                        <div class="form-group">
-                            <label for="name">First Name</label>
-                            <input type="text" name="first_name" value="{{ old('first_name') }}" required maxlength="100" id="name" placeholder="Enter First Name">
-                            <div class="error-message">
-                                @error('first_name') {{ $message }} @enderror
-                            </div>
-                        </div>
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 
+<!-- Remix Icons & Font Awesome -->
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-                         <div class="form-group">
-                            <label for="name">Last Name</label>
-                            <input type="text" name="last_name" value="{{ old('last_name') }}" required maxlength="100" id="name" placeholder="Enter Last Name">
-                            <div class="error-message">
-                                @error('last_name') {{ $message }} @enderror
-                            </div>
-                        </div>
-
-                        
-                        <div class="form-row">
-                            <div class="form-col">
-                                <div class="form-group">
-                                    <label for="email">Email Address</label>
-                                    <input type="email" name="email" value="{{ old('email') }}" required id="email" placeholder="Your email address">
-                                    <div class="error-message">
-                                        @error('email') {{ $message }} @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-col">
-    <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input 
-            type="number" 
-            name="phone" 
-            value="{{ old('phone') }}" 
-            required 
-            id="phone" 
-            placeholder="Enter phone number "
-        >
-        <div class="error-message">
-            @error('phone') {{ $message }} @enderror
-        </div>
-    </div>
-</div>
-</div>
-
-
-                        <div class="form-col">
-    <div class="form-group">
-        <label for="gender">Gender</label>
-        <select name="gender" id="gender" required>
-            <option value="" disabled selected>Select gender</option>
-            <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
-            <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
-            <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
-        </select>
-        <div class="error-message">
-            @error('gender') {{ $message }} @enderror
-        </div>
-    </div>
-</div>
-
-                        
-                        <div class="form-row">
-                            <div class="form-col">
-                                <div class="form-group">
-                                    <label for="dob">Date of Birth</label>
-                                    <input type="date" name="dob" value="{{ old('dob') }}" required id="dob" max="{{ date('Y-m-d', strtotime('-18 years')) }}">
-                                    <div class="error-message">
-                                        @error('dob') {{ $message }} @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            
-                          <div class="form-col"> 
-    <div class="form-group">
-        <label for="country">Country of Residence</label>
-        <select name="country" id="country" required>
-            <option value="" disabled {{ old('country') ? '' : 'selected' }}>Select country</option>
-            <option value="Afghanistan" {{ old('country') == 'Afghanistan' ? 'selected' : '' }}>Afghanistan</option>
-            <option value="Aland Islands" {{ old('country') == 'Aland Islands' ? 'selected' : '' }}>Aland Islands</option>
-            <option value="Albania" {{ old('country') == 'Albania' ? 'selected' : '' }}>Albania</option>
-            <option value="Algeria" {{ old('country') == 'Algeria' ? 'selected' : '' }}>Algeria</option>
-            <option value="American Samoa" {{ old('country') == 'American Samoa' ? 'selected' : '' }}>American Samoa</option>
-            <option value="Andorra" {{ old('country') == 'Andorra' ? 'selected' : '' }}>Andorra</option>
-            <option value="Angola" {{ old('country') == 'Angola' ? 'selected' : '' }}>Angola</option>
-            <option value="Anguilla" {{ old('country') == 'Anguilla' ? 'selected' : '' }}>Anguilla</option>
-            <option value="Antarctica" {{ old('country') == 'Antarctica' ? 'selected' : '' }}>Antarctica</option>
-            <option value="Antigua and Barbuda" {{ old('country') == 'Antigua and Barbuda' ? 'selected' : '' }}>Antigua and Barbuda</option>
-            <option value="Argentina" {{ old('country') == 'Argentina' ? 'selected' : '' }}>Argentina</option>
-            <option value="Armenia" {{ old('country') == 'Armenia' ? 'selected' : '' }}>Armenia</option>
-            <option value="Aruba" {{ old('country') == 'Aruba' ? 'selected' : '' }}>Aruba</option>
-            <option value="Australia" {{ old('country') == 'Australia' ? 'selected' : '' }}>Australia</option>
-            <option value="Austria" {{ old('country') == 'Austria' ? 'selected' : '' }}>Austria</option>
-            <option value="Azerbaijan" {{ old('country') == 'Azerbaijan' ? 'selected' : '' }}>Azerbaijan</option>
-            <option value="Bahamas" {{ old('country') == 'Bahamas' ? 'selected' : '' }}>Bahamas</option>
-            <option value="Bahrain" {{ old('country') == 'Bahrain' ? 'selected' : '' }}>Bahrain</option>
-            <option value="Bangladesh" {{ old('country') == 'Bangladesh' ? 'selected' : '' }}>Bangladesh</option>
-            <option value="Barbados" {{ old('country') == 'Barbados' ? 'selected' : '' }}>Barbados</option>
-            <option value="Belarus" {{ old('country') == 'Belarus' ? 'selected' : '' }}>Belarus</option>
-            <option value="Belgium" {{ old('country') == 'Belgium' ? 'selected' : '' }}>Belgium</option>
-            <option value="Belize" {{ old('country') == 'Belize' ? 'selected' : '' }}>Belize</option>
-            <option value="Benin" {{ old('country') == 'Benin' ? 'selected' : '' }}>Benin</option>
-            <option value="Bermuda" {{ old('country') == 'Bermuda' ? 'selected' : '' }}>Bermuda</option>
-            <option value="Bhutan" {{ old('country') == 'Bhutan' ? 'selected' : '' }}>Bhutan</option>
-            <option value="Bolivia" {{ old('country') == 'Bolivia' ? 'selected' : '' }}>Bolivia</option>
-            <option value="Bosnia and Herzegovina" {{ old('country') == 'Bosnia and Herzegovina' ? 'selected' : '' }}>Bosnia and Herzegovina</option>
-            <option value="Botswana" {{ old('country') == 'Botswana' ? 'selected' : '' }}>Botswana</option>
-            <option value="Brazil" {{ old('country') == 'Brazil' ? 'selected' : '' }}>Brazil</option>
-            <option value="Brunei Darussalam" {{ old('country') == 'Brunei Darussalam' ? 'selected' : '' }}>Brunei Darussalam</option>
-            <option value="Bulgaria" {{ old('country') == 'Bulgaria' ? 'selected' : '' }}>Bulgaria</option>
-            <option value="Burkina Faso" {{ old('country') == 'Burkina Faso' ? 'selected' : '' }}>Burkina Faso</option>
-            <option value="Burundi" {{ old('country') == 'Burundi' ? 'selected' : '' }}>Burundi</option>
-            <option value="Cabo Verde" {{ old('country') == 'Cabo Verde' ? 'selected' : '' }}>Cabo Verde</option>
-            <option value="Cambodia" {{ old('country') == 'Cambodia' ? 'selected' : '' }}>Cambodia</option>
-            <option value="Cameroon" {{ old('country') == 'Cameroon' ? 'selected' : '' }}>Cameroon</option>
-            <option value="Canada" {{ old('country') == 'Canada' ? 'selected' : '' }}>Canada</option>
-            <option value="Central African Republic" {{ old('country') == 'Central African Republic' ? 'selected' : '' }}>Central African Republic</option>
-            <option value="Chad" {{ old('country') == 'Chad' ? 'selected' : '' }}>Chad</option>
-            <option value="Chile" {{ old('country') == 'Chile' ? 'selected' : '' }}>Chile</option>
-            <option value="China" {{ old('country') == 'China' ? 'selected' : '' }}>China</option>
-            <option value="Colombia" {{ old('country') == 'Colombia' ? 'selected' : '' }}>Colombia</option>
-            <option value="Comoros" {{ old('country') == 'Comoros' ? 'selected' : '' }}>Comoros</option>
-            <option value="Congo" {{ old('country') == 'Congo' ? 'selected' : '' }}>Congo</option>
-            <option value="Congo, Democratic Republic of the Congo" {{ old('country') == 'Congo, Democratic Republic of the Congo' ? 'selected' : '' }}>Congo, Democratic Republic of the Congo</option>
-            <option value="Costa Rica" {{ old('country') == 'Costa Rica' ? 'selected' : '' }}>Costa Rica</option>
-            <option value="Croatia" {{ old('country') == 'Croatia' ? 'selected' : '' }}>Croatia</option>
-            <option value="Cuba" {{ old('country') == 'Cuba' ? 'selected' : '' }}>Cuba</option>
-            <option value="Cyprus" {{ old('country') == 'Cyprus' ? 'selected' : '' }}>Cyprus</option>
-            <option value="Czech Republic" {{ old('country') == 'Czech Republic' ? 'selected' : '' }}>Czech Republic</option>
-            <option value="Denmark" {{ old('country') == 'Denmark' ? 'selected' : '' }}>Denmark</option>
-            <option value="Djibouti" {{ old('country') == 'Djibouti' ? 'selected' : '' }}>Djibouti</option>
-            <option value="Dominica" {{ old('country') == 'Dominica' ? 'selected' : '' }}>Dominica</option>
-            <option value="Dominican Republic" {{ old('country') == 'Dominican Republic' ? 'selected' : '' }}>Dominican Republic</option>
-            <option value="Ecuador" {{ old('country') == 'Ecuador' ? 'selected' : '' }}>Ecuador</option>
-            <option value="Egypt" {{ old('country') == 'Egypt' ? 'selected' : '' }}>Egypt</option>
-            <option value="El Salvador" {{ old('country') == 'El Salvador' ? 'selected' : '' }}>El Salvador</option>
-            <option value="Equatorial Guinea" {{ old('country') == 'Equatorial Guinea' ? 'selected' : '' }}>Equatorial Guinea</option>
-            <option value="Eritrea" {{ old('country') == 'Eritrea' ? 'selected' : '' }}>Eritrea</option>
-            <option value="Estonia" {{ old('country') == 'Estonia' ? 'selected' : '' }}>Estonia</option>
-            <option value="Eswatini" {{ old('country') == 'Eswatini' ? 'selected' : '' }}>Eswatini</option>
-            <option value="Ethiopia" {{ old('country') == 'Ethiopia' ? 'selected' : '' }}>Ethiopia</option>
-            <option value="Fiji" {{ old('country') == 'Fiji' ? 'selected' : '' }}>Fiji</option>
-            <option value="Finland" {{ old('country') == 'Finland' ? 'selected' : '' }}>Finland</option>
-            <option value="France" {{ old('country') == 'France' ? 'selected' : '' }}>France</option>
-            <option value="Gabon" {{ old('country') == 'Gabon' ? 'selected' : '' }}>Gabon</option>
-            <option value="Gambia" {{ old('country') == 'Gambia' ? 'selected' : '' }}>Gambia</option>
-            <option value="Georgia" {{ old('country') == 'Georgia' ? 'selected' : '' }}>Georgia</option>
-            <option value="Germany" {{ old('country') == 'Germany' ? 'selected' : '' }}>Germany</option>
-            <option value="Ghana" {{ old('country') == 'Ghana' ? 'selected' : '' }}>Ghana</option>
-            <option value="Greece" {{ old('country') == 'Greece' ? 'selected' : '' }}>Greece</option>
-            <option value="Greenland" {{ old('country') == 'Greenland' ? 'selected' : '' }}>Greenland</option>
-            <option value="Grenada" {{ old('country') == 'Grenada' ? 'selected' : '' }}>Grenada</option>
-            <option value="Guatemala" {{ old('country') == 'Guatemala' ? 'selected' : '' }}>Guatemala</option>
-            <option value="Guinea" {{ old('country') == 'Guinea' ? 'selected' : '' }}>Guinea</option>
-            <option value="Guinea-Bissau" {{ old('country') == 'Guinea-Bissau' ? 'selected' : '' }}>Guinea-Bissau</option>
-            <option value="Guyana" {{ old('country') == 'Guyana' ? 'selected' : '' }}>Guyana</option>
-            <option value="Haiti" {{ old('country') == 'Haiti' ? 'selected' : '' }}>Haiti</option>
-            <option value="Honduras" {{ old('country') == 'Honduras' ? 'selected' : '' }}>Honduras</option>
-            <option value="Hungary" {{ old('country') == 'Hungary' ? 'selected' : '' }}>Hungary</option>
-            <option value="Iceland" {{ old('country') == 'Iceland' ? 'selected' : '' }}>Iceland</option>
-            <option value="India" {{ old('country') == 'India' ? 'selected' : '' }}>India</option>
-            <option value="Indonesia" {{ old('country') == 'Indonesia' ? 'selected' : '' }}>Indonesia</option>
-            <option value="Iran" {{ old('country') == 'Iran' ? 'selected' : '' }}>Iran</option>
-            <option value="Iraq" {{ old('country') == 'Iraq' ? 'selected' : '' }}>Iraq</option>
-            <option value="Ireland" {{ old('country') == 'Ireland' ? 'selected' : '' }}>Ireland</option>
-            <option value="Israel" {{ old('country') == 'Israel' ? 'selected' : '' }}>Israel</option>
-            <option value="Italy" {{ old('country') == 'Italy' ? 'selected' : '' }}>Italy</option>
-            <option value="Jamaica" {{ old('country') == 'Jamaica' ? 'selected' : '' }}>Jamaica</option>
-            <option value="Japan" {{ old('country') == 'Japan' ? 'selected' : '' }}>Japan</option>
-            <option value="Jordan" {{ old('country') == 'Jordan' ? 'selected' : '' }}>Jordan</option>
-            <option value="Kazakhstan" {{ old('country') == 'Kazakhstan' ? 'selected' : '' }}>Kazakhstan</option>
-            <option value="Kenya" {{ old('country') == 'Kenya' ? 'selected' : '' }}>Kenya</option>
-            <option value="Kiribati" {{ old('country') == 'Kiribati' ? 'selected' : '' }}>Kiribati</option>
-            <option value="Kuwait" {{ old('country') == 'Kuwait' ? 'selected' : '' }}>Kuwait</option>
-            <option value="Kyrgyzstan" {{ old('country') == 'Kyrgyzstan' ? 'selected' : '' }}>Kyrgyzstan</option>
-            <option value="Laos" {{ old('country') == 'Laos' ? 'selected' : '' }}>Laos</option>
-            <option value="Latvia" {{ old('country') == 'Latvia' ? 'selected' : '' }}>Latvia</option>
-            <option value="Lebanon" {{ old('country') == 'Lebanon' ? 'selected' : '' }}>Lebanon</option>
-            <option value="Lesotho" {{ old('country') == 'Lesotho' ? 'selected' : '' }}>Lesotho</option>
-            <option value="Liberia" {{ old('country') == 'Liberia' ? 'selected' : '' }}>Liberia</option>
-            <option value="Libya" {{ old('country') == 'Libya' ? 'selected' : '' }}>Libya</option>
-            <option value="Liechtenstein" {{ old('country') == 'Liechtenstein' ? 'selected' : '' }}>Liechtenstein</option>
-            <option value="Lithuania" {{ old('country') == 'Lithuania' ? 'selected' : '' }}>Lithuania</option>
-            <option value="Luxembourg" {{ old('country') == 'Luxembourg' ? 'selected' : '' }}>Luxembourg</option>
-            <option value="Madagascar" {{ old('country') == 'Madagascar' ? 'selected' : '' }}>Madagascar</option>
-            <option value="Malawi" {{ old('country') == 'Malawi' ? 'selected' : '' }}>Malawi</option>
-            <option value="Malaysia" {{ old('country') == 'Malaysia' ? 'selected' : '' }}>Malaysia</option>
-            <option value="Maldives" {{ old('country') == 'Maldives' ? 'selected' : '' }}>Maldives</option>
-            <option value="Mali" {{ old('country') == 'Mali' ? 'selected' : '' }}>Mali</option>
-            <option value="Malta" {{ old('country') == 'Malta' ? 'selected' : '' }}>Malta</option>
-            <option value="Marshall Islands" {{ old('country') == 'Marshall Islands' ? 'selected' : '' }}>Marshall Islands</option>
-            <option value="Mauritania" {{ old('country') == 'Mauritania' ? 'selected' : '' }}>Mauritania</option>
-            <option value="Mauritius" {{ old('country') == 'Mauritius' ? 'selected' : '' }}>Mauritius</option>
-            <option value="Mexico" {{ old('country') == 'Mexico' ? 'selected' : '' }}>Mexico</option>
-            <option value="Micronesia" {{ old('country') == 'Micronesia' ? 'selected' : '' }}>Micronesia</option>
-            <option value="Moldova" {{ old('country') == 'Moldova' ? 'selected' : '' }}>Moldova</option>
-            <option value="Monaco" {{ old('country') == 'Monaco' ? 'selected' : '' }}>Monaco</option>
-            <option value="Mongolia" {{ old('country') == 'Mongolia' ? 'selected' : '' }}>Mongolia</option>
-            <option value="Montenegro" {{ old('country') == 'Montenegro' ? 'selected' : '' }}>Montenegro</option>
-            <option value="Morocco" {{ old('country') == 'Morocco' ? 'selected' : '' }}>Morocco</option>
-            <option value="Mozambique" {{ old('country') == 'Mozambique' ? 'selected' : '' }}>Mozambique</option>
-            <option value="Myanmar" {{ old('country') == 'Myanmar' ? 'selected' : '' }}>Myanmar</option>
-            <option value="Namibia" {{ old('country') == 'Namibia' ? 'selected' : '' }}>Namibia</option>
-            <option value="Nauru" {{ old('country') == 'Nauru' ? 'selected' : '' }}>Nauru</option>
-            <option value="Nepal" {{ old('country') == 'Nepal' ? 'selected' : '' }}>Nepal</option>
-            <option value="Netherlands" {{ old('country') == 'Netherlands' ? 'selected' : '' }}>Netherlands</option>
-            <option value="New Zealand" {{ old('country') == 'New Zealand' ? 'selected' : '' }}>New Zealand</option>
-            <option value="Nicaragua" {{ old('country') == 'Nicaragua' ? 'selected' : '' }}>Nicaragua</option>
-            <option value="Niger" {{ old('country') == 'Niger' ? 'selected' : '' }}>Niger</option>
-            <option value="Nigeria" {{ old('country') == 'Nigeria' ? 'selected' : '' }}>Nigeria</option>
-            <option value="North Korea" {{ old('country') == 'North Korea' ? 'selected' : '' }}>North Korea</option>
-            <option value="North Macedonia" {{ old('country') == 'North Macedonia' ? 'selected' : '' }}>North Macedonia</option>
-            <option value="Norway" {{ old('country') == 'Norway' ? 'selected' : '' }}>Norway</option>
-            <option value="Oman" {{ old('country') == 'Oman' ? 'selected' : '' }}>Oman</option>
-            <option value="Pakistan" {{ old('country') == 'Pakistan' ? 'selected' : '' }}>Pakistan</option>
-            <option value="Palau" {{ old('country') == 'Palau' ? 'selected' : '' }}>Palau</option>
-            <option value="Palestine" {{ old('country') == 'Palestine' ? 'selected' : '' }}>Palestine</option>
-            <option value="Panama" {{ old('country') == 'Panama' ? 'selected' : '' }}>Panama</option>
-            <option value="Papua New Guinea" {{ old('country') == 'Papua New Guinea' ? 'selected' : '' }}>Papua New Guinea</option>
-            <option value="Paraguay" {{ old('country') == 'Paraguay' ? 'selected' : '' }}>Paraguay</option>
-            <option value="Peru" {{ old('country') == 'Peru' ? 'selected' : '' }}>Peru</option>
-            <option value="Philippines" {{ old('country') == 'Philippines' ? 'selected' : '' }}>Philippines</option>
-            <option value="Poland" {{ old('country') == 'Poland' ? 'selected' : '' }}>Poland</option>
-            <option value="Portugal" {{ old('country') == 'Portugal' ? 'selected' : '' }}>Portugal</option>
-            <option value="Qatar" {{ old('country') == 'Qatar' ? 'selected' : '' }}>Qatar</option>
-            <option value="Romania" {{ old('country') == 'Romania' ? 'selected' : '' }}>Romania</option>
-            <option value="Russia" {{ old('country') == 'Russia' ? 'selected' : '' }}>Russia</option>
-            <option value="Rwanda" {{ old('country') == 'Rwanda' ? 'selected' : '' }}>Rwanda</option>
-            <option value="Saint Kitts and Nevis" {{ old('country') == 'Saint Kitts and Nevis' ? 'selected' : '' }}>Saint Kitts and Nevis</option>
-            <option value="Saint Lucia" {{ old('country') == 'Saint Lucia' ? 'selected' : '' }}>Saint Lucia</option>
-            <option value="Saint Vincent and the Grenadines" {{ old('country') == 'Saint Vincent and the Grenadines' ? 'selected' : '' }}>Saint Vincent and the Grenadines</option>
-            <option value="Samoa" {{ old('country') == 'Samoa' ? 'selected' : '' }}>Samoa</option>
-            <option value="San Marino" {{ old('country') == 'San Marino' ? 'selected' : '' }}>San Marino</option>
-            <option value="Sao Tome and Principe" {{ old('country') == 'Sao Tome and Principe' ? 'selected' : '' }}>Sao Tome and Principe</option>
-            <option value="Saudi Arabia" {{ old('country') == 'Saudi Arabia' ? 'selected' : '' }}>Saudi Arabia</option>
-            <option value="Senegal" {{ old('country') == 'Senegal' ? 'selected' : '' }}>Senegal</option>
-            <option value="Serbia" {{ old('country') == 'Serbia' ? 'selected' : '' }}>Serbia</option>
-            <option value="Seychelles" {{ old('country') == 'Seychelles' ? 'selected' : '' }}>Seychelles</option>
-            <option value="Sierra Leone" {{ old('country') == 'Sierra Leone' ? 'selected' : '' }}>Sierra Leone</option>
-            <option value="Singapore" {{ old('country') == 'Singapore' ? 'selected' : '' }}>Singapore</option>
-            <option value="Slovakia" {{ old('country') == 'Slovakia' ? 'selected' : '' }}>Slovakia</option>
-            <option value="Slovenia" {{ old('country') == 'Slovenia' ? 'selected' : '' }}>Slovenia</option>
-            <option value="Solomon Islands" {{ old('country') == 'Solomon Islands' ? 'selected' : '' }}>Solomon Islands</option>
-            <option value="Somalia" {{ old('country') == 'Somalia' ? 'selected' : '' }}>Somalia</option>
-            <option value="South Africa" {{ old('country') == 'South Africa' ? 'selected' : '' }}>South Africa</option>
-            <option value="South Korea" {{ old('country') == 'South Korea' ? 'selected' : '' }}>South Korea</option>
-            <option value="South Sudan" {{ old('country') == 'South Sudan' ? 'selected' : '' }}>South Sudan</option>
-            <option value="Spain" {{ old('country') == 'Spain' ? 'selected' : '' }}>Spain</option>
-            <option value="Sri Lanka" {{ old('country') == 'Sri Lanka' ? 'selected' : '' }}>Sri Lanka</option>
-            <option value="Sudan" {{ old('country') == 'Sudan' ? 'selected' : '' }}>Sudan</option>
-            <option value="Suriname" {{ old('country') == 'Suriname' ? 'selected' : '' }}>Suriname</option>
-            <option value="Sweden" {{ old('country') == 'Sweden' ? 'selected' : '' }}>Sweden</option>
-            <option value="Switzerland" {{ old('country') == 'Switzerland' ? 'selected' : '' }}>Switzerland</option>
-            <option value="Syria" {{ old('country') == 'Syria' ? 'selected' : '' }}>Syria</option>
-            <option value="Taiwan" {{ old('country') == 'Taiwan' ? 'selected' : '' }}>Taiwan</option>
-            <option value="Tajikistan" {{ old('country') == 'Tajikistan' ? 'selected' : '' }}>Tajikistan</option>
-            <option value="Tanzania" {{ old('country') == 'Tanzania' ? 'selected' : '' }}>Tanzania</option>
-            <option value="Thailand" {{ old('country') == 'Thailand' ? 'selected' : '' }}>Thailand</option>
-            <option value="Timor-Leste" {{ old('country') == 'Timor-Leste' ? 'selected' : '' }}>Timor-Leste</option>
-            <option value="Togo" {{ old('country') == 'Togo' ? 'selected' : '' }}>Togo</option>
-            <option value="Tonga" {{ old('country') == 'Tonga' ? 'selected' : '' }}>Tonga</option>
-            <option value="Trinidad and Tobago" {{ old('country') == 'Trinidad and Tobago' ? 'selected' : '' }}>Trinidad and Tobago</option>
-            <option value="Tunisia" {{ old('country') == 'Tunisia' ? 'selected' : '' }}>Tunisia</option>
-            <option value="Turkey" {{ old('country') == 'Turkey' ? 'selected' : '' }}>Turkey</option>
-            <option value="Turkmenistan" {{ old('country') == 'Turkmenistan' ? 'selected' : '' }}>Turkmenistan</option>
-            <option value="Tuvalu" {{ old('country') == 'Tuvalu' ? 'selected' : '' }}>Tuvalu</option>
-            <option value="Uganda" {{ old('country') == 'Uganda' ? 'selected' : '' }}>Uganda</option>
-            <option value="Ukraine" {{ old('country') == 'Ukraine' ? 'selected' : '' }}>Ukraine</option>
-            <option value="United Arab Emirates" {{ old('country') == 'United Arab Emirates' ? 'selected' : '' }}>United Arab Emirates</option>
-            <option value="United Kingdom" {{ old('country') == 'United Kingdom' ? 'selected' : '' }}>United Kingdom</option>
-            <option value="United States" {{ old('country') == 'United States' ? 'selected' : '' }}>United States</option>
-            <option value="Uruguay" {{ old('country') == 'Uruguay' ? 'selected' : '' }}>Uruguay</option>
-            <option value="Uzbekistan" {{ old('country') == 'Uzbekistan' ? 'selected' : '' }}>Uzbekistan</option>
-            <option value="Vanuatu" {{ old('country') == 'Vanuatu' ? 'selected' : '' }}>Vanuatu</option>
-            <option value="Vatican City" {{ old('country') == 'Vatican City' ? 'selected' : '' }}>Vatican City</option>
-            <option value="Venezuela" {{ old('country') == 'Venezuela' ? 'selected' : '' }}>Venezuela</option>
-            <option value="Vietnam" {{ old('country') == 'Vietnam' ? 'selected' : '' }}>Vietnam</option>
-            <option value="Yemen" {{ old('country') == 'Yemen' ? 'selected' : '' }}>Yemen</option>
-            <option value="Zambia" {{ old('country') == 'Zambia' ? 'selected' : '' }}>Zambia</option>
-            <option value="Zimbabwe" {{ old('country') == 'Zimbabwe' ? 'selected' : '' }}>Zimbabwe</option>
-        </select>
-        <div class="error-message">
-            @error('country') {{ $message }} @enderror
-        </div>
-    </div>
-</div>
-
-                        </div>
-                        
-                        <div class="form-actions">
-                            <div></div> <!-- Empty div for spacing -->
-                            <button type="button" class="btn btn-primary next-step" data-next="2">
-                                Continue <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 2: Account Details -->
-                    <div class="form-section" id="step-2">
-                        <h3 class="section-title">Account Details</h3>
-                        
-                        <div class="form-row">
-                            <div class="form-col">
-                                <div class="form-group">
-                                    <label for="account_type">Account Type</label>
-                                    <select name="account_type" id="account_type" required>
-                                        <option value="">Select Account Type</option>
-                                        <option value="savings" {{ old('account_type') == 'savings' ? 'selected' : '' }}>Savings Account</option>
-                                         <option value="joint" {{ old('account_type') == 'joint' ? 'selected' : '' }}>Joint Account</option>
-                                        <option value="checking" {{ old('account_type') == 'checking' ? 'selected' : '' }}>Checking Account</option>
-                                        <option value="business" {{ old('account_type') == 'business' ? 'selected' : '' }}>Business Account</option>
-                                    </select>
-                                    <div class="error-message">
-                                        @error('account_type') {{ $message }} @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-col">
-                                <div class="form-group">
-                                    <label for="currency">Preferred Currency</label>
-                                    <select name="currency" id="currency" required>
-                                       <option value="$" @if(old('currency') == '$') selected @endif>$ (US Dollar)</option>
-    <option value="€" @if(old('currency') == '€') selected @endif>€ (Euro)</option>
-    <option value="£" @if(old('currency') == '£') selected @endif>£ (British Pound)</option>
-    <option value="¥" @if(old('currency') == '¥') selected @endif>¥ (Japanese Yen)</option>
-    <option value="₩" @if(old('currency') == '₩') selected @endif>₩ (South Korean Won)</option>
-    <option value="₺" @if(old('currency') == '₺') selected @endif>₺ (Turkish Lira)</option>
-    <option value="₹" @if(old('currency') == '₹') selected @endif>₹ (Indian Rupee)</option>
-    <option value="A$" @if(old('currency') == 'A$') selected @endif>A$ (Australian Dollar)</option>
-    <option value="C$" @if(old('currency') == 'C$') selected @endif>C$ (Canadian Dollar)</option>
-    <option value="CHF" @if(old('currency') == 'CHF') selected @endif>CHF (Swiss Franc)</option>
-    <option value="NZ$" @if(old('currency') == 'NZ$') selected @endif>NZ$ (New Zealand Dollar)</option>
-    <option value="SGD" @if(old('currency') == 'SGD') selected @endif>SGD (Singapore Dollar)</option>
-    <option value="HK$" @if(old('currency') == 'HK$') selected @endif>HK$ (Hong Kong Dollar)</option>
-    <option value="MX$" @if(old('currency') == 'MX$') selected @endif>MX$ (Mexican Peso)</option>
-    <option value="R$" @if(old('currency') == 'R$') selected @endif>R$ (Brazilian Real)</option>
-    <option value="ZAR" @if(old('currency') == 'ZAR') selected @endif>ZAR (South African Rand)</option>
-    <option value="฿" @if(old('currency') == '฿') selected @endif>฿ (Thai Baht)</option>
-    <option value="₦" @if(old('currency') == '₦') selected @endif>₦ (Nigerian Naira)</option>
-    <option value="₫" @if(old('currency') == '₫') selected @endif>₫ (Vietnamese Dong)</option>
-    <option value="₱" @if(old('currency') == '₱') selected @endif>₱ (Philippine Peso)</option>
-    <option value="₡" @if(old('currency') == '₡') selected @endif>₡ (Costa Rican Colón)</option>
-    <option value="₲" @if(old('currency') == '₲') selected @endif>₲ (Paraguayan Guaraní)</option>
-    <option value="₴" @if(old('currency') == '₴') selected @endif>₴ (Ukrainian Hryvnia)</option>
-    <option value="₪" @if(old('currency') == '₪') selected @endif>₪ (Israeli Shekel)</option>
-    <option value="₸" @if(old('currency') == '₸') selected @endif>₸ (Kazakhstani Tenge)</option>
-    <option value="₺" @if(old('currency') == '₺') selected @endif>₺ (Turkish Lira)</option>
-    <option value="R" @if(old('currency') == 'R') selected @endif>R (South African Rand)</option>
-    <option value="kr" @if(old('currency') == 'kr') selected @endif>kr (Swedish / Norwegian Krona)</option>
-    <option value="Kč" @if(old('currency') == 'Kč') selected @endif>Kč (Czech Koruna)</option>
-    <option value="₾" @if(old('currency') == '₾') selected @endif>₾ (Georgian Lari)</option>
-    <option value="₨" @if(old('currency') == '₨') selected @endif>₨ (Pakistani / Sri Lankan / Nepalese Rupee)</option>
-    <option value="₮" @if(old('currency') == '₮') selected @endif>₮ (Mongolian Tögrög)</option>
-    <option value="₼" @if(old('currency') == '₼') selected @endif>₼ (Azerbaijani Manat)</option>
-    <option value="₤" @if(old('currency') == '₤') selected @endif>₤ (Italian Lira)</option>
-    <option value="₳" @if(old('currency') == '₳') selected @endif>₳ (Argentine Austral)</option>
-    <option value="₥" @if(old('currency') == '₥') selected @endif>₥ (Mill)</option>
-    <option value="₯" @if(old('currency') == '₯') selected @endif>₯ (Greek Drachma)</option>
-    <option value="₰" @if(old('currency') == '₰') selected @endif>₰ (German Pfennig)</option>
-                                    </select>
-                                    <div class="error-message">
-                                        @error('currency') {{ $message }} @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>How did you hear about us?</label>
-                            <select name="referral_source" id="referral_source">
-                                <option value="">Select an option</option>
-                                <option value="friend">Friend or Family</option>
-                                <option value="online">Online Search</option>
-                                <option value="social">Social Media</option>
-                                <option value="advertisement">Advertisement</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary prev-step" data-prev="1">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="button" class="btn btn-primary next-step" data-next="3">
-                                Continue <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 3: Next of Kin Information -->
-                    <div class="form-section" id="step-3">
-                        <h3 class="section-title">Next of Kin Information</h3>
-                        <p style="margin-bottom: 1.5rem; color: var(--gray-dark); font-size: 0.95rem;">
-                            Please provide details of your next of kin. This information is required for account security and emergency contact purposes.
-                        </p>
-                        
-                        <div class="form-group">
-                            <label for="kin_full_name">Full Name</label>
-                            <input type="text" name="kin_full_name" value="{{ old('kin_full_name') }}" required id="kin_full_name" placeholder="Next of kin's full legal name">
-                            <div class="error-message">
-                                @error('kin_full_name') {{ $message }} @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="relationship-group">
-                            <div class="form-col">
-                                <div class="form-group">
-                                    <label for="kin_relationship">Relationship</label>
-                                    <select name="kin_relationship" id="kin_relationship" required>
-                                        <option value="">Select Relationship</option>
-                                        <option value="spouse" {{ old('kin_relationship') == 'spouse' ? 'selected' : '' }}>Spouse</option>
-                                        <option value="parent" {{ old('kin_relationship') == 'parent' ? 'selected' : '' }}>Parent</option>
-                                        <option value="child" {{ old('kin_relationship') == 'child' ? 'selected' : '' }}>Child</option>
-                                        <option value="sibling" {{ old('kin_relationship') == 'sibling' ? 'selected' : '' }}>Sibling</option>
-                                        <option value="other_relative" {{ old('kin_relationship') == 'other_relative' ? 'selected' : '' }}>Other Relative</option>
-                                        <option value="friend" {{ old('kin_relationship') == 'friend' ? 'selected' : '' }}>Friend</option>
-                                    </select>
-                                    <div class="error-message">
-                                        @error('kin_relationship') {{ $message }} @enderror
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-col">
-                                <div class="form-group">
-                                    <label for="kin_phone">Phone Number</label>
-                                    <input type="tel" name="kin_phone" value="{{ old('kin_phone') }}" required id="kin_phone" placeholder="Next of kin's phone number">
-                                    <div class="error-message">
-                                        @error('kin_phone') {{ $message }} @enderror
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="kin_email">Email Address</label>
-                            <input type="email" name="kin_email" value="{{ old('kin_email') }}" id="kin_email" placeholder="Next of kin's email address (optional)">
-                            <div class="error-message">
-                                @error('kin_email') {{ $message }} @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="kin_address">Residential Address</label>
-                            <textarea name="kin_address" id="kin_address" rows="3" placeholder="Next of kin's complete residential address" required>{{ old('kin_address') }}</textarea>
-                            <div class="error-message">
-                                @error('kin_address') {{ $message }} @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="security-tips">
-                            <h3><i class="fas fa-info-circle"></i> Important Note</h3>
-                            <ul>
-                                <li>Your next of kin will be contacted only in emergency situations</li>
-                                <li>Ensure the contact information provided is accurate and up-to-date</li>
-                                <li>You can update this information anytime through your online banking portal</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary prev-step" data-prev="2">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="button" class="btn btn-primary next-step" data-next="4">
-                                Continue <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 4: Security Setup -->
-                    <div class="form-section" id="step-4">
-                        <h3 class="section-title">Security Setup</h3>
-                        
-                        <div class="form-group">
-                            <label for="password">Create Password</label>
-                            <div class="password-container">
-                                <input type="password" name="password" autocomplete="new-password" required id="password" placeholder="Minimum 8 characters with uppercase, lowercase, and number">
-                                <span class="toggle-password" data-target="password">
-                                    <i class="far fa-eye"></i>
-                                </span>
-                            </div>
-                            <div class="password-strength" id="password-strength" data-strength="weak"></div>
-                            <div class="password-strength-text" id="password-strength-text">Password Strength: Weak</div>
-                            <div class="error-message">
-                                @error('password') {{ $message }} @enderror
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password_confirmation">Confirm Password</label>
-                            <div class="password-container">
-                                <input type="password" name="password_confirmation" required id="password_confirmation" placeholder="Re-enter your password">
-                                <span class="toggle-password" data-target="password_confirmation">
-                                    <i class="far fa-eye"></i>
-                                </span>
-                            </div>
-                            <div class="error-message">
-                                @error('password_confirmation') {{ $message }} @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="transaction_pin">Transaction PIN</label>
-                            <div class="password-container">
-                                <input 
-                                    type="password" 
-                                    name="transaction_pin" 
-                                    value="{{ old('transaction_pin') }}" 
-                                    required 
-                                    id="transaction_pin" 
-                                    placeholder="Enter 4 digit PIN" 
-                                    maxlength="6"
-                                    pattern="[0-9]{4,6}"
-                                    title="Please enter a 4 digit numeric PIN"
-                                    autocomplete="off"
-                                >
-                                <span class="toggle-password" data-target="transaction_pin">
-                                    <i class="far fa-eye"></i>
-                                </span>
-                            </div>
-                            <div class="error-message">
-                                @error('transaction_pin') {{ $message }} @enderror
-                            </div>
-                        </div>
-                        
-                        <div class="security-tips">
-                            <h3><i class="fas fa-shield-alt"></i> Security Tips:</h3>
-                            <ul>
-                                <li>Never share your password or PIN with anyone, including bank employees</li>
-                                <li>Create a strong password with uppercase, lowercase, numbers and special characters</li>
-                                <li>Avoid using personal information like birthdays or names in your password</li>
-                                <li>Topsavers Trust Bank will never ask for your password via email or phone</li>
-                            </ul>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary prev-step" data-prev="3">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="button" class="btn btn-primary next-step" data-next="5">
-                                Continue <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 5: Profile Picture Upload -->
-                    <div class="form-section" id="step-5">
-                        <h3 class="section-title">Upload Profile Picture</h3>
-                        
-                        <div class="upload-container">
-                            <div class="upload-icon">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <h3 class="upload-text">Upload your profile picture to complete account setup</h3>
-                            
-                            <div class="file-input-wrapper">
-                                <input type="file" name="display_picture" id="display_picture" accept="image/*" class="file-input">
-                                <label for="display_picture" class="file-input-button">
-                                    <i class="fas fa-cloud-upload-alt"></i> Choose File
-                                </label>
-                            </div>
-                            
-                            <div class="file-name" id="file-name">No file chosen</div>
-                            
-                            <div class="preview-container">
-                                <div class="preview-placeholder" id="preview-placeholder">
-                                    <i class="fas fa-user" style="font-size: 3rem; color: var(--gray-dark);"></i>
-                                </div>
-                                <img id="preview-image" class="preview-image" style="display: none;">
-                            </div>
-                            
-                            <div class="error-message">
-                                @error('display_picture') {{ $message }} @enderror
-                            </div>
-                            
-                            <p style="margin-top: 1rem; color: var(--gray-dark); font-size: 0.85rem;">
-                                Supported formats: JPG, PNG, GIF. Max file size: 2MB.
-                            </p>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary prev-step" data-prev="4">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="button" class="btn btn-primary next-step" data-next="6">
-                                Continue <i class="fas fa-arrow-right"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <!-- Step 6: Review & Submit -->
-                    <div class="form-section" id="step-6">
-                        <h3 class="section-title">Review & Submit</h3>
-                        
-                        <div class="review-summary">
-                            <h4>Please review your information:</h4>
-                            
-                            <div class="review-section">
-                                <h5>Personal Information</h5>
-                                <div class="review-row">
-                                    <span class="review-label">Full Name:</span>
-                                    <span class="review-value" id="review-name"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Email:</span>
-                                    <span class="review-value" id="review-email"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Phone:</span>
-                                    <span class="review-value" id="review-phone"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Date of Birth:</span>
-                                    <span class="review-value" id="review-dob"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Country:</span>
-                                    <span class="review-value" id="review-country"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Profile Picture:</span>
-                                    <span class="review-value" id="review-display-picture">No file chosen</span>
-                                </div>
-                            </div>
-                            
-                            <div class="review-section">
-                                <h5>Account Details</h5>
-                                <div class="review-row">
-                                    <span class="review-label">Account Type:</span>
-                                    <span class="review-value" id="review-account-type"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Currency:</span>
-                                    <span class="review-value" id="review-currency"></span>
-                                </div>
-                            </div>
-                            
-                            <div class="review-section">
-                                <h5>Next of Kin Information</h5>
-                                <div class="review-row">
-                                    <span class="review-label">Full Name:</span>
-                                    <span class="review-value" id="review-kin-name"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Relationship:</span>
-                                    <span class="review-value" id="review-kin-relationship"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Phone:</span>
-                                    <span class="review-value" id="review-kin-phone"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Email:</span>
-                                    <span class="review-value" id="review-kin-email"></span>
-                                </div>
-                                <div class="review-row">
-                                    <span class="review-label">Address:</span>
-                                    <span class="review-value" id="review-kin-address"></span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="terms-container">
-                            <h4>Terms and Conditions</h4>
-                            <p>By submitting this application, you agree to the Topsavers Trust Bank Online Banking Agreement, which includes important information about your rights and responsibilities when using our online banking services.</p>
-                            <p>You acknowledge that you have received and read the Privacy Policy and agree to its terms. You authorize Topsavers Trust Bank to verify the information provided in this application and to obtain credit reports and other information as necessary.</p>
-                            <p>You understand that accounts are subject to approval and that Topsavers Trust Bank may require additional documentation to verify your identity before opening your account.</p>
-                        </div>
-                        
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="terms_agree" name="terms_agree" required>
-                            <label for="terms_agree">I have read and agree to the Terms and Conditions and Privacy Policy</label>
-                        </div>
-                        
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="marketing_agree" name="marketing_agree">
-                            <label for="marketing_agree">I would like to receive marketing communications about Topsavers Trust Bank products and services</label>
-                        </div>
-                        
-                        <div class="form-actions">
-                            <button type="button" class="btn btn-secondary prev-step" data-prev="5">
-                                <i class="fas fa-arrow-left"></i> Back
-                            </button>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-check-circle"></i> Submit Application
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-            
-            <div class="login-prompt">
-                Already have an account? <a href="{{ route('user.login') }}">Sign in to your account</a>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <p>Copyright &copy; 2025 Topsavers Trust Bank. All rights reserved. | Member FDIC | Equal Housing Lender</p>
-    </footer>
-
-    <script>
-        // Multi-step form functionality
-        document.querySelectorAll('.next-step').forEach(button => {
-            button.addEventListener('click', function() {
-                const currentStep = this.closest('.form-section').id.split('-')[1];
-                const nextStep = this.getAttribute('data-next');
-                
-                // Validate current step before proceeding
-                if (validateStep(currentStep)) {
-                    // Update progress steps
-                    document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
-                    document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('completed');
-                    document.querySelector(`.progress-step[data-step="${nextStep}"]`).classList.add('active');
-                    
-                    // Show next step
-                    document.getElementById(`step-${currentStep}`).classList.remove('active');
-                    document.getElementById(`step-${nextStep}`).classList.add('active');
-                    
-                    // If moving to review step, populate review fields
-                    if (nextStep === '6') {
-                        populateReviewFields();
-                    }
-                }
-            });
-        });
-        
-        document.querySelectorAll('.prev-step').forEach(button => {
-            button.addEventListener('click', function() {
-                const currentStep = this.closest('.form-section').id.split('-')[1];
-                const prevStep = this.getAttribute('data-prev');
-                
-                // Update progress steps
-                document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
-                document.querySelector(`.progress-step[data-step="${prevStep}"]`).classList.add('active');
-                
-                // Show previous step
-                document.getElementById(`step-${currentStep}`).classList.remove('active');
-                document.getElementById(`step-${prevStep}`).classList.add('active');
-            });
-        });
-        
-        // Form validation for each step
-        function validateStep(step) {
-            let isValid = true;
-            const currentStep = document.getElementById(`step-${step}`);
-            const inputs = currentStep.querySelectorAll('input[required], select[required], textarea[required]');
-            
-            inputs.forEach(input => {
-                if (!input.value.trim()) {
-                    isValid = false;
-                    input.style.borderColor = 'var(--error-color)';
-                    const errorDiv = input.parentElement.querySelector('.error-message');
-                    if (errorDiv) {
-                        errorDiv.textContent = 'This field is required';
-                    }
-                } else {
-                    input.style.borderColor = '';
-                    const errorDiv = input.parentElement.querySelector('.error-message');
-                    if (errorDiv) {
-                        errorDiv.textContent = '';
-                    }
-                }
-            });
-            
-            // Additional validation for specific steps
-            if (step === '4') {
-                const password = document.getElementById('password').value;
-                const confirmPassword = document.getElementById('password_confirmation').value;
-                
-                if (password !== confirmPassword) {
-                    isValid = false;
-                    document.getElementById('password_confirmation').style.borderColor = 'var(--error-color)';
-                    const errorDiv = document.getElementById('password_confirmation').parentElement.querySelector('.error-message');
-                    if (errorDiv) {
-                        errorDiv.textContent = 'Passwords do not match';
-                    }
-                }
-            }
-            
-            return isValid;
-        }
-        
-        // Populate review fields
-        function populateReviewFields() {
-            document.getElementById('review-name').textContent = document.getElementById('name').value;
-            document.getElementById('review-email').textContent = document.getElementById('email').value;
-            document.getElementById('review-phone').textContent = document.getElementById('phone').value;
-            document.getElementById('review-dob').textContent = document.getElementById('dob').value;
-            document.getElementById('review-country').textContent = document.getElementById('country').value;
-            
-            // Profile picture file name
-            const displayPictureInput = document.getElementById('display_picture');
-            document.getElementById('review-display-picture').textContent = displayPictureInput.files.length > 0 ? displayPictureInput.files[0].name : 'No file chosen';
-            
-            const accountTypeSelect = document.getElementById('account_type');
-            document.getElementById('review-account-type').textContent = accountTypeSelect.options[accountTypeSelect.selectedIndex].text;
-            
-            const currencySelect = document.getElementById('currency');
-            document.getElementById('review-currency').textContent = currencySelect.options[currencySelect.selectedIndex].text;
-            
-            // Next of kin information
-            document.getElementById('review-kin-name').textContent = document.getElementById('kin_full_name').value;
-            
-            const relationshipSelect = document.getElementById('kin_relationship');
-            document.getElementById('review-kin-relationship').textContent = relationshipSelect.options[relationshipSelect.selectedIndex].text;
-            
-            document.getElementById('review-kin-phone').textContent = document.getElementById('kin_phone').value;
-            document.getElementById('review-kin-email').textContent = document.getElementById('kin_email').value || 'Not provided';
-            document.getElementById('review-kin-address').textContent = document.getElementById('kin_address').value;
-        }
-        
-        // Password strength indicator
-        const passwordInput = document.getElementById('password');
-        const passwordStrength = document.getElementById('password-strength');
-        const passwordStrengthText = document.getElementById('password-strength-text');
-        
-        passwordInput.addEventListener('input', function() {
-            const password = passwordInput.value;
-            let strength = 0;
-            
-            // Check length
-            if (password.length >= 8) strength += 1;
-            if (password.length >= 12) strength += 1;
-            
-            // Check for mixed case
-            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 1;
-            
-            // Check for numbers
-            if (/\d/.test(password)) strength += 1;
-            
-            // Check for special chars
-            if (/[^a-zA-Z0-9]/.test(password)) strength += 1;
-            
-            // Update strength indicator
-            let strengthLevel = '';
-            let strengthText = '';
-            let textClass = '';
-            
-            if (password.length === 0) {
-                strengthLevel = '';
-                strengthText = '';
-            } else if (strength <= 1) {
-                strengthLevel = 'weak';
-                strengthText = 'Weak';
-                textClass = 'weak';
-            } else if (strength <= 3) {
-                strengthLevel = 'medium';
-                strengthText = 'Medium';
-                textClass = 'medium';
-            } else if (strength === 4) {
-                strengthLevel = 'good';
-                strengthText = 'Good';
-                textClass = 'good';
-            } else {
-                strengthLevel = 'strong';
-                strengthText = 'Strong';
-                textClass = 'strong';
-            }
-            
-            passwordStrength.setAttribute('data-strength', strengthLevel);
-            passwordStrengthText.textContent = password.length > 0 ? `Password Strength: ${strengthText}` : '';
-            passwordStrengthText.className = `password-strength-text ${textClass}`;
-        });
-        
-        // Toggle password visibility
-        document.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.addEventListener('click', function() {
-                const targetId = this.getAttribute('data-target');
-                const input = document.getElementById(targetId);
-                const icon = this.querySelector('i');
-                
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    icon.classList.remove('fa-eye');
-                    icon.classList.add('fa-eye-slash');
-                } else {
-                    input.type = 'password';
-                    icon.classList.remove('fa-eye-slash');
-                    icon.classList.add('fa-eye');
-                }
-            });
-        });
-        
-        // Profile picture file handling
-        const displayPictureInput = document.getElementById('display_picture');
-        const fileName = document.getElementById('file-name');
-        const previewImage = document.getElementById('preview-image');
-        const previewPlaceholder = document.getElementById('preview-placeholder');
-        
-        displayPictureInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            const errorDiv = this.parentElement.parentElement.querySelector('.error-message');
-            
-            if (file) {
-                // Display file name
-                fileName.textContent = file.name;
-                
-                // Check file type
-                const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
-                if (!validTypes.includes(file.type)) {
-                    errorDiv.textContent = 'Please select a valid image file (JPEG, PNG, GIF).';
-                    this.value = '';
-                    fileName.textContent = 'No file chosen';
-                    return;
-                }
-                
-              // Check file size (15MB)
-if (file.size > 15 * 1024 * 1024) {
-    errorDiv.textContent = 'File size must be less than 15MB.';
-    this.value = '';
-    fileName.textContent = 'No file chosen';
-    return;
+<style>
+:root {
+  --primary: #00a9a4;
+  --primary-dark: #007875;
+  --primary-light: #20c9c3;
+  --accent: #0284c7;
+  --navy: #0f172a;
+  --navy-dark: #082f49;
+  --txt: #0f172a;
+  --txt-muted: #64748b;
+  --bg-light: #f8fafc;
+  --card-bg: #ffffff;
+  --border: #e2e8f0;
+  --error: #ef4444;
+  --success: #10b981;
+  --radius: 14px;
 }
 
-                
-                errorDiv.textContent = '';
-                
-                // Preview image
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    previewImage.src = e.target.result;
-                    previewImage.style.display = 'block';
-                    previewPlaceholder.style.display = 'none';
-                };
-                reader.readAsDataURL(file);
-            } else {
-                fileName.textContent = 'No file chosen';
-                previewImage.style.display = 'none';
-                previewPlaceholder.style.display = 'flex';
-            }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--txt);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.auth-header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.auth-header-logo img { height: 48px; width: auto; }
+.auth-header-action {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--primary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1.5px solid rgba(0,169,164,.35);
+  transition: all .25s ease;
+}
+.auth-header-action:hover {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* Main Container */
+.reg-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.reg-card {
+  width: 100%;
+  max-width: 900px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(15,23,42,.08), 0 1px 3px rgba(0,0,0,.05);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Card Header & Wizard Steps */
+.reg-card-head {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+  color: #fff;
+  padding: 32px 36px 24px;
+}
+.reg-card-head h1 { font-family: 'Manrope', sans-serif; font-size: 26px; font-weight: 800; margin-bottom: 6px; }
+.reg-card-head p { font-size: 14px; color: rgba(255,255,255,.7); }
+
+/* Progress Bar */
+.wizard-progress {
+  display: flex;
+  background: #f1f5f9;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  overflow-x: auto;
+  gap: 12px;
+}
+.wiz-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--txt-muted);
+  white-space: nowrap;
+  opacity: .65;
+  transition: all .25s ease;
+}
+.wiz-step.active { color: var(--primary); opacity: 1; }
+.wiz-step.completed { color: var(--success); opacity: 1; }
+.wiz-step-num {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  color: #fff;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+.wiz-step.active .wiz-step-num { background: var(--primary); }
+.wiz-step.completed .wiz-step-num { background: var(--success); }
+.wiz-step-sep { color: #cbd5e1; font-size: 12px; }
+
+/* Wizard Form Body */
+.reg-card-body { padding: 36px 36px 28px; }
+.form-step { display: none; }
+.form-step.active { display: block; animation: fadeIn .3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--txt);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.step-title i { color: var(--primary); }
+.step-desc { font-size: 13.5px; color: var(--txt-muted); margin-bottom: 24px; }
+
+/* Form Grids & Inputs */
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.form-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.form-group { margin-bottom: 20px; }
+.form-label { display: block; font-size: 13px; font-weight: 600; color: var(--txt); margin-bottom: 6px; }
+.form-label span.req { color: var(--error); margin-left: 2px; }
+
+.form-control {
+  width: 100%;
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--txt);
+  background: var(--bg-light);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  transition: all .2s ease;
+}
+.form-control:focus {
+  outline: none;
+  background: #fff;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0,169,164,.14);
+}
+
+select.form-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg fill='%2300a9a4' height='20' viewBox='0 0 24 24' width='20' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.input-wrap { position: relative; display: flex; align-items: center; }
+.toggle-pwd {
+  position: absolute; right: 14px;
+  background: none; border: none;
+  color: #94a3b8; cursor: pointer;
+  font-size: 16px; transition: color .2s;
+}
+.toggle-pwd:hover { color: var(--primary); }
+
+.error-txt { color: var(--error); font-size: 12px; margin-top: 4px; font-weight: 500; }
+
+/* Password Strength Meter */
+.pwd-strength { margin-top: 8px; }
+.pwd-strength-bar { height: 4px; width: 100%; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin-bottom: 4px; }
+.pwd-strength-fill { height: 100%; width: 0%; transition: width .3s, background-color .3s; }
+.pwd-strength-label { font-size: 11.5px; font-weight: 600; color: var(--txt-muted); }
+
+/* File Upload Zone */
+.upload-box {
+  border: 2px dashed var(--border);
+  background: var(--bg-light);
+  border-radius: 14px;
+  padding: 32px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .25s ease;
+  position: relative;
+}
+.upload-box:hover { border-color: var(--primary); background: rgba(0,169,164,.04); }
+.upload-icon { font-size: 38px; color: var(--primary); margin-bottom: 10px; }
+.upload-box p { font-size: 13.5px; color: var(--txt-muted); margin-bottom: 12px; }
+.upload-file-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 13px; font-weight: 600;
+  color: #fff; background: var(--primary);
+  padding: 8px 18px; border-radius: 8px; cursor: pointer;
+}
+.upload-input { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.preview-img { max-width: 110px; max-height: 110px; border-radius: 50%; object-fit: cover; margin: 12px auto 0; border: 3px solid var(--primary); display: none; }
+
+/* Checkbox Label */
+.terms-label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 13.5px; color: var(--txt); }
+.terms-label input { accent-color: var(--primary); width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0; }
+
+/* Buttons & Navigation */
+.wiz-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+.btn-wiz {
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .25s ease;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-wiz-prev { background: #e2e8f0; color: var(--txt); }
+.btn-wiz-prev:hover { background: #cbd5e1; }
+.btn-wiz-next { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; box-shadow: 0 4px 14px rgba(0,169,164,.30); }
+.btn-wiz-next:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(0,169,164,.40); }
+
+.btn-spinner {
+  display: none;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.auth-footer-note { text-align: center; margin-top: 20px; font-size: 13.5px; color: var(--txt-muted); }
+.auth-footer-note a { color: var(--primary); font-weight: 700; text-decoration: none; }
+
+footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-muted); border-top: 1px solid var(--border); background: var(--card-bg); }
+
+@media (max-width: 768px) {
+  .reg-card-body { padding: 24px 20px; }
+  .form-grid-2, .form-grid-3 { grid-template-columns: 1fr; }
+  .reg-card-head { padding: 24px 20px; }
+  .reg-card-head h1 { font-size: 22px; }
+}
+</style>
+</head>
+<body>
+
+  <!-- Header Navigation -->
+  <header class="auth-header">
+    <a href="/" class="auth-header-logo">
+      <img src="{{ asset('home/asset/img/logo.png') }}" alt="Topsavers Trust Bank">
+    </a>
+    <a href="{{ route('login') }}" class="auth-header-action">
+      <i class="ri-login-box-line"></i> Already a Client? Sign In
+    </a>
+  </header>
+
+  <!-- Main Enrollment Wrapper -->
+  <main class="reg-wrapper">
+    <div class="reg-card">
+
+      <!-- Header Title -->
+      <div class="reg-card-head">
+        <h1>Online Banking Account Enrollment</h1>
+        <p>Complete the application below to open your secure Topsavers Trust Bank account in minutes.</p>
+      </div>
+
+      <!-- Step Wizard Progress Bar -->
+      <div class="wizard-progress">
+        <div class="wiz-step active" id="wiz-step-1">
+          <span class="wiz-step-num">1</span> Personal Details
+        </div>
+        <span class="wiz-step-sep"><i class="ri-arrow-right-s-line"></i></span>
+        <div class="wiz-step" id="wiz-step-2">
+          <span class="wiz-step-num">2</span> Account &amp; PIN
+        </div>
+        <span class="wiz-step-sep"><i class="ri-arrow-right-s-line"></i></span>
+        <div class="wiz-step" id="wiz-step-3">
+          <span class="wiz-step-num">3</span> Security
+        </div>
+        <span class="wiz-step-sep"><i class="ri-arrow-right-s-line"></i></span>
+        <div class="wiz-step" id="wiz-step-4">
+          <span class="wiz-step-num">4</span> Next of Kin
+        </div>
+        <span class="wiz-step-sep"><i class="ri-arrow-right-s-line"></i></span>
+        <div class="wiz-step" id="wiz-step-5">
+          <span class="wiz-step-num">5</span> Photo &amp; Terms
+        </div>
+      </div>
+
+      <!-- Form Body -->
+      <div class="reg-card-body">
+
+        @if($errors->any())
+          <div style="padding: 12px 16px; border-radius: 10px; background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; font-size: 13px; margin-bottom: 24px;">
+            <strong style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><i class="ri-error-warning-fill"></i> Please fix the following errors:</strong>
+            <ul style="padding-left: 18px; margin: 0;">
+              @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
+
+        <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+          @csrf
+
+          <!-- STEP 1: PERSONAL INFORMATION -->
+          <div class="form-step active" id="step-1">
+            <div class="step-title"><i class="ri-user-settings-line"></i> Step 1: Personal Information</div>
+            <div class="step-desc">Enter your basic identification details as shown on your official government ID.</div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">First Name <span class="req">*</span></label>
+                <input type="text" name="first_name" id="first_name" class="form-control" placeholder="e.g. John" value="{{ old('first_name') }}" required>
+                <div class="error-txt" id="err-first_name"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name <span class="req">*</span></label>
+                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="e.g. Smith" value="{{ old('last_name') }}" required>
+                <div class="error-txt" id="err-last_name"></div>
+              </div>
+            </div>
+
+            <div class="form-grid-3">
+              <div class="form-group">
+                <label class="form-label">Gender <span class="req">*</span></label>
+                <select name="gender" id="gender" class="form-control" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
+                  <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Female</option>
+                  <option value="Other" {{ old('gender') == 'Other' ? 'selected' : '' }}>Other</option>
+                </select>
+                <div class="error-txt" id="err-gender"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email Address <span class="req">*</span></label>
+                <input type="email" name="email" id="email" class="form-control" placeholder="john@example.com" value="{{ old('email') }}" required autocomplete="email">
+                <div class="error-txt" id="err-email"></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Phone Number <span class="req">*</span></label>
+                <input type="tel" name="phone" id="phone" class="form-control" placeholder="+1 (555) 000-0000" value="{{ old('phone') }}" required>
+                <div class="error-txt" id="err-phone"></div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Date of Birth <span class="req">*</span></label>
+              <input type="date" name="dob" id="dob" class="form-control" value="{{ old('dob') }}" required>
+              <div class="error-txt" id="err-dob"></div>
+            </div>
+          </div>
+
+          <!-- STEP 2: ACCOUNT PREFERENCES -->
+          <div class="form-step" id="step-2">
+            <div class="step-title"><i class="ri-bank-card-line"></i> Step 2: Account Preferences &amp; Security PIN</div>
+            <div class="step-desc">Choose your preferred account type, currency, and create a 4-digit transfer PIN.</div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Account Type <span class="req">*</span></label>
+                <select name="account_type" id="account_type" class="form-control" required>
+                  <option value="">Select Account Type</option>
+                  <option value="Savings Account" {{ old('account_type') == 'Savings Account' ? 'selected' : '' }}>Personal Savings Account</option>
+                  <option value="Checking Account" {{ old('account_type') == 'Checking Account' ? 'selected' : '' }}>Checking / Everyday Account</option>
+                  <option value="Corporate Account" {{ old('account_type') == 'Corporate Account' ? 'selected' : '' }}>Corporate &amp; Business Account</option>
+                  <option value="Fixed Deposit Account" {{ old('account_type') == 'Fixed Deposit Account' ? 'selected' : '' }}>Tenured Fixed Deposit Account</option>
+                </select>
+                <div class="error-txt" id="err-account_type"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Country of Residence <span class="req">*</span></label>
+                <select name="country" id="country" class="form-control" required>
+                  <option value="">Select Country</option>
+                  <option value="United States" {{ old('country') == 'United States' ? 'selected' : '' }}>United States</option>
+                  <option value="United Kingdom" {{ old('country') == 'United Kingdom' ? 'selected' : '' }}>United Kingdom</option>
+                  <option value="Canada" {{ old('country') == 'Canada' ? 'selected' : '' }}>Canada</option>
+                  <option value="Australia" {{ old('country') == 'Australia' ? 'selected' : '' }}>Australia</option>
+                  <option value="Germany" {{ old('country') == 'Germany' ? 'selected' : '' }}>Germany</option>
+                  <option value="France" {{ old('country') == 'France' ? 'selected' : '' }}>France</option>
+                  <option value="Switzerland" {{ old('country') == 'Switzerland' ? 'selected' : '' }}>Switzerland</option>
+                  <option value="Japan" {{ old('country') == 'Japan' ? 'selected' : '' }}>Japan</option>
+                  <option value="Other" {{ old('country') == 'Other' ? 'selected' : '' }}>Other International</option>
+                </select>
+                <div class="error-txt" id="err-country"></div>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Base Account Currency <span class="req">*</span></label>
+                <select name="currency" id="currency" class="form-control" required>
+                  <option value="USD" {{ old('currency') == 'USD' ? 'selected' : '' }}>USD - United States Dollar ($)</option>
+                  <option value="EUR" {{ old('currency') == 'EUR' ? 'selected' : '' }}>EUR - Euro (€)</option>
+                  <option value="GBP" {{ old('currency') == 'GBP' ? 'selected' : '' }}>GBP - British Pound (£)</option>
+                  <option value="CAD" {{ old('currency') == 'CAD' ? 'selected' : '' }}>CAD - Canadian Dollar (C$)</option>
+                  <option value="AUD" {{ old('currency') == 'AUD' ? 'selected' : '' }}>AUD - Australian Dollar (A$)</option>
+                  <option value="CHF" {{ old('currency') == 'CHF' ? 'selected' : '' }}>CHF - Swiss Franc (CHF)</option>
+                </select>
+                <div class="error-txt" id="err-currency"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">4-Digit Transaction Security PIN <span class="req">*</span></label>
+                <input type="password" name="transaction_pin" id="transaction_pin" class="form-control" placeholder="e.g. 4812" maxlength="4" pattern="\d{4}" required>
+                <div class="error-txt" id="err-transaction_pin"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: SECURITY & PASSWORD -->
+          <div class="form-step" id="step-3">
+            <div class="step-title"><i class="ri-lock-password-line"></i> Step 3: Account Password Setup</div>
+            <div class="step-desc">Set up a strong password to protect your online banking dashboard session.</div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Password <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="password" name="password" id="password" class="form-control" placeholder="Min. 8 characters" required autocomplete="new-password">
+                  <button type="button" class="toggle-pwd" data-target="password"><i class="far fa-eye"></i></button>
+                </div>
+                <div class="pwd-strength">
+                  <div class="pwd-strength-bar"><div class="pwd-strength-fill" id="pwd-fill"></div></div>
+                  <span class="pwd-strength-label" id="pwd-txt">Password Strength</span>
+                </div>
+                <div class="error-txt" id="err-password"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Confirm Password <span class="req">*</span></label>
+                <div class="input-wrap">
+                  <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Re-enter password" required autocomplete="new-password">
+                  <button type="button" class="toggle-pwd" data-target="password_confirmation"><i class="far fa-eye"></i></button>
+                </div>
+                <div class="error-txt" id="err-password_confirmation"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 4: NEXT OF KIN -->
+          <div class="form-step" id="step-4">
+            <div class="step-title"><i class="ri-parent-line"></i> Step 4: Next of Kin Information</div>
+            <div class="step-desc">Required regulatory emergency contact details for beneficiary safety.</div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Full Name of Next of Kin <span class="req">*</span></label>
+                <input type="text" name="kin_full_name" id="kin_full_name" class="form-control" placeholder="Full legal name" value="{{ old('kin_full_name') }}" required>
+                <div class="error-txt" id="err-kin_full_name"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Relationship <span class="req">*</span></label>
+                <input type="text" name="kin_relationship" id="kin_relationship" class="form-control" placeholder="e.g. Spouse, Brother, Parent" value="{{ old('kin_relationship') }}" required>
+                <div class="error-txt" id="err-kin_relationship"></div>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Next of Kin Phone <span class="req">*</span></label>
+                <input type="tel" name="kin_phone" id="kin_phone" class="form-control" placeholder="Phone number" value="{{ old('kin_phone') }}" required>
+                <div class="error-txt" id="err-kin_phone"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Next of Kin Email (Optional)</label>
+                <input type="email" name="kin_email" id="kin_email" class="form-control" placeholder="Email address" value="{{ old('kin_email') }}">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label class="form-label">Next of Kin Address <span class="req">*</span></label>
+                <input type="text" name="kin_address" id="kin_address" class="form-control" placeholder="Residential address" value="{{ old('kin_address') }}" required>
+                <div class="error-txt" id="err-kin_address"></div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">How Did You Hear About Us? (Optional)</label>
+                <select name="referral_source" id="referral_source" class="form-control">
+                  <option value="">Select Option</option>
+                  <option value="Search Engine (Google, Bing)">Search Engine</option>
+                  <option value="Social Media">Social Media</option>
+                  <option value="Friend or Family Referral">Friend or Family</option>
+                  <option value="Advertisement">Advertisement</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 5: PHOTO & TERMS -->
+          <div class="form-step" id="step-5">
+            <div class="step-title"><i class="ri-shield-check-line"></i> Step 5: Verification Photo &amp; Terms Agreement</div>
+            <div class="step-desc">Upload a profile/ID photo (optional) and accept our digital banking terms to activate your account.</div>
+
+            <div class="form-group">
+              <label class="form-label">Profile / ID Picture (Optional)</label>
+              <div class="upload-box" id="dropZone">
+                <i class="ri-image-add-line upload-icon"></i>
+                <p>Drag &amp; drop your profile image here, or click to browse</p>
+                <span class="upload-file-btn"><i class="ri-folder-open-line"></i> Choose Photo</span>
+                <input type="file" name="display_picture" id="display_picture" class="upload-input" accept="image/jpeg,image/png,image/jpg">
+                <img id="imagePreview" class="preview-img" alt="Preview Image">
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:24px;">
+              <label class="terms-label">
+                <input type="checkbox" name="terms_agree" id="terms_agree" value="1" required>
+                <span>I confirm that the information provided is accurate, and I agree to the <a href="{{ url('terms') }}" target="_blank" style="color:var(--primary);font-weight:700;">Topsavers Trust Bank Terms of Service</a> and Privacy Governance. <span class="req">*</span></span>
+              </label>
+              <div class="error-txt" id="err-terms_agree"></div>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="wiz-actions">
+            <button type="button" class="btn-wiz btn-wiz-prev" id="btnPrev" style="display:none;">
+              <i class="ri-arrow-left-line"></i> Back
+            </button>
+            <div></div>
+            <button type="button" class="btn-wiz btn-wiz-next" id="btnNext">
+              Next Step <i class="ri-arrow-right-line"></i>
+            </button>
+            <button type="submit" class="btn-wiz btn-wiz-next" id="btnSubmit" style="display:none;">
+              <span class="btn-spinner" id="submitSpinner"></span>
+              <i class="ri-checkbox-circle-line"></i> Complete Enrollment
+            </button>
+          </div>
+
+          <div class="auth-footer-note">
+            Already have an account? <a href="{{ route('login') }}">Sign In to Portal</a>
+          </div>
+
+        </form>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; {{ date('Y') }} Topsavers Trust Bank. All rights reserved. Encrypted &amp; Regulated Digital Banking Services.</p>
+  </footer>
+
+  <!-- Wizard JavaScript Logic -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let currentStep = 1;
+      const totalSteps = 5;
+
+      const btnNext = document.getElementById('btnNext');
+      const btnPrev = document.getElementById('btnPrev');
+      const btnSubmit = document.getElementById('btnSubmit');
+      const submitSpinner = document.getElementById('submitSpinner');
+      const regForm = document.getElementById('registrationForm');
+
+      function updateWizardUI() {
+        // Update Step displays
+        for (let i = 1; i <= totalSteps; i++) {
+          const stepEl = document.getElementById(`step-${i}`);
+          const wizStepEl = document.getElementById(`wiz-step-${i}`);
+
+          if (i === currentStep) {
+            stepEl.classList.add('active');
+            wizStepEl.classList.add('active');
+            wizStepEl.classList.remove('completed');
+          } else if (i < currentStep) {
+            stepEl.classList.remove('active');
+            wizStepEl.classList.remove('active');
+            wizStepEl.classList.add('completed');
+          } else {
+            stepEl.classList.remove('active');
+            wizStepEl.classList.remove('active');
+            wizStepEl.classList.remove('completed');
+          }
+        }
+
+        // Update Nav Buttons
+        if (currentStep === 1) {
+          btnPrev.style.display = 'none';
+        } else {
+          btnPrev.style.display = 'inline-flex';
+        }
+
+        if (currentStep === totalSteps) {
+          btnNext.style.display = 'none';
+          btnSubmit.style.display = 'inline-flex';
+        } else {
+          btnNext.style.display = 'inline-flex';
+          btnSubmit.style.display = 'none';
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function validateCurrentStep() {
+        let isValid = true;
+        const currentStepEl = document.getElementById(`step-${currentStep}`);
+        const requiredInputs = currentStepEl.querySelectorAll('[required]');
+
+        requiredInputs.forEach(input => {
+          const errDiv = document.getElementById(`err-${input.name}`);
+          if (!input.checkValidity() || input.value.trim() === '') {
+            isValid = false;
+            input.style.borderColor = 'var(--error)';
+            if (errDiv) errDiv.textContent = 'This field is required.';
+          } else {
+            input.style.borderColor = 'var(--border)';
+            if (errDiv) errDiv.textContent = '';
+          }
         });
-        
-        // Form validation
-        const form = document.getElementById('registrationForm');
-        form.addEventListener('submit', function(e) {
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('password_confirmation').value;
-            const termsAgree = document.getElementById('terms_agree').checked;
-            
-            if (password !== confirmPassword) {
-                e.preventDefault();
-                document.getElementById('password_confirmation').style.borderColor = 'var(--error-color)';
-                document.getElementById('password_confirmation').nextElementSibling.textContent = 'Passwords do not match';
-                document.getElementById('password_confirmation').focus();
-            }
-            
-            if (!termsAgree) {
-                e.preventDefault();
-                alert('You must agree to the Terms and Conditions to continue.');
-            }
+
+        // Special password match validation on step 3
+        if (currentStep === 3) {
+          const pwd = document.getElementById('password').value;
+          const pwdConfirm = document.getElementById('password_confirmation').value;
+          const errConfirm = document.getElementById('err-password_confirmation');
+
+          if (pwd.length < 8) {
+            isValid = false;
+            document.getElementById('err-password').textContent = 'Password must be at least 8 characters.';
+          }
+          if (pwd !== pwdConfirm) {
+            isValid = false;
+            if (errConfirm) errConfirm.textContent = 'Passwords do not match.';
+          }
+        }
+
+        return isValid;
+      }
+
+      btnNext.addEventListener('click', function() {
+        if (validateCurrentStep()) {
+          if (currentStep < totalSteps) {
+            currentStep++;
+            updateWizardUI();
+          }
+        }
+      });
+
+      btnPrev.addEventListener('click', function() {
+        if (currentStep > 1) {
+          currentStep--;
+          updateWizardUI();
+        }
+      });
+
+      // Password Toggle
+      document.querySelectorAll('.toggle-pwd').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const targetInput = document.getElementById(targetId);
+          const icon = this.querySelector('i');
+          if (targetInput.type === 'password') {
+            targetInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+          } else {
+            targetInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+          }
         });
-        
-        // Date picker max date (18 years ago)
-        document.getElementById('dob').max = new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0];
-        
-        // Phone number formatting for next of kin
-        document.getElementById('kin_phone').addEventListener('input', function(e) {
-            const x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-            e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+      });
+
+      // Password Strength Meter
+      const pwdInput = document.getElementById('password');
+      const pwdFill = document.getElementById('pwd-fill');
+      const pwdTxt = document.getElementById('pwd-txt');
+
+      if (pwdInput) {
+        pwdInput.addEventListener('input', function() {
+          const val = this.value;
+          let score = 0;
+          if (val.length >= 8) score += 30;
+          if (/[A-Z]/.test(val)) score += 20;
+          if (/[0-9]/.test(val)) score += 25;
+          if (/[^A-Za-z0-9]/.test(val)) score += 25;
+
+          pwdFill.style.width = score + '%';
+          if (score < 40) {
+            pwdFill.style.backgroundColor = 'var(--error)';
+            pwdTxt.textContent = 'Weak Password';
+            pwdTxt.style.color = 'var(--error)';
+          } else if (score < 75) {
+            pwdFill.style.backgroundColor = '#f59e0b';
+            pwdTxt.textContent = 'Medium Password';
+            pwdTxt.style.color = '#f59e0b';
+          } else {
+            pwdFill.style.backgroundColor = 'var(--success)';
+            pwdTxt.textContent = 'Strong Password';
+            pwdTxt.style.color = 'var(--success)';
+          }
         });
-    </script>
+      }
+
+      // Profile Picture Image Preview
+      const fileInput = document.getElementById('display_picture');
+      const imagePreview = document.getElementById('imagePreview');
+
+      if (fileInput) {
+        fileInput.addEventListener('change', function() {
+          const file = this.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              imagePreview.src = e.target.result;
+              imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+
+      // Form submit handler
+      regForm.addEventListener('submit', function(e) {
+        if (!validateCurrentStep()) {
+          e.preventDefault();
+          return;
+        }
+        btnSubmit.disabled = true;
+        submitSpinner.style.display = 'inline-block';
+      });
+
+    });
+  </script>
 </body>
 </html>

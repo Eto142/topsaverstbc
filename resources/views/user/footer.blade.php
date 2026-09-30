@@ -1,44 +1,36 @@
-<!-- Bottom Header -->
+<!-- Bottom Header (Floating Mobile Luxury Glass Dock) -->
 <div class="bottom-header">
     <ul>
         <li>
-            <div class="link-item">
-                <i class="fas fa-tachometer-alt"></i>
-                <a href="{{route('user.home')}}">Overview</a>
-            </div>
+            <a href="{{ route('user.home') }}" class="link-item {{ request()->routeIs('user.home') ? 'active' : '' }}">
+                <i class="fas fa-home"></i>
+                <span>Overview</span>
+            </a>
         </li>
         <li>
-            <div class="link-item">
-                <i class="fas fa-exchange-alt"></i>
-                <a href="{{route('user.transfer.bank')}}">Transfer</a>
-            </div>
+            <a href="{{ route('user.transfer.bank') }}" class="link-item {{ request()->routeIs('user.transfer*') ? 'active' : '' }}">
+                <i class="fas fa-paper-plane"></i>
+                <span>Transfer</span>
+            </a>
         </li>
         <li>
-            <div class="link-item">
+            <a href="{{ route('user.cards.card') }}" class="link-item {{ request()->routeIs('user.cards*') ? 'active' : '' }}">
                 <i class="fas fa-credit-card"></i>
-                <a href="{{route('user.cards.card')}}">Cards</a>
-            </div>
+                <span>Cards</span>
+            </a>
         </li>
         <li>
-            <div class="link-item">
+            <a href="{{ route('user.transactions') }}" class="link-item {{ request()->routeIs('user.transactions') ? 'active' : '' }}">
                 <i class="fas fa-history"></i>
-                <a href="{{route('user.transactions')}}">History</a>
-            </div>
+                <span>Activity</span>
+            </a>
         </li>
-       <li>
-    <div class="link-item">
-        <i class="fas fa-sign-out-alt"></i>
-        <a href="{{ route('user.logout') }}"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-           Logout
-        </a>
-
-        <form id="logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </div>
-</li>
-
+        <li>
+            <a href="{{ route('user.profile') }}" class="link-item {{ request()->routeIs('user.profile') ? 'active' : '' }}">
+                <i class="fas fa-user-circle"></i>
+                <span>Profile</span>
+            </a>
+        </li>
     </ul>
 </div>
 
@@ -68,15 +60,17 @@
         });
         
         // Balance toggle functionality
-        balanceToggle.addEventListener('change', function() {
-            if(this.checked) {
-                balanceDisplay.textContent = '{{ Auth::user()->currency }}{{ number_format($balance, 2) }}';
-                balanceDisplay.classList.remove('balance-hidden');
-            } else {
-                balanceDisplay.textContent = '••••••••';
-                balanceDisplay.classList.add('balance-hidden');
-            }
-        });
+        if (balanceToggle && balanceDisplay) {
+            balanceToggle.addEventListener('change', function() {
+                if(this.checked) {
+                    balanceDisplay.textContent = '{{ Auth::user()->currency }}{{ number_format($balance ?? Auth::user()->balance ?? 0, 2) }}';
+                    balanceDisplay.classList.remove('balance-hidden');
+                } else {
+                    balanceDisplay.textContent = '••••••••';
+                    balanceDisplay.classList.add('balance-hidden');
+                }
+            });
+        }
         
         // Auto-hide sidebar on mobile when clicking a link
         document.querySelectorAll('.nav-link').forEach(link => {

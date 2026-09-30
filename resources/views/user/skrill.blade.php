@@ -28,7 +28,7 @@
                     <div class="col-xl-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Balance: {{Auth::user()->currency}}{{$balance}}</h4>
+                                <h4 class="card-title">Balance: {{Auth::user()->currency}}{{ number_format($balance ?? Auth::user()->balance ?? 0, 2) }}</h4>
                             </div>
                             <div class="card-body">
                                 <div class="card">

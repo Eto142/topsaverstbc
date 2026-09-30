@@ -141,7 +141,7 @@
                                     <div class="balance">
                                         <img src="assets/images/logo2.png" alt="img" class="image-block imaged w48 lazy animate"
                                              width="800px">
-                                        <h1 class="title">{{Auth::user()->currency}}{{number_format($balance, 2, '.', ',')}}</h1>
+                                        <h1 class="title">{{Auth::user()->currency}}{{number_format($balance ?? Auth::user()->balance ?? 0, 2, '.', ',')}}</h1>
                                     </div>
                                     <div class="in">
                                         <div class="card-number">
