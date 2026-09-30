@@ -12,7 +12,7 @@
         <div class="bk-hero-body">
           <span class="bk-hero-label"><i class="ri-sparkling-2-fill"></i> Next-Gen Digital Banking</span>
           <h1>Your Money, Moving <em>Smarter</em> Than Ever</h1>
-          <p>Topsavers Trust Bank pairs bank-grade 256-bit security with an experience built for modern living — instant global transfers, real-time insights, and 24/7 dedicated support.</p>
+          <p>Topsavers Trust Bank pairs bank-grade 256-bit security with an experience built for modern living  instant global transfers, real-time insights, and 24/7 dedicated support.</p>
           <div class="bk-hero-actions">
             <a href="{{ route('register') }}" class="bk-btn bk-btn--white">Open an Account <i class="ri-arrow-right-line"></i></a>
             <a href="{{ route('login') }}" class="bk-btn bk-btn--glass">Sign In <i class="ri-login-circle-line"></i></a>
@@ -27,7 +27,7 @@
         <div class="bk-hero-body">
           <span class="bk-hero-label"><i class="ri-briefcase-4-fill"></i> Personal &amp; Business Banking</span>
           <h1>One Account. <em>Every</em> Side of Your Finances.</h1>
-          <p>Personal savings, business accounts, credit cards, and high-yield fixed deposits — manage all of it seamlessly from a single unified dashboard built to scale with you.</p>
+          <p>Personal savings, business accounts, credit cards, and high-yield fixed deposits  manage all of it seamlessly from a single unified dashboard built to scale with you.</p>
           <div class="bk-hero-actions">
             <a href="{{ url('services') }}" class="bk-btn bk-btn--white">Our Services <i class="ri-arrow-right-line"></i></a>
             <a href="{{ route('register') }}" class="bk-btn bk-btn--glass">Register Now <i class="ri-user-add-line"></i></a>
@@ -222,7 +222,7 @@
       <div class="bk-step sr">
         <div class="bk-step-num">01</div>
         <h3>Create Account</h3>
-        <p>Sign up online in under 5 minutes — all you need is a valid government ID and basic details.</p>
+        <p>Sign up online in under 5 minutes  all you need is a valid government ID and basic details.</p>
       </div>
       <div class="bk-step-line"></div>
       <div class="bk-step sr">
@@ -303,13 +303,13 @@
       <div class="bk-split-text sr">
         <span class="bk-label">Why Choose Us</span>
         <h2 class="bk-title">A Bank Built on Trust, Not Just <em>Transactions</em></h2>
-        <p class="bk-desc" style="margin:0 0 20px">For over a decade, Topsavers Trust Bank has been redefining digital finance — pairing powerful tech with genuine care, ensuring every customer feels safe, supported, and valued.</p>
+        <p class="bk-desc" style="margin:0 0 20px">For over a decade, Topsavers Trust Bank has been redefining digital finance  pairing powerful tech with genuine care, ensuring every customer feels safe, supported, and valued.</p>
         <div class="bk-check-list">
           <div class="bk-check-item">
             <i class="ri-checkbox-circle-fill"></i>
             <div>
               <strong>Transparent Banking Guarantee</strong>
-              <p>No hidden maintenance fees, no surprise fine-print charges — plain, honest banking.</p>
+              <p>No hidden maintenance fees, no surprise fine-print charges  plain, honest banking.</p>
             </div>
           </div>
           <div class="bk-check-item">
@@ -341,7 +341,7 @@
     <div class="bk-section-top">
       <span class="bk-label">Why Switch</span>
       <h2 class="bk-title">See the <em>Difference</em> for Yourself</h2>
-      <p class="bk-desc">No waiting rooms, no slow approvals — just banking that respects your time and your money.</p>
+      <p class="bk-desc">No waiting rooms, no slow approvals  just banking that respects your time and your money.</p>
     </div>
     <div class="bk-compare sr">
       <div class="bk-compare-row bk-compare-row--head">
@@ -492,7 +492,7 @@
     <div class="bk-cta-box sr">
       <div class="bk-cta-content">
         <h2>Ready to Bank Smarter, Starting Today?</h2>
-        <p>Join thousands of clients already banking better with Topsavers Trust Bank. Open your account in under 5 minutes — no paperwork, no hassle.</p>
+        <p>Join thousands of clients already banking better with Topsavers Trust Bank. Open your account in under 5 minutes  no paperwork, no hassle.</p>
         <div class="bk-cta-btns">
           <a href="{{ route('register') }}" class="bk-btn bk-btn--white">Open Free Account <i class="ri-arrow-right-line"></i></a>
           <a href="{{ url('contact') }}" class="bk-btn bk-btn--glass">Contact Support <i class="ri-customer-service-2-line"></i></a>
