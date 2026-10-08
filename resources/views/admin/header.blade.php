@@ -264,11 +264,14 @@
             background: var(--primary-color);
             color: white;
             border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
             font-size: 1.2rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
         }
         
         /* Responsive Adjustments */
@@ -279,15 +282,19 @@
             
             .sidebar.show {
                 transform: translateX(0);
-                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
             }
             
             .main-content {
-                margin-left: 0;
+                margin-left: 0 !important;
+                padding-top: 70px !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
+                width: 100% !important;
             }
             
             .sidebar-toggle {
-                display: block;
+                display: flex !important;
             }
             
             .sidebar-overlay.show {

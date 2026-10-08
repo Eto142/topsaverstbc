@@ -1,7 +1,7 @@
 @include('admin.header')
 
 <!-- Main Content -->
-<div class="main-content" id="mainContent">
+<div class="main-content p-3 p-md-4" id="mainContent">
     <!-- Page Header -->
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
         <div class="mb-3 mb-md-0">

@@ -1,6 +1,6 @@
 @include('admin.header')
 <!-- Main Content -->
-<div class="main-content p-4" id="mainContent" style="margin-left: 250px;">
+<div class="main-content p-3 p-md-4" id="mainContent">
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
@@ -11,11 +11,11 @@
 
     <!-- Customers Table Card -->
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
             <h5 class="mb-0">Recent Users</h5>
-            <div class="d-flex">
-                <input type="text" class="form-control form-control-sm me-2" placeholder="Search...">
-                <button class="btn btn-sm btn-outline-secondary">
+            <div class="d-flex gap-2">
+                <input type="text" class="form-control form-control-sm" placeholder="Search...">
+                <button class="btn btn-sm btn-outline-secondary text-nowrap">
                     <i class="fas fa-filter"></i> Filter
                 </button>
             </div>
@@ -56,7 +56,7 @@
 
       <div class="card-body p-0">
     <div class="table-responsive">
-        <table class="table table-hover mb-0" id="users-table">
+        <table class="table table-hover align-middle mb-0 text-nowrap" id="users-table">
             <thead class="table-light">
                 <tr>
                     <th>ID</th>
@@ -86,19 +86,19 @@
                     </td>
                     <td class="d-none d-sm-table-cell">{{ $user->created_at->format('Y-m-d') }}</td>
                     <td>
-                        <div class="btn-group btn-group-sm" role="group">
-                            <a href="{{ route('admin.profile', $user->id) }}" class="btn btn-outline-primary" title="View">
+                        <div class="d-flex align-items-center gap-1">
+                            <a href="{{ route('admin.profile', $user->id) }}" class="btn btn-sm btn-outline-primary" title="View">
                              <i class="fas fa-eye"></i>
                              <span class="d-none d-lg-inline"> View</span>
                              </a>
-                            <button type="button" class="btn btn-outline-success" title="Send Mail">
+                            <button type="button" class="btn btn-sm btn-outline-success" title="Send Mail">
                                 <i class="fas fa-envelope"></i>
                                 <span class="d-none d-lg-inline"> Mail</span>
                             </button>
-                             <form action="{{route('admin.delete', $user->id) }}" method="POST" class="d-inline">
+                             <form action="{{route('admin.delete', $user->id) }}" method="POST" class="d-inline mb-0">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-outline-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteUserModal{{ $user->id }}">
+                                            <button class="btn btn-sm btn-outline-danger" title="Delete" data-bs-toggle="modal" data-bs-target="#deleteUserModal{{ $user->id }}">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </form>
@@ -111,13 +111,15 @@
     </div>
     
     <!-- Pagination -->
-    <div class="card-footer d-flex justify-content-between align-items-center">
+    <div class="card-footer d-flex justify-content-between align-items-center flex-wrap gap-2">
         <div class="text-muted small">
             Showing <span class="fw-semibold">{{ $users->firstItem() }}</span> to 
             <span class="fw-semibold">{{ $users->lastItem() }}</span> of 
             <span class="fw-semibold">{{ $users->total() }}</span> entries
         </div>
-        {{ $users->links() }}
+        <div class="overflow-auto">
+            {{ $users->links() }}
+        </div>
     </div>
 </div>
 

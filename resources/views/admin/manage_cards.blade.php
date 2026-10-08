@@ -1,8 +1,8 @@
 @include('admin.header')
 
-<div class="main-content" id="mainContent">
+<div class="main-content p-3 p-md-4" id="mainContent">
     <!-- Page Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <h1 class="h4 mb-2 mb-md-0">My Cards</h1>
         <button class="btn btn-primary btn-sm">
             <i class="fas fa-download me-2"></i>Export Cards

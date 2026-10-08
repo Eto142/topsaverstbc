@@ -1,5 +1,5 @@
 @include('admin.header')
-<div class="main-content p-4" id="mainContent" style="margin-left: 250px;">
+<div class="main-content p-3 p-md-4" id="mainContent">
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
@@ -10,11 +10,11 @@
 
     <!-- Transactions Table Card -->
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
+        <div class="card-header d-flex justify-content-between align-items-center flex-wrap gap-2">
             <h5 class="mb-0">Recent Transfers</h5>
-            <div class="d-flex">
-                <input type="text" class="form-control form-control-sm me-2" placeholder="Search transfers...">
-                <button class="btn btn-sm btn-outline-secondary">
+            <div class="d-flex gap-2">
+                <input type="text" class="form-control form-control-sm" placeholder="Search transfers...">
+                <button class="btn btn-sm btn-outline-secondary text-nowrap">
                     <i class="fas fa-filter"></i> Filter
                 </button>
             </div>
@@ -22,7 +22,7 @@
         
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table custom-table table-hover mb-0" id="highlightRowColumn">
+                <table class="table custom-table table-hover align-middle mb-0 text-nowrap" id="highlightRowColumn">
                     <thead class="table-light">
                         <tr>
                             <th>Transaction ID</th>

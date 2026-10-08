@@ -1,6 +1,6 @@
 @include('admin.header')
 
-<div class="main-content p-4" id="mainContent" style="margin-left: 250px;">
+<div class="main-content p-3 p-md-4" id="mainContent">
     <!-- Page Header -->
     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
         <div>
@@ -25,7 +25,7 @@
     <!-- High-Impact Stats Cards Grid -->
     <div class="row g-4 mb-4">
         <!-- Total Users Card -->
-        <div class="col-md-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 position-relative overflow-hidden" style="border-left: 4px solid #00a9a4 !important;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted small fw-bold text-uppercase tracking-wider">Total Registered Users</span>
@@ -41,7 +41,7 @@
         </div>
 
         <!-- Total Deposits Card -->
-        <div class="col-md-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 position-relative overflow-hidden" style="border-left: 4px solid #10b981 !important;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted small fw-bold text-uppercase tracking-wider">Total Deposits</span>
@@ -55,7 +55,7 @@
         </div>
 
         <!-- Total Transfers Card -->
-        <div class="col-md-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 position-relative overflow-hidden" style="border-left: 4px solid #0284c7 !important;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted small fw-bold text-uppercase tracking-wider">Total Wire Transfers</span>
@@ -69,7 +69,7 @@
         </div>
 
         <!-- Active Loans Card -->
-        <div class="col-md-6 col-lg-3">
+        <div class="col-12 col-sm-6 col-lg-3">
             <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 position-relative overflow-hidden" style="border-left: 4px solid #f59e0b !important;">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted small fw-bold text-uppercase tracking-wider">Active Loan Applications</span>
@@ -85,7 +85,7 @@
 
     <!-- Recent Registrations Table Card -->
     <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden mb-4">
-        <div class="card-header bg-white border-0 p-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="card-header bg-white border-0 p-3 p-md-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
             <div>
                 <h5 class="fw-bold text-dark mb-0"><i class="fas fa-user-plus me-2 text-primary"></i> Recent Account Registrations</h5>
                 <span class="text-muted small">Latest accounts signed up on the platform</span>
@@ -97,7 +97,7 @@
 
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle mb-0 text-nowrap">
                     <thead class="bg-light">
                         <tr>
                             <th class="ps-4 py-3 text-muted small font-monospace">USER ID</th>
