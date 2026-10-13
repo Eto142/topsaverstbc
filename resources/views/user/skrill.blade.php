@@ -35,7 +35,7 @@
                                     <div class="card-body">
                                         <p>You're about to transfer from your account's available balance. This action cannot be reversed. Be sure to enter correct details.</p>
                                         <div id="response_code"></div>
-                                        <form  action="{{route('skrill.transfer')}}" method="POST">
+                                        <form  action="{{ route('user.skrill.transfer') }}" method="POST">
                                                  @csrf
                                             <p id="server"></p>
                                              <input type="hidden" class="form-control" name="email" value=" {{ Auth::user()->email}}"/>
