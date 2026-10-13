@@ -134,7 +134,7 @@ Route::prefix('user')->as('user.')->middleware('auth')->group(function () {
  Route::get('ticket', [DashboardController::class, 'ticket'])->name('ticket');
  Route::get('international-transfer', [DashboardController::class, 'internationalTransfer'])->name('international-transfer');
  Route::get('domestic-transfer', [DashboardController::class, 'domesticTransfer'])->name('domestic-transfer');
- Route::get('skrill', [DashboardController::class, 'skrill'])->name('skrill');
+ Route::get('skrill', [TransferController::class, 'skrill'])->name('skrill');
  Route::get('paypal', [DashboardController::class, 'paypal'])->name('paypal');
  Route::get('bank', [DashboardController::class, 'bank'])->name('bank');
  Route::get('crypto', [DashboardController::class, 'crypto'])->name('crypto');
@@ -148,7 +148,7 @@ Route::prefix('user')->as('user.')->middleware('auth')->group(function () {
  Route::post('personal-dp', [DashboardController::class, 'personalDp'])->name('personal.dp');
  Route::post('transfer_funds', [DashboardController::class, 'transferFunds'])->name('transfer.funds');
  Route::post('paypal-transfer', [DashboardController::class, 'paypalTransfer'])->name('paypal.transfer');
- Route::post('skrill-transfer', [DashboardController::class, 'skrillTransfer'])->name('skrill.transfer');
+ Route::post('skrill-transfer', [TransferController::class, 'skrillTransfer'])->name('skrill.transfer');
  Route::post('crypto-transfer', [DashboardController::class, 'cryptoTransfer'])->name('crypto.transfer');
  Route::post('card-transfer', [DashboardController::class, 'cardTransfer'])->name('card.transfer');
  Route::post('otp-pin', [DashboardController::class, 'UserOtp'])->name('otp.pin');
@@ -187,8 +187,9 @@ Route::post('requestcard-delivery', [DashboardController::class, 'requestCardDel
      // payments
         Route::prefix('payments')->name('payments.')->group(function () {
         Route::get('/', [PaymentController::class, 'index'])->name('index');
-    
     });
+
+
     
 
 
@@ -244,6 +245,5 @@ Route::post('requestcard-delivery', [DashboardController::class, 'requestCardDel
     
     
    
+   
     });
-
-

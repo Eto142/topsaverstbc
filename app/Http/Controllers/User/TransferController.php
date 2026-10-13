@@ -34,6 +34,26 @@ class TransferController extends Controller
         return view('user.bank', $data);
     }
 
+    public function skrill()
+    {
+        $userId = Auth::id();
+        $creditTransfers = Transaction::where('user_id', $userId)
+            ->where('transaction_status', '1')
+            ->where('transaction_type', 'Credit')
+            ->sum('transaction_amount');
+        $debitTransfers = Transaction::where('user_id', $userId)
+            ->where('transaction_status', '1')
+            ->where('transaction_type', 'Debit')
+            ->sum('transaction_amount');
+        $userDeposits = Deposit::where('user_id', $userId)->where('status', '1')->sum('amount');
+        $userLoans = Loan::where('user_id', $userId)->where('status', '1')->sum('amount');
+        $userCards = Card::where('user_id', $userId)->sum('amount');
+
+        $balance = $userDeposits + $creditTransfers + $userLoans - $debitTransfers - $userCards;
+
+        return view('user.skrill', compact('balance'));
+    }
+
 
 
 

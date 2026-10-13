@@ -1,4 +1,4 @@
-@include('dashboard.header')
+@include('user.header')
         <!--**********************************
             Content body start
         ***********************************-->
@@ -91,4 +91,4 @@
         <!--**********************************
             Content body end
         ***********************************-->
-@include('dashboard.footer')
+@include('user.footer')
