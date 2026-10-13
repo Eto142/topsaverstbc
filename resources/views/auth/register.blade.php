@@ -342,7 +342,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
           </div>
         @endif
 
-        <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
+        <form id="registrationForm" action="{{ route('register') }}" method="POST" enctype="multipart/form-data" novalidate>
           @csrf
 
           <!-- STEP 1: PERSONAL INFORMATION -->
@@ -510,6 +510,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
               <div class="form-group">
                 <label class="form-label">Next of Kin Email (Optional)</label>
                 <input type="email" name="kin_email" id="kin_email" class="form-control" placeholder="Email address" value="{{ old('kin_email') }}">
+                <div class="error-txt" id="err-kin_email"></div>
               </div>
             </div>
 
@@ -638,17 +639,22 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      function validateCurrentStep() {
+      function validateStep(stepNumber) {
         let isValid = true;
-        const currentStepEl = document.getElementById(`step-${currentStep}`);
-        const requiredInputs = currentStepEl.querySelectorAll('[required]');
+        const currentStepEl = document.getElementById(`step-${stepNumber}`);
+        const inputs = currentStepEl.querySelectorAll('input, select, textarea');
 
-        requiredInputs.forEach(input => {
+        inputs.forEach(input => {
           const errDiv = document.getElementById(`err-${input.name}`);
-          if (!input.checkValidity() || input.value.trim() === '') {
+          const isBlankRequired = input.required && input.value.trim() === '';
+          if (!input.checkValidity() || isBlankRequired) {
             isValid = false;
             input.style.borderColor = 'var(--error)';
-            if (errDiv) errDiv.textContent = 'This field is required.';
+            if (errDiv) {
+              errDiv.textContent = isBlankRequired || input.validity.valueMissing
+                ? 'This field is required.'
+                : input.validationMessage;
+            }
           } else {
             input.style.borderColor = 'var(--border)';
             if (errDiv) errDiv.textContent = '';
@@ -656,7 +662,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
         });
 
         // Special password match validation on step 3
-        if (currentStep === 3) {
+        if (stepNumber === 3) {
           const pwd = document.getElementById('password').value;
           const pwdConfirm = document.getElementById('password_confirmation').value;
           const errConfirm = document.getElementById('err-password_confirmation');
@@ -672,6 +678,10 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
         }
 
         return isValid;
+      }
+
+      function validateCurrentStep() {
+        return validateStep(currentStep);
       }
 
       btnNext.addEventListener('click', function() {
@@ -759,9 +769,16 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
 
       // Form submit handler
       regForm.addEventListener('submit', function(e) {
-        if (!validateCurrentStep()) {
-          e.preventDefault();
-          return;
+        for (let step = 1; step <= totalSteps; step++) {
+          if (!validateStep(step)) {
+            e.preventDefault();
+            currentStep = step;
+            updateWizardUI();
+            const invalidInput = document.getElementById(`step-${step}`)
+              .querySelector(':invalid');
+            if (invalidInput) invalidInput.focus();
+            return;
+          }
         }
         btnSubmit.disabled = true;
         submitSpinner.style.display = 'inline-block';
