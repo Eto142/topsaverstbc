@@ -31,91 +31,86 @@ class ManageUserController extends Controller
         return view('admin.manage_users', ['users' => $users]);
     }
 
-    public function ShowUsers () {
+    public function userProfile($id)
+    {
+        $user = DB::table('users')->where('id', $id)->first();
 
-        return view('admin.user_data');
+        if (!$user) {
+            return redirect()->route('admin.users')->with('error', 'User not found.');
+        }
+
+        $data = [
+            'userProfile'       => $user,
+            'credit_transfers'  => Transaction::where('user_id', $id)
+                                        ->where('transaction_status', '1')
+                                        ->where('transaction_type', 'Credit')
+                                        ->sum('transaction_amount'),
+
+            'debit_transfers'   => Transaction::where('user_id', $id)
+                                        ->where('transaction_status', '1')
+                                        ->where('transaction_type', 'Debit')
+                                        ->sum('transaction_amount'),
+
+            'user_deposits'     => Deposit::where('user_id', $id)
+                                        ->where('status', '1')
+                                        ->sum('amount'),
+                                        
+
+            'user_loans'        => Loan::where('user_id', $id)
+                                        ->where('status', '1')
+                                        ->sum('amount'),
+
+            'user_credit'       => Credit::where('user_id', $id)
+                                        ->where('status', '1')
+                                        ->sum('amount'),
+
+            'user_debit'        => Debit::where('user_id', $id)
+                                        ->where('status', '1')
+                                        ->sum('amount'),
+
+            'loan'              => Loan::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+
+            'user_deposits_list'=> Deposit::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+
+              'user_transfers_list'=> Transfer::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+
+
+            'user_loans_list'   => Loan::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+
+             'user_cards_list'   => Card::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+
+            'user_transactions' => Transaction::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+        ];
+
+        return view('admin.user_data', $data);
     }
 
 
 
-
-
-    public function userProfile($id)
-{
-    $user = DB::table('users')->where('id', $id)->first();
-
-    $data = [
-        'userProfile'       => $user,
-        'credit_transfers'  => Transaction::where('user_id', $id)
-                                    ->where('transaction_status', '1')
-                                    ->where('transaction_type', 'Credit')
-                                    ->sum('transaction_amount'),
-
-        'debit_transfers'   => Transaction::where('user_id', $id)
-                                    ->where('transaction_status', '1')
-                                    ->where('transaction_type', 'Debit')
-                                    ->sum('transaction_amount'),
-
-        'user_deposits'     => Deposit::where('user_id', $id)
-                                    ->where('status', '1')
-                                    ->sum('amount'),
-                                    
-
-        'user_loans'        => Loan::where('user_id', $id)
-                                    ->where('status', '1')
-                                    ->sum('amount'),
-
-        'user_credit'       => Credit::where('user_id', $id)
-                                    ->where('status', '1')
-                                    ->sum('amount'),
-
-        'user_debit'        => Debit::where('user_id', $id)
-                                    ->where('status', '1')
-                                    ->sum('amount'),
-
-        'loan'              => Loan::where('user_id', $id)
-                                    ->orderBy('id', 'desc')
-                                    ->get(),
-
-        'user_deposits_list'=> Deposit::where('user_id', $id)
-                                    ->orderBy('id', 'desc')
-                                    ->get(),
-
-          'user_transfers_list'=> Transfer::where('user_id', $id)
-                                    ->orderBy('id', 'desc')
-                                    ->get(),
-
-
-        'user_loans_list'   => Loan::where('user_id', $id)
-                                    ->orderBy('id', 'desc')
-                                    ->get(),
-
-         'user_cards_list'   => Card::where('user_id', $id)
-                                    ->orderBy('id', 'desc')
-                                    ->get(),
-
-        'user_transactions' => Transaction::where('user_id', $id)
-                                    ->orderBy('id', 'desc')
-                                    ->get(),
-    ];
-
-    return view('admin.user_data', $data);
-}
-
-
-
         public function deleteUser($id)
-{
-    $user = User::findOrFail($id);
-    $user->delete();
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
 
 
-        return back()->with('status', 'User deleted successfully');
-}
+            return back()->with('status', 'User deleted successfully');
+    }
 
 
 
-public function clearAccount($id)
+    public function clearAccount($id)
     {
         $user = User::find($id);
         if ($user) {
@@ -140,26 +135,26 @@ public function clearAccount($id)
 
     //update payment status
 
-public function updatePaymentStatus(Request $request)
-{
-    // Validate the request
-    $request->validate([
-        'id' => 'required|exists:users,id',
-        'payment_status' => 'required|in:0,1', // only 0 or 1 allowed
-    ]);
+    public function updatePaymentStatus(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'id' => 'required|exists:users,id',
+            'payment_status' => 'required|in:0,1', // only 0 or 1 allowed
+        ]);
 
-    // Find the user
-    $user = User::findOrFail($request->id);
+        // Find the user
+        $user = User::findOrFail($request->id);
 
-    // Update the payment_status
-    $user->payment_status = $request->payment_status;
-    $user->save();
+        // Update the payment_status
+        $user->payment_status = $request->payment_status;
+        $user->save();
 
-    // Optional: send email notification if needed
-    // Mail::to($user->email)->send(new PaymentStatusUpdated($user));
+        // Optional: send email notification if needed
+        // Mail::to($user->email)->send(new PaymentStatusUpdated($user));
 
-    return back()->with('status', 'Payment status updated successfully for ' . $user->first_name);
-}
+        return back()->with('status', 'Payment status updated successfully for ' . $user->first_name);
+    }
 
 
 

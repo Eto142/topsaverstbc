@@ -22,7 +22,7 @@
                     <img src="{{ asset('logo.png') }}" alt="Logo" class="site-logo">
                 </div>
 
-                <h6 class="fw-semibold mb-2">{{ Auth::user()->first_name }} {{ Auth::user()->last_name }}</h6>
+                <h6 class="fw-semibold mb-2">{{ Auth::guard('admin')->user()->email ?? 'Admin' }}</h6>
 
                 <div class="card-number mb-2">
                     <small class="text-light">Card Number</small><br>
