@@ -25,7 +25,7 @@
             document.addEventListener('click', function(event) {
                 if (window.innerWidth <= 992 && 
                     !sidebar.contains(event.target) && 
-                    event.target !== sidebarToggle) {
+                    !sidebarToggle.contains(event.target)) {
                     sidebar.classList.remove('show');
                     sidebarOverlay.classList.remove('show');
                 }

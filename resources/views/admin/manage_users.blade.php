@@ -200,7 +200,7 @@
         const form = document.getElementById('mailForm');
         const formData = new FormData(form);
         
-        fetch('{{ route("admin.users.send-mail") }}', {
+        fetch('{{ route("admin.mail.send") }}', {
             method: 'POST',
             body: formData,
             headers: {
