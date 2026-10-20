@@ -28,6 +28,7 @@
                     <thead class="table-light">
                         <tr>
                             <th>Transaction ID</th>
+                            <th>User</th>
                             <th>Transaction Type</th>
                             <th>Description</th>
                             <th>Amount</th>
@@ -39,6 +40,7 @@
                         @foreach($user_transactions as $transaction)
                         <tr>
                             <td>{{ $transaction->transaction_ref }}</td>
+                            <td>{{ $transaction->user?->first_name }} {{ $transaction->user?->last_name }} <small class="text-muted">({{ $transaction->user?->email ?? 'User unavailable' }})</small></td>
                             <td>{{ $transaction->transaction_type }}</td>
                             <td>{{ $transaction->transaction_description }}</td>
                             <td>{{ number_format($transaction->transaction_amount, 2, '.', ',') }}</td>
@@ -47,6 +49,8 @@
                                 <span class="badge bg-success">Completed</span>
                                 @elseif($transaction->transaction_status == '0')
                                 <span class="badge bg-warning">Pending</span>
+                                @elseif($transaction->transaction_status == '2')
+                                <span class="badge bg-danger">Declined</span>
                                 @endif
                             </td>
                             <td>{{ \Carbon\Carbon::parse($transaction->created_at)->format('D, M j, Y g:i A') }}</td>
@@ -55,7 +59,7 @@
                         
                         @if($user_transactions->isEmpty())
                         <tr>
-                            <td colspan="6" class="text-center py-4">No transactions found</td>
+                            <td colspan="7" class="text-center py-4">No transactions found</td>
                         </tr>
                         @endif
                     </tbody>

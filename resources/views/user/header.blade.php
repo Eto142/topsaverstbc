@@ -784,39 +784,67 @@ window.smartsupp||(function(d) {
             <ul class="nav flex-column">
                 <li class="sidebar-section-title">MAIN MENU</li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{route('user.home')}}">
+                    <a class="nav-link {{ request()->routeIs('user.home') ? 'active' : '' }}" href="{{route('user.home')}}">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+
+                <li class="sidebar-section-title">SAVING & INVESTING</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.deposit.index')}}">
+                    <a class="nav-link {{ request()->routeIs('user.savings-goals.*') ? 'active' : '' }}" href="{{ route('user.savings-goals.index') }}">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Savings Goals</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('user.mutual-funds') ? 'active' : '' }}" href="{{ route('user.mutual-funds') }}">
+                        <i class="fas fa-layer-group"></i>
+                        <span>Mutual Funds</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('user.investment') ? 'active' : '' }}" href="{{ route('user.investment') }}">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Markets</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-section-title">PAYMENTS & TRANSFERS</li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('user.deposit.*') ? 'active' : '' }}" href="{{route('user.deposit.index')}}">
                         <i class="fas fa-wallet"></i>
                         <span>Deposit</span>
                     </a>
                 </li>
-
-                <li class="sidebar-section-title">TRANSFERS & SERVICES</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.transfer.bank')}}">
+                    <a class="nav-link {{ request()->routeIs('user.bill.*') ? 'active' : '' }}" href="{{ route('user.bill.index') }}">
+                        <i class="fas fa-file-invoice-dollar"></i>
+                        <span>Pay Bills</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('user.transfer.*') ? 'active' : '' }}" href="{{route('user.transfer.bank')}}">
                         <i class="fas fa-university"></i>
                         <span>Bank Transfers</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.withdrawal.crypto')}}">
+                    <a class="nav-link {{ request()->routeIs('user.withdrawal.crypto') ? 'active' : '' }}" href="{{route('user.withdrawal.crypto')}}">
                         <i class="fab fa-bitcoin"></i>
                         <span>Crypto Withdrawal</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.withdrawal.paypal')}}">
+                    <a class="nav-link {{ request()->routeIs('user.withdrawal.paypal') ? 'active' : '' }}" href="{{route('user.withdrawal.paypal')}}">
                         <i class="fab fa-paypal"></i>
                         <span>PayPal Withdrawals</span>
                     </a>
                 </li>
+
+                <li class="sidebar-section-title">CREDIT</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.loans.loan')}}">
+                    <a class="nav-link {{ request()->routeIs('user.loans.*') ? 'active' : '' }}" href="{{route('user.loans.loan')}}">
                         <i class="fas fa-hand-holding-usd"></i>
                         <span>Apply for Loan</span>
                     </a>
@@ -824,13 +852,13 @@ window.smartsupp||(function(d) {
 
                 <li class="sidebar-section-title">ACCOUNT</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.cards.card')}}">
+                    <a class="nav-link {{ request()->routeIs('user.cards.*') ? 'active' : '' }}" href="{{route('user.cards.card')}}">
                         <i class="fas fa-id-card"></i>
                         <span>My Card</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('user.profile')}}">
+                    <a class="nav-link {{ request()->routeIs('user.profile') ? 'active' : '' }}" href="{{route('user.profile')}}">
                         <i class="fas fa-user-shield"></i>
                         <span>Account Profile</span>
                     </a>

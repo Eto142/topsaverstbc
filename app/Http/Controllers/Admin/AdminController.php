@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Deposit;
 use App\Models\Loan;
+use App\Models\Trade;
 use App\Models\Transaction;
 use App\Models\Transfer;
 use App\Models\User;
@@ -23,6 +24,7 @@ class AdminController extends Controller
         $totalLoanCount = Loan::count();
         $totalTransferCount = Transfer::count();
         $totalDepositCount = Deposit::count();
+        $pendingTradeCount = Trade::where('status', 'pending')->count();
 
 
          // Recent Activity
@@ -35,6 +37,7 @@ class AdminController extends Controller
             'totalLoanCount',
             'totalTransferCount',
             'totalDepositCount',
+            'pendingTradeCount',
             'recentUsers',
         ));
      

@@ -7,8 +7,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\User\BillController;
 use App\Http\Controllers\User\CardController;
 use App\Http\Controllers\User\DepositController;
+use App\Http\Controllers\User\InvestmentController;
 use App\Http\Controllers\User\LoanController;
 use App\Http\Controllers\User\PaymentController;
+use App\Http\Controllers\User\SavingsGoalController;
 use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\TransferController;
 use App\Http\Controllers\User\WithdrawalController;
@@ -242,6 +244,14 @@ Route::post('requestcard-delivery', [DashboardController::class, 'requestCardDel
   Route::prefix('bill')->name('bill.')->group(function () {
   Route::get('/index', [BillController::class, 'Bills'])->name('index'); // becomes 'user.bills'
     }); 
+
+    Route::get('/investment', [InvestmentController::class, 'index'])->name('investment');
+    Route::get('/mutual-funds', [InvestmentController::class, 'mutualFunds'])->name('mutual-funds');
+    Route::post('/investment/orders', [InvestmentController::class, 'store'])->name('investment.order');
+
+    Route::get('/savings-goals', [SavingsGoalController::class, 'index'])->name('savings-goals.index');
+    Route::post('/savings-goals', [SavingsGoalController::class, 'store'])->name('savings-goals.store');
+    Route::post('/savings-goals/{goal}/contributions', [SavingsGoalController::class, 'contribute'])->name('savings-goals.contributions.store');
     
     
    

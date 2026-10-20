@@ -91,37 +91,39 @@
         }, 100);
         
         // Initialize spending chart
-        const ctx = document.getElementById('spendingChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Transfers', 'Withdrawals', 'Payments', 'Deposits'],
-                datasets: [{
-                    data: [35, 25, 20, 20],
-                    backgroundColor: [
-                        '#4e54c8',
-                        '#11998e',
-                        '#f46b45',
-                        '#6c757d'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                cutout: '70%',
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            boxWidth: 10,
-                            padding: 20
+        const spendingChart = document.getElementById('spendingChart');
+        if (spendingChart) {
+            new Chart(spendingChart.getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Transfers', 'Withdrawals', 'Payments', 'Deposits'],
+                    datasets: [{
+                        data: [35, 25, 20, 20],
+                        backgroundColor: [
+                            '#4e54c8',
+                            '#11998e',
+                            '#f46b45',
+                            '#6c757d'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 10,
+                                padding: 20
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
+        }
     });
     
     function triggerFileInput() {

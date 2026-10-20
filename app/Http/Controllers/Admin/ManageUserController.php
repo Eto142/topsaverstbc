@@ -8,6 +8,8 @@ use App\Models\Credit;
 use App\Models\Debit;
 use App\Models\Deposit;
 use App\Models\Loan;
+use App\Models\SavingsGoal;
+use App\Models\Trade;
 use App\Models\Transaction;
 use App\Models\Transfer;
 use App\Models\User;
@@ -91,6 +93,14 @@ class ManageUserController extends Controller
 
             'user_transactions' => Transaction::where('user_id', $id)
                                         ->orderBy('id', 'desc')
+                                        ->get(),
+
+            'user_savings_goals' => SavingsGoal::where('user_id', $id)
+                                        ->orderBy('id', 'desc')
+                                        ->get(),
+
+            'user_trades' => Trade::where('user_id', $id)
+                                        ->latest()
                                         ->get(),
         ];
 

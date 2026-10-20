@@ -297,6 +297,16 @@
                     <i class="fas fa-hand-holding-usd me-2"></i> Loans
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link px-4 py-3 fw-bold text-primary" id="savings-goals-tab" data-bs-toggle="tab" data-bs-target="#savings-goals" type="button" role="tab">
+                    <i class="fas fa-bullseye me-2"></i> Savings Goals
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link px-4 py-3 fw-bold text-info" id="investment-orders-tab" data-bs-toggle="tab" data-bs-target="#investment-orders" type="button" role="tab">
+                    <i class="fas fa-chart-line me-2"></i> Investment Orders
+                </button>
+            </li>
         </ul>
     </div>
 
@@ -748,6 +758,98 @@
                 @else
                     <div class="alert alert-info mt-3 mb-0">
                         <i class="fas fa-info-circle me-2"></i> No loans found for this user.
+                    </div>
+                @endif
+            </div>
+
+            <!-- Savings Goals Tab -->
+            <div class="tab-pane fade" id="savings-goals" role="tabpanel" aria-labelledby="savings-goals-tab">
+                @if($user_savings_goals->isNotEmpty())
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Goal</th>
+                                    <th>Target Amount</th>
+                                    <th>Saved Amount</th>
+                                    <th>Progress</th>
+                                    <th>Target Date</th>
+                                    <th>Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($user_savings_goals as $goal)
+                                    @php($progress = min(100, (int) round(((float) $goal->saved_amount / (float) $goal->target_amount) * 100)))
+                                    <tr>
+                                        <td class="fw-semibold">{{ $goal->name }}</td>
+                                        <td>{{ $userProfile->currency }}{{ number_format((float) $goal->target_amount, 2) }}</td>
+                                        <td>{{ $userProfile->currency }}{{ number_format((float) $goal->saved_amount, 2) }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div class="progress flex-grow-1" role="progressbar" aria-label="Savings goal progress" aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100" style="height: 8px; min-width: 70px;">
+                                                    <div class="progress-bar" style="width: {{ $progress }}%"></div>
+                                                </div>
+                                                <small class="text-muted">{{ $progress }}%</small>
+                                            </div>
+                                        </td>
+                                        <td>{{ $goal->target_date?->format('M d, Y') ?? 'No target date' }}</td>
+                                        <td>{{ $goal->created_at->format('M d, Y') }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-muted small mb-0">Savings goals are progress trackers only; contributions do not move funds or change the user's account balance.</p>
+                @else
+                    <div class="alert alert-info mt-3 mb-0">
+                        <i class="fas fa-info-circle me-2"></i> No savings goals found for this user.
+                    </div>
+                @endif
+            </div>
+
+            <!-- Investment Orders Tab -->
+            <div class="tab-pane fade" id="investment-orders" role="tabpanel" aria-labelledby="investment-orders-tab">
+                @if($user_trades->isNotEmpty())
+                    <div class="table-responsive">
+                        <table class="table table-hover table-sm align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Order ID</th>
+                                    <th>Asset</th>
+                                    <th>Side</th>
+                                    <th>Order Type</th>
+                                    <th>Amount (USD)</th>
+                                    <th>Quantity</th>
+                                    <th>Limit Price</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($user_trades as $trade)
+                                    <tr>
+                                        <td>{{ $trade->created_at->format('M d, Y h:i A') }}</td>
+                                        <td><code>{{ $trade->transaction_id }}</code></td>
+                                        <td>{{ $trade->asset_name }} <span class="text-muted">({{ $trade->asset_symbol }})</span></td>
+                                        <td><span class="badge bg-{{ $trade->type === 'buy' ? 'success' : 'danger' }}">{{ ucfirst($trade->type) }}</span></td>
+                                        <td>{{ ucfirst($trade->order_type) }}</td>
+                                        <td>${{ number_format((float) $trade->amount_usd, 2) }}</td>
+                                        <td>{{ number_format((float) $trade->quantity, 6) }}</td>
+                                        <td>{{ $trade->limit_price !== null ? '$' . number_format((float) $trade->limit_price, 6) : 'Market' }}</td>
+                                        <td>
+                                            <span class="badge bg-{{ $trade->status === 'pending' ? 'warning' : ($trade->status === 'executed' ? 'success' : 'secondary') }}">
+                                                {{ ucfirst($trade->status) }}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="text-muted small mb-0">Order requests are recorded here; pending orders have not been executed or deducted from the user's balance.</p>
+                @else
+                    <div class="alert alert-info mt-3 mb-0">
+                        <i class="fas fa-info-circle me-2"></i> No investment orders found for this user.
                     </div>
                 @endif
             </div>

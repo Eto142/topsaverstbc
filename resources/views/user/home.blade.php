@@ -321,6 +321,50 @@
               <small class="text-muted font-monospace d-block" style="font-size: 0.68rem;">Fast Transfer</small>
             </a>
           </div>
+
+          <!-- Pay Bills Shortcut -->
+          <div class="col">
+            <a href="{{ route('user.bill.index') }}" class="card border rounded-4 text-center text-decoration-none p-3 h-100 transition shadow-sm hover-lift" style="background: #ffffff; border-color: rgba(16, 185, 129, 0.15) !important;">
+              <div class="rounded-circle text-white mx-auto mb-2.5 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; font-size: 1.25rem; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25) !important;">
+                <i class="fas fa-file-invoice-dollar"></i>
+              </div>
+              <span class="fw-bold text-dark d-block mb-0.5" style="font-size: 0.88rem;">Pay Bills</span>
+              <small class="text-muted font-monospace d-block" style="font-size: 0.68rem;">Utilities &amp; Services</small>
+            </a>
+          </div>
+
+          <!-- Investments Shortcut -->
+          <div class="col">
+            <a href="{{ route('user.investment') }}" class="card border rounded-4 text-center text-decoration-none p-3 h-100 transition shadow-sm hover-lift" style="background: #ffffff; border-color: rgba(99, 102, 241, 0.15) !important;">
+              <div class="rounded-circle text-white mx-auto mb-2.5 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; font-size: 1.25rem; background: linear-gradient(135deg, #6366f1, #4f46e5); box-shadow: 0 6px 15px rgba(99, 102, 241, 0.25) !important;">
+                <i class="fas fa-chart-line"></i>
+              </div>
+              <span class="fw-bold text-dark d-block mb-0.5" style="font-size: 0.88rem;">Investments</span>
+              <small class="text-muted font-monospace d-block" style="font-size: 0.68rem;">Explore Options</small>
+            </a>
+          </div>
+
+          <!-- Mutual Funds Shortcut -->
+          <div class="col">
+            <a href="{{ route('user.mutual-funds') }}" class="card border rounded-4 text-center text-decoration-none p-3 h-100 transition shadow-sm hover-lift" style="background: #ffffff; border-color: rgba(14, 165, 233, 0.15) !important;">
+              <div class="rounded-circle text-white mx-auto mb-2.5 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; font-size: 1.25rem; background: linear-gradient(135deg, #0ea5e9, #0284c7); box-shadow: 0 6px 15px rgba(14, 165, 233, 0.25) !important;">
+                <i class="fas fa-layer-group"></i>
+              </div>
+              <span class="fw-bold text-dark d-block mb-0.5" style="font-size: 0.88rem;">Mutual Funds</span>
+              <small class="text-muted font-monospace d-block" style="font-size: 0.68rem;">Explore Funds</small>
+            </a>
+          </div>
+
+          <!-- Savings Goals Shortcut -->
+          <div class="col">
+            <a href="{{ route('user.savings-goals.index') }}" class="card border rounded-4 text-center text-decoration-none p-3 h-100 transition shadow-sm hover-lift" style="background: #ffffff; border-color: rgba(16, 185, 129, 0.15) !important;">
+              <div class="rounded-circle text-white mx-auto mb-2.5 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px; font-size: 1.25rem; background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 6px 15px rgba(16, 185, 129, 0.25) !important;">
+                <i class="fas fa-bullseye"></i>
+              </div>
+              <span class="fw-bold text-dark d-block mb-0.5" style="font-size: 0.88rem;">Savings Goals</span>
+              <small class="text-muted font-monospace d-block" style="font-size: 0.68rem;">Track Progress</small>
+            </a>
+          </div>
         </div>
       </div>
     </div>

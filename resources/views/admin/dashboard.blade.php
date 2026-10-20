@@ -81,6 +81,20 @@
                 <div class="small text-muted">Under review & approved loans</div>
             </div>
         </div>
+
+        <!-- Pending Investment Orders Card -->
+        <div class="col-12 col-sm-6 col-lg-3">
+            <div class="card border-0 shadow-sm rounded-4 bg-white p-4 h-100 position-relative overflow-hidden" style="border-left: 4px solid #8b5cf6 !important;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="text-muted small fw-bold text-uppercase tracking-wider">Pending Investment Orders</span>
+                    <div class="p-2.5 rounded-3 bg-primary bg-opacity-10 text-primary">
+                        <i class="fas fa-chart-line fs-5"></i>
+                    </div>
+                </div>
+                <h2 class="fw-extrabold text-dark font-monospace mb-2">{{ number_format($pendingTradeCount) }}</h2>
+                <div class="small text-muted">Orders awaiting review</div>
+            </div>
+        </div>
     </div>
 
     <!-- Recent Registrations Table Card -->

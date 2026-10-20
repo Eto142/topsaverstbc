@@ -16,8 +16,8 @@ class TransactionController extends Controller
     
     public function usersTransaction(){
 
-        $user_transactions = Transaction::where('user_id', auth()->id())
-                                  ->orderBy('created_at', 'desc')
+        $user_transactions = Transaction::with('user')
+                                  ->latest()
                                   ->paginate(10); // or whatever number you prefer
         return view('admin.manage_transactions', compact('user_transactions'));
     }
@@ -118,4 +118,3 @@ class TransactionController extends Controller
 
 
 }
-
