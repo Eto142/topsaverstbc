@@ -40,7 +40,6 @@ return new class extends Migration
             
             // Next of Kin fields
             $table->string('kin_full_name');
-             $table->string('display_picture')->nullable();
             $table->string('kin_relationship');
             $table->string('kin_phone');
             $table->string('kin_email')->nullable();

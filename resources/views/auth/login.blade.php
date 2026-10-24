@@ -375,7 +375,13 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
           <p>Sign in to your online banking dashboard</p>
         </div>
 
-        <div id="alert-area"></div>
+        <div id="alert-area">
+          @if (session('status'))
+            <div role="status" style="margin-bottom:16px;padding:12px;border-radius:8px;background:#ecfdf5;color:#047857;font-size:13px;">
+              {{ session('status') }}
+            </div>
+          @endif
+        </div>
 
         <form id="loginForm">
           @csrf
@@ -406,7 +412,7 @@ footer { text-align: center; padding: 16px; font-size: 12px; color: var(--txt-mu
               <input type="checkbox" id="remember" name="remember">
               <span>Remember me</span>
             </label>
-            <a href="/forgot-password" class="forgot-link">Forgot password?</a>
+            <a href="{{ route('password.request') }}" class="forgot-link">Forgot password?</a>
           </div>
 
           <button type="submit" class="btn-submit" id="loginButton">
